@@ -2,7 +2,7 @@ import { Check, Close, Download, ReplayRounded, Upload } from "@mui/icons-materi
 import { FC, Fragment } from "react";
 import { useRecoilRefresher_UNSTABLE, useRecoilValue, useSetRecoilState } from "recoil";
 import { dialogState } from "~/web/2_route";
-import { localPacksState, mergedPackList, pathState, registoryPackListState, useUpdateRegistory } from "~/web/2_store";
+import { localPacksState, mergedPackList, pathState, registoryPackListState, useDownloadPackage, useUpdateRegistory } from "~/web/2_store";
 import { Center, Dialog, Grid, IconButton, Left } from "../atom";
 
 export const PackageDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
@@ -13,6 +13,7 @@ export const PackageDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
   const reload = useRecoilRefresher_UNSTABLE(localPacksState);
   const registory = useRecoilValue(registoryPackListState);
   const reloadRegistory = useUpdateRegistory();
+  const downloadPackage = useDownloadPackage();
   console.log(localPacks);
   console.log(registory);
   console.table(merged);
@@ -51,7 +52,7 @@ export const PackageDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
                 <Left>{pack.version}</Left>
                 <Center>
                   {pack.remote && !pack.local && (
-                    <IconButton size={30} onClick={() => console.log("Download", pack.name)}>
+                    <IconButton size={30} onClick={() => downloadPackage(pack)}>
                       <Download />
                     </IconButton>
                   )}

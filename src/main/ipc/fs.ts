@@ -78,7 +78,7 @@ export const fsHandler = () => {
     log.trace(IPCKeys.FS_MKDIR, path);
     try {
       const exist = existsSync(path);
-      if (!exist) mkdirSync(path);
+      if (!exist) mkdirSync(path, { recursive: true });
       return true;
     } catch (e) {
       throw e;

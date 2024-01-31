@@ -140,3 +140,16 @@ export const mergedPackList = selector({
     return ret;
   },
 });
+
+// --------------------------------------------------------------------------------
+// パッケージをダウンロード
+
+export const useDownloadPackage = () => {
+  const { home } = useRecoilValue(pathState);
+  return async (pack: PackInfo) => {
+    const path = [pack.owner, pack.name, pack.version];
+    const files = [PACK_FILE, `${pack.name}.cpp`, `${pack.name}.hpp`, `${pack.name}.sv`];
+    await window.ipc.fs.mkdir([...home, PACK_DIR, ...path]);
+    await Promise.all(files.map((file) => window.ipc.web.clone([URL_PACK_REPO, ...path, file], [...home, PACK_DIR, ...path, file])));
+  };
+};
