@@ -1,0 +1,85 @@
+{
+  "private": true,
+  "name": "NextMiconIDE",
+  "description": "IDE for Next MICON FPGA",
+  "version": "0.0.0",
+  "license": "MIT",
+  "author": {
+    "name": "kanade-k-1228"
+  },
+  "repository": {
+    "url": "https://github.com/kanade-k-1228/"
+  },
+  "main": "dist/main.js",
+  "scripts": {
+    "dev": "rimraf dist && run-p dev:webpack dev:electron",
+    "dev:webpack": "cross-env NODE_ENV=\"development\" webpack --progress",
+    "dev:electron": "wait-on dist/main.js dist/index.html && electronmon .",
+    "pack": "rimraf dist && cross-env NODE_ENV=\"production\" webpack --progress",
+    "build": "electron-builder",
+    "build:linux": "npm run pack && npx electron-builder --linux --x64",
+    "build:mac": "npm run pack && npx electron-builder --mac --x64",
+    "build:win": "npm run pack && npx electron-builder --win --x64"
+  },
+  "electronmon": {
+    "patterns": [
+      "dist/**/*"
+    ]
+  },
+  "build": {
+    "appId": "io.github.NextMicon.NextMiconIDE",
+    "publish": {
+      "provider": "github",
+      "owner": "NextMicon",
+      "repo": "NextMiconIDE",
+      "releaseType": "release"
+    },
+    "linux": {
+      "category": "Utility"
+    },
+    "mac": {
+      "category": "public.app-category.developer-tools"
+    },
+    "productName": "NextMiconIDE",
+    "files": [
+      "dist/**/*"
+    ]
+  },
+  "dependencies": {
+    "@mui/icons-material": "^5.15.0",
+    "@types/js-yaml": "^4.0.9",
+    "allotment": "^1.19.3",
+    "directory-tree": "^3.5.1",
+    "electron-store": "^8.1.0",
+    "execa": "^8.0.1",
+    "js-yaml": "^4.1.0",
+    "log4js": "^6.9.1",
+    "react": "^18.2.0",
+    "react-ace": "^10.1.0",
+    "react-dom": "^18.2.0",
+    "recoil": "^0.7.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.8.1",
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1",
+    "electronmon": "^2.0.2",
+    "html-webpack-plugin": "^5.5.4",
+    "mini-css-extract-plugin": "^2.7.6",
+    "monaco-editor-webpack-plugin": "^7.1.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.1.1",
+    "rimraf": "^5.0.5",
+    "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths-webpack-plugin": "^4.1.0",
+    "typescript": "^5.3.3",
+    "wait-on": "^7.2.0",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
