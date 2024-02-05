@@ -47,7 +47,10 @@ export const IoportComponent: FC<{ ioport: Ioport }> = ({ ioport }) => {
         {ioport.name}
       </text>
       {ioport.pack.ports.map((port) => (
-        <IOPortInfo key={port.name} port={port} flip={ioport.flip ?? false} hover={highlight} origin={ioport.pos} />
+        <IOPortBg key={port.name} port={port} flip={ioport.flip ?? false} hover={highlight} origin={ioport.pos} />
+      ))}
+      {ioport.pack.ports.map((port) => (
+        <IOPortIcon key={port.name} port={port} flip={ioport.flip ?? false} hover={highlight} origin={ioport.pos} />
       ))}
     </g>
   );
@@ -92,13 +95,29 @@ export const IoifView: FC<{ ioif: Board["ioifs"][number]; ioName: string; pos: P
         {ioName}
       </text>
       {ioif.ports.map((port) => (
-        <IOPortInfo key={port.name} port={port} flip={flip ?? false} hover={highlight} origin={pos} />
+        <IOPortBg key={port.name} port={port} flip={flip} hover={highlight} origin={pos} />
+      ))}
+      {ioif.ports.map((port) => (
+        <IOPortIcon key={port.name} port={port} flip={flip} hover={highlight} origin={pos} />
       ))}
     </g>
   );
 };
 
-const IOPortInfo: FC<{
+const IOPortBg: FC<{
+  port: Board["ioifs"][number]["ports"][number];
+  origin: Position;
+  hover: boolean;
+  flip: boolean;
+}> = ({ port, origin, hover, flip }) => {
+  const side = port.pos[0] > 0 !== flip;
+  const color = useColor();
+  const [x, y] = posAdd(origin, flip ? posFlip(port.pos) : port.pos);
+  const [cx, cy] = side ? [x - 18, y] : [x + 18, y];
+  return <circle cx={cx} cy={cy} r={14} fill={hover ? color.gray.mid : color.gray.light} />;
+};
+
+const IOPortIcon: FC<{
   port: Board["ioifs"][number]["ports"][number];
   origin: Position;
   hover: boolean;
@@ -112,7 +131,7 @@ const IOPortInfo: FC<{
   const icon = port.icon;
   return (
     <>
-      <circle cx={cx} cy={cy} r={14} fill={hover ? color.gray.mid : color.gray.light} style={{ zIndex: 10 }} />
+      {/* <circle cx={cx} cy={cy} r={14} fill={hover ? color.gray.mid : color.gray.light} /> */}
       {icon === "!" && <ExclamationIcon cx={cx} cy={cy} color={color.primary.dark} />}
       {icon === "?" && <QuestionIcon cx={cx} cy={cy} color={color.primary.dark} />}
       {icon === undefined &&
