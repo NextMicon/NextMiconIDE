@@ -40,7 +40,7 @@ export const PackageDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
               <Left style={{ fontWeight: "bold" }}>Package</Left>
               <Left style={{ fontWeight: "bold" }}>Version</Left>
               <Left>
-                <IconButton size={30} onClick={() => reload()}>
+                <IconButton size={30} onClick={() => reloadRegistory().then(() => reload())}>
                   <ReplayRounded />
                 </IconButton>
               </Left>
@@ -52,7 +52,7 @@ export const PackageDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
                 <Left>{pack.version}</Left>
                 <Center>
                   {pack.remote && !pack.local && (
-                    <IconButton size={30} onClick={() => downloadPackage(pack)}>
+                    <IconButton size={30} onClick={() => downloadPackage(pack).then(() => reload())}>
                       <Download />
                     </IconButton>
                   )}
