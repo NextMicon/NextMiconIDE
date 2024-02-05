@@ -57,12 +57,14 @@
     "react": "^18.2.0",
     "react-ace": "^10.1.0",
     "react-dom": "^18.2.0",
-    "recoil": "^0.7.7"
+    "recoil": "^0.7.7",
+    "unzipper": "^0.10.14"
   },
   "devDependencies": {
     "@types/node": "^20.10.5",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
+    "@types/unzipper": "^0.10.9",
     "cross-env": "^7.0.3",
     "css-loader": "^6.8.1",
     "electron": "^28.0.0",

@@ -62,7 +62,7 @@ export const PackageDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
                     </IconButton>
                   )}
                   {pack.remote && pack.local && (
-                    <IconButton size={30} onClick={() => console.log("OK", pack.name)}>
+                    <IconButton size={30} onClick={() => downloadPackage(pack).then(() => reload())}>
                       <Check />
                     </IconButton>
                   )}
