@@ -57,8 +57,8 @@ const InstanceDoc: FC<{ instance: Instance }> = ({ instance }) => {
       </div>
       {open && (
         <div>
-          {instance.pack.software?.member.map(({ doc, copy }, i) => (
-            <Method key={i} doc={doc} copy={copy.replace("${INSTANCE}", instance.name)} />
+          {instance.pack.software?.member.map(({ note, use, def }, i) => (
+            <Method key={i} note={note} def={def} use={use.replace("${INSTANCE}", instance.name)} />
           ))}
         </div>
       )}
@@ -66,11 +66,11 @@ const InstanceDoc: FC<{ instance: Instance }> = ({ instance }) => {
   );
 };
 
-const Method: FC<{ doc: string; copy: string }> = ({ doc, copy }) => {
+const Method: FC<{ note: string; def: string; use: string }> = ({ note, def, use }) => {
   const color = useColor();
   const [hover, setHover] = useState(false);
 
-  const SIZE = 30;
+  const SIZE = 30 * 2;
   const TAB = 40;
 
   return (
@@ -84,11 +84,12 @@ const Method: FC<{ doc: string; copy: string }> = ({ doc, copy }) => {
       }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      onClick={() => window.ipc.clipboard.copy(copy)}
+      onClick={() => window.ipc.clipboard.copy(use)}
     >
-      <div style={{ ...cssCenter }}>{/* <HorizontalRule style={{ height: 15, width: 15 }} /> */}</div>
-      <div style={{ ...cssLeft, whiteSpace: "nowrap" }}>{doc}</div>
-      {/* <Left style={{ whiteSpace: "nowrap", overflow: "hidden", padding: "0 5px" }}>{doc}</Left> */}
+      <div></div>
+      <div style={{ ...cssLeft, whiteSpace: "nowrap" }}>{note}</div>
+      <div></div>
+      <div style={{ ...cssLeft, whiteSpace: "nowrap" }}>{def}</div>
     </div>
   );
 };

@@ -37,7 +37,7 @@ const EditorLoadded = () => {
       if (mode === "software") setMode("hardware");
     }
     if (e.ctrlKey && e.key === "Enter") {
-      runMake();
+      runMake("upload");
     }
   };
 

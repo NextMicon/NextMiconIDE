@@ -8,11 +8,7 @@ export interface Package {
 
   params: {
     name: string;
-    valid: (
-      | { type: "num"; num: number }
-      | { type: "range"; from: number; to: number }
-      | { type: "enum"; num: number; str: string }
-    )[];
+    valid: ({ type: "num"; num: number } | { type: "range"; from: number; to: number } | { type: "enum"; num: number; str: string })[];
   }[];
 
   size: [number, number];
@@ -21,6 +17,6 @@ export interface Package {
   software?: {
     className: string;
     memSize: number;
-    member: { doc: string; copy: string }[];
+    member: { note: string; def: string; use: string }[];
   };
 }
