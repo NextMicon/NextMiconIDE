@@ -24,7 +24,7 @@ export const TextEditor = () => {
           theme="monokai"
           fontSize="16px"
           highlightActiveLine={true}
-          setOptions={{ tabSize: 2, printMargin: false, fontFamily: "Lucida Console" }}
+          setOptions={{ tabSize: 2, printMargin: false, fontFamily: "monospace" }}
           value={value}
           onChange={update}
           commands={[
