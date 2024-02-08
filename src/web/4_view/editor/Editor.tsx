@@ -14,8 +14,7 @@ export const Editor: FC<{ projectPath: string[] }> = ({ projectPath }) => {
   const openSoftware = useOpenSoftware();
 
   useEffect(() => {
-    openProject(projectPath);
-    openSoftware(projectPath);
+    openProject(projectPath).then(() => openSoftware(projectPath));
   }, [projectPath]);
 
   return (

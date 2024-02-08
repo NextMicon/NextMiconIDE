@@ -10,7 +10,7 @@ export const InstanceList = () => {
   const instances = useRecoilValue(instancesResolvedState);
   const color = useColor();
   return (
-    <div style={{ overflow: "scroll", backgroundColor: "#272822", color: color.gray.white }}>
+    <div style={{ overflow: "scroll", backgroundColor: "#1e1e1e", color: color.gray.white }}>
       <div
         style={{
           height: "auto",
@@ -47,7 +47,7 @@ const InstanceDoc: FC<{ instance: Instance }> = ({ instance }) => {
           cursor: "pointer",
           display: "grid",
           gridTemplateColumns: `${SIZE}px 1fr`,
-          background: hover ? color.primary.dark : "#272822",
+          background: hover ? color.primary.dark : "#1e1e1e",
         }}
         onClick={() => setOpen(!open)}
         onMouseEnter={() => setHover(true)}
@@ -92,7 +92,7 @@ const Func: FC<{ inst: string; note: string; method: Func }> = ({ inst, note, me
     <div
       style={{
         height: SIZE,
-        background: hover ? color.primary.dark : "#272822",
+        background: hover ? color.primary.dark : "#1e1e1e",
         cursor: "pointer",
         display: "flex",
         flexDirection: "column",

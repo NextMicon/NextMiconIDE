@@ -1,44 +1,36 @@
-import { useRef } from "react";
-import AceEditor from "react-ace";
 import { useRecoilValueLoadable } from "recoil";
 import { softwareFileState, useSoftwareEditor } from "~/web/2_store";
-
-import "ace-builds/src-noconflict/ext-language_tools";
-import "ace-builds/src-noconflict/mode-c_cpp";
-import "ace-builds/src-noconflict/theme-monokai";
+import { useEffect, useRef, useState } from "react";
+import { EditorState } from "@codemirror/state";
+import { EditorView } from "@codemirror/view";
+import { basicSetup } from "@codemirror/basic-setup";
 
 export const TextEditor = () => {
   const codeLoadable = useRecoilValueLoadable(softwareFileState);
-  const { value, update, save } = useSoftwareEditor();
-  const editorRef = useRef<AceEditor>(null);
   return (
     <>
       {codeLoadable.state === "loading" && <div>Loading</div>}
       {codeLoadable.state === "hasError" && <div>Error</div>}
-      {codeLoadable.state === "hasValue" && (
-        <AceEditor
-          ref={editorRef}
-          height="100%"
-          width="100%"
-          mode="c_cpp"
-          theme="monokai"
-          fontSize="16px"
-          highlightActiveLine={true}
-          setOptions={{ tabSize: 2, printMargin: false, fontFamily: "monospace" }}
-          value={value}
-          onChange={update}
-          commands={[
-            {
-              name: "save",
-              bindKey: { win: "Ctrl-s", mac: "Cmd-s" },
-              exec: (s) => save(s.getValue()),
-            },
-          ]}
-          onCursorChange={(v) => {
-            console.log(v.getCursor());
-          }}
-        />
-      )}
+      {codeLoadable.state === "hasValue" && <TextEditorBody />}
     </>
   );
+};
+
+const TextEditorBody = () => {
+  const { path, value, update, save } = useSoftwareEditor();
+  const editorParentRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (editorParentRef.current === null) return;
+    const state = EditorState.create({ doc: value });
+    const editorView = new EditorView({
+      state,
+      parent: editorParentRef.current,
+    });
+    return () => {
+      editorView.destroy();
+    };
+  }, [editorParentRef]);
+
+  return <div ref={editorParentRef} />;
 };

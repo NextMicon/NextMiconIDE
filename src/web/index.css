@@ -19,6 +19,17 @@ div {
   box-sizing: border-box;
 }
 
+.cm-editor div {
+  width: auto;
+  height: auto;
+  box-sizing: content-box;
+  overflow: scroll;
+}
+
+[contenteditable]:focus {
+  outline: none;
+}
+
 ::-webkit-scrollbar {
   display: none;
 }

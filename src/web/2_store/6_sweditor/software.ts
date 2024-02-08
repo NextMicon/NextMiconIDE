@@ -1,5 +1,6 @@
 import { atom, useRecoilState, useSetRecoilState } from "recoil";
 import { SW_DIR, SW_FILE } from "~/consts";
+import { useMessage } from "../0_sys/message";
 
 interface TextFile {
   path: string[];
@@ -11,27 +12,41 @@ export const softwareFileState = atom<TextFile>({ key: "textFile" });
 
 export const useOpenSoftware = () => {
   const setTextFile = useSetRecoilState(softwareFileState);
+  const { createMessage } = useMessage();
+
   return async (path: string[]) => {
-    const filePath = [...path, SW_DIR, SW_FILE];
-    const text = await window.ipc.fs.read(filePath);
-    setTextFile({ path: filePath, text: text, uploading: false });
+    window.log.info("openSoftware: Start");
+    try {
+      const filePath = [...path, SW_DIR, SW_FILE];
+      const text = await window.ipc.fs.read(filePath);
+      const textFile: TextFile = { path: filePath, text: text, uploading: false };
+      setTextFile(textFile);
+      window.log.trace("openSoftware: textFile = ", textFile);
+      window.log.info("openSoftware: Done");
+    } catch (e) {
+      window.log.error("openSoftware: Failed");
+      window.log.error(e);
+      createMessage("error", "Failed to open software", `${e}`);
+    }
   };
 };
 
 export const useSoftwareEditor = () => {
   const [textFile, setTextFile] = useRecoilState(softwareFileState);
+  console.log(textFile.path);
 
   const update = (text: string) => {
-    console.log("Updated:", text);
     setTextFile({ ...textFile, text: text });
   };
 
-  const save = async (text: string) => {
-    setTextFile({ path: textFile.path, text: text, uploading: true });
-    console.log("Save:", text);
-    await window.ipc.fs.write(textFile.path, text);
-    setTextFile({ path: textFile.path, text: text, uploading: false });
+  const save = async () => {
+    if (!textFile.uploading) {
+      window.log.trace("SaveFile: textFile = ", textFile);
+      setTextFile({ ...textFile, uploading: true });
+      await window.ipc.fs.write(textFile.path, textFile.text);
+      setTextFile({ ...textFile, uploading: false });
+    }
   };
 
-  return { value: textFile.text, update: update, save: save };
+  return { path: textFile.path, value: textFile.text, uploading: textFile.uploading, update: update, save: save };
 };
