@@ -39,7 +39,6 @@ export const useSoftwareEditor = () => {
 
   const save = async () => {
     if (!textFile.uploading) {
-      window.log.trace("SaveFile: textFile = ", textFile);
       setTextFile({ ...textFile, uploading: true });
       await window.ipc.fs.write(textFile.path, textFile.text);
       setTextFile({ ...textFile, uploading: false });

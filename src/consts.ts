@@ -31,5 +31,7 @@ void loop(){
 `;
 
 export const COLORS = {
-  bg: "#282c34",
+  hw_back: "#282c34",
+  hw_grid: "",
+  sw_back: "#282c34",
 } as const;

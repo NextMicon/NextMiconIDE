@@ -1,4 +1,4 @@
-import { ArrowRightAlt, DeviceHub, EditNote, Home, Language, QuestionMark, Send, Settings } from "@mui/icons-material";
+import { ArrowRightAlt, Build, DeviceHub, EditNote, Home, Language, QuestionMark, Send, Settings } from "@mui/icons-material";
 import { FC } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { URL_NEXT_MICON } from "~/consts";
@@ -40,7 +40,7 @@ export const TopBar: FC = () => {
         </Center>
         <Center>
           <IconButton size={40} onClick={() => generate()}>
-            <ArrowRightAlt />
+            <Build />
           </IconButton>
         </Center>
         <Center>
