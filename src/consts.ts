@@ -22,10 +22,10 @@ export const SW_INIT = `// main.cpp
 #include "firmware.hpp"
 
 void init(){
-    // Code Here!
+  // Code Here!
 }
 
 void loop(){
-    // Code Here!
+  // Code Here!
 }
 `;

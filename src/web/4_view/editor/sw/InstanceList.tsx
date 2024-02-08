@@ -1,6 +1,7 @@
 import { KeyboardArrowDown, KeyboardArrowRight } from "@mui/icons-material";
 import { CSSProperties, FC, useState } from "react";
 import { useRecoilValue } from "recoil";
+import { Func, Package } from "~/files";
 import { Instance } from "~/web/1_type";
 import { instancesResolvedState, useColor } from "~/web/2_store";
 import { cssCenter, cssLeft } from "~/web/4_view/atom";
@@ -57,21 +58,35 @@ const InstanceDoc: FC<{ instance: Instance }> = ({ instance }) => {
       </div>
       {open && (
         <div>
-          {instance.pack.software?.member.map(({ note, use, def }, i) => (
-            <Method key={i} note={note} def={def} use={use.replace("${INSTANCE}", instance.name)} />
-          ))}
+          {instance.pack.software?.methods.map((method, i) => <Func key={i} inst={instance.name} note={method.note} method={method} />)}
         </div>
       )}
     </div>
   );
 };
 
-const Method: FC<{ note: string; def: string; use: string }> = ({ note, def, use }) => {
+const Func: FC<{ inst: string; note: string; method: Func }> = ({ inst, note, method }) => {
   const color = useColor();
   const [hover, setHover] = useState(false);
 
+  const use = `${inst}.${method.name}();`;
+
   const SIZE = 30 * 2;
-  const TAB = 40;
+
+  const ccolor = {
+    comment: "#6a9955",
+    embtype: "#569cd6",
+    objtype: "#4ec9b0",
+    funcname: "#dcdcaa",
+    varname: "#9cdcfe",
+  } as const;
+
+  const startWithLowercase = (str: string) => {
+    return str.charAt(0) === str.charAt(0).toLowerCase();
+  };
+  const typeColor = (str: string) => {
+    return startWithLowercase(str) ? ccolor.embtype : ccolor.objtype;
+  };
 
   return (
     <div
@@ -79,17 +94,36 @@ const Method: FC<{ note: string; def: string; use: string }> = ({ note, def, use
         height: SIZE,
         background: hover ? color.primary.dark : "#272822",
         cursor: "pointer",
-        display: "grid",
-        gridTemplateColumns: `${TAB}px 1fr`,
+        display: "flex",
+        flexDirection: "column",
       }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       onClick={() => window.ipc.clipboard.copy(use)}
     >
-      <div></div>
-      <div style={{ ...cssLeft, whiteSpace: "nowrap" }}>{note}</div>
-      <div></div>
-      <div style={{ ...cssLeft, whiteSpace: "nowrap" }}>{def}</div>
+      <div style={{ ...cssLeft, whiteSpace: "nowrap" }}>
+        <pre> </pre>
+        <pre style={{ color: ccolor.comment }}>{note}</pre>
+      </div>
+      <div style={{ ...cssLeft, whiteSpace: "nowrap" }}>
+        <pre> </pre>
+        <pre style={{ color: typeColor(method.type) }}>{method.type}</pre>
+        <pre> </pre>
+        <pre style={{ color: ccolor.funcname, fontWeight: "bold" }}>{method.name}</pre>
+        <pre>(</pre>
+        {method.args.map((arg, i, arr) => {
+          const sep = i < arr.length - 1;
+          return (
+            <>
+              <pre style={{ color: typeColor(arg.type) }}>{arg.type}</pre>
+              <pre> </pre>
+              <pre style={{ color: ccolor.varname }}>{arg.name}</pre>
+              {sep && <pre>, </pre>}
+            </>
+          );
+        })}
+        <pre>);</pre>
+      </div>
     </div>
   );
 };

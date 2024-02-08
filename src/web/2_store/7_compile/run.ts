@@ -2,6 +2,8 @@ import { useRecoilValue } from "recoil";
 import { useMessage } from "../0_sys/message";
 import { projectPathState } from "../2_project/0_project";
 
+const useRunPath = (cmd: string, arg: string[], srcFiles: string[][], distFiles: string[][]) => {};
+
 export const useRunMake = () => {
   const projpath = useRecoilValue(projectPathState);
   const { createMessage: createDialog, deleteMessage: deleteDialog } = useMessage();

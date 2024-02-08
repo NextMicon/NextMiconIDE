@@ -17,6 +17,12 @@ export interface Package {
   software?: {
     className: string;
     memSize: number;
-    member: { note: string; def: string; use: string }[];
+    methods: ({ note: string } & Func)[];
   };
+}
+
+export interface Func {
+  type: string;
+  name: string;
+  args: { type: string; name: string }[];
 }
