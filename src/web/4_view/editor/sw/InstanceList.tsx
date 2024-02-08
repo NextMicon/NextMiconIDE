@@ -1,5 +1,5 @@
 import { KeyboardArrowDown, KeyboardArrowRight } from "@mui/icons-material";
-import { CSSProperties, FC, useState } from "react";
+import { CSSProperties, FC, Fragment, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { Func, Package } from "~/files";
 import { Instance } from "~/web/1_type";
@@ -114,12 +114,12 @@ const Func: FC<{ inst: string; note: string; method: Func }> = ({ inst, note, me
         {method.args.map((arg, i, arr) => {
           const sep = i < arr.length - 1;
           return (
-            <>
+            <Fragment key={i}>
               <pre style={{ color: typeColor(arg.type) }}>{arg.type}</pre>
               <pre> </pre>
               <pre style={{ color: ccolor.varname }}>{arg.name}</pre>
               {sep && <pre>, </pre>}
-            </>
+            </Fragment>
           );
         })}
         <pre>);</pre>

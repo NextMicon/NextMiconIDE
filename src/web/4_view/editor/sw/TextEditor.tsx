@@ -1,9 +1,8 @@
 import { useRecoilValueLoadable } from "recoil";
 import { softwareFileState, useSoftwareEditor } from "~/web/2_store";
-import { useEffect, useRef, useState } from "react";
-import { EditorState } from "@codemirror/state";
-import { EditorView } from "@codemirror/view";
-import { basicSetup } from "@codemirror/basic-setup";
+
+import CodeMirror, { EditorView, keymap } from "@uiw/react-codemirror";
+import { cpp } from "@codemirror/lang-cpp";
 
 export const TextEditor = () => {
   const codeLoadable = useRecoilValueLoadable(softwareFileState);
@@ -16,21 +15,29 @@ export const TextEditor = () => {
   );
 };
 
+const cursorTheme = EditorView.theme({});
+
 const TextEditorBody = () => {
   const { path, value, update, save } = useSoftwareEditor();
-  const editorParentRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (editorParentRef.current === null) return;
-    const state = EditorState.create({ doc: value });
-    const editorView = new EditorView({
-      state,
-      parent: editorParentRef.current,
-    });
-    return () => {
-      editorView.destroy();
-    };
-  }, [editorParentRef]);
-
-  return <div ref={editorParentRef} />;
+  return (
+    <CodeMirror
+      value={value}
+      height="100%"
+      theme="dark"
+      extensions={[
+        cpp(),
+        cursorTheme,
+        keymap.of([
+          {
+            key: "Ctrl-s",
+            run: (e) => {
+              save();
+              return true;
+            },
+          },
+        ]),
+      ]}
+      onChange={update}
+    />
+  );
 };

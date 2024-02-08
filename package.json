@@ -47,9 +47,12 @@
   },
   "dependencies": {
     "@codemirror/basic-setup": "^0.20.0",
+    "@codemirror/commands": "^6.3.3",
+    "@codemirror/gutter": "^0.19.9",
     "@codemirror/lang-cpp": "^6.0.2",
     "@mui/icons-material": "^5.15.0",
     "@types/js-yaml": "^4.0.9",
+    "@uiw/react-codemirror": "^4.21.21",
     "allotment": "^1.19.3",
     "codemirror": "^6.0.1",
     "directory-tree": "^3.5.1",

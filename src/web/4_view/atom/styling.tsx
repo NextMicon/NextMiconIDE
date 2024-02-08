@@ -24,6 +24,16 @@ export const Grid: FC<{
   </div>
 );
 
+export const cssGrid = ({ row, column }: { row?: string[]; column?: string[] }): CSSProperties => {
+  return {
+    display: "grid",
+    gridTemplateColumns: column?.join(" ") ?? "100%",
+    gridAutoColumns: undefined,
+    gridTemplateRows: row?.join(" ") ?? "100%",
+    gridAutoRows: undefined,
+  };
+};
+
 export const cssCenter: CSSProperties = { display: "flex", justifyContent: "center", alignItems: "center" };
 export const cssLeft: CSSProperties = { display: "flex", justifyContent: "left", alignItems: "center" };
 export const cssRight: CSSProperties = { display: "flex", justifyContent: "right", alignItems: "center" };
@@ -35,6 +45,19 @@ export const Center: FC<{ children: ReactNode; style?: CSSProperties }> = ({ chi
 export const Left: FC<{ children: ReactNode; style?: CSSProperties }> = ({ children, style }) => (
   <div style={{ display: "flex", justifyContent: "left", alignItems: "center", ...style }}>{children}</div>
 );
+
+export const cssFlex = ({
+  direction,
+  justify,
+  align,
+}: {
+  direction: "horizontal" | "vertical";
+  justify?: CSSProperties["justifyContent"];
+  align?: CSSProperties["alignItems"];
+}): CSSProperties => {
+  const flexDirection = (direction === "horizontal" && "row") || (direction === "vertical" && "column") || undefined;
+  return { display: "flex", flexDirection, justifyContent: justify, alignItems: align };
+};
 
 export const Flex: FC<{
   children: ReactNode;

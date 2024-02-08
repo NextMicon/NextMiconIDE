@@ -33,7 +33,6 @@ export const useOpenSoftware = () => {
 
 export const useSoftwareEditor = () => {
   const [textFile, setTextFile] = useRecoilState(softwareFileState);
-  console.log(textFile.path);
 
   const update = (text: string) => {
     setTextFile({ ...textFile, text: text });

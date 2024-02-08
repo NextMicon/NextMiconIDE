@@ -3,24 +3,22 @@ import { FC } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import "~/assets/logo.png";
 import { dialogState, routeState } from "~/web/2_route";
-import { Center, Flex, Grid, IconButton, TextButton } from "~/web/4_view/atom";
+import { Center, Flex, Grid, IconButton, TextButton, cssCenter, cssFlex, cssGrid } from "~/web/4_view/atom";
 import { projectListState, useColor } from "../../2_store";
 
 export const Home: FC = () => {
   const color = useColor();
 
   return (
-    <Center style={{ background: color.primary.dark }}>
-      <div style={{ maxWidth: "500px", maxHeight: "600px", padding: "20px" }}>
-        <Grid row={["1fr", "1fr", "3fr"]}>
-          <Center>
-            <span style={{ fontWeight: "bold", fontSize: 40, color: "white" }}>Next Micon IDE</span>
-          </Center>
+    <div style={{ ...cssCenter, height: "100%", background: color.primary.dark }}>
+      <div style={{ maxWidth: "500px", maxHeight: "600px", width: "100%", height: "100%" }}>
+        <div style={{ ...cssGrid({ row: ["1fr", "1fr", "3fr"] }) }}>
+          <div style={{ ...cssCenter, fontWeight: "bold", fontSize: 40, color: "white" }}>Next Micon IDE</div>
           <Buttons />
           <ProjectList />
-        </Grid>
+        </div>
       </div>
-    </Center>
+    </div>
   );
 };
 
@@ -34,7 +32,7 @@ const Buttons: FC = () => {
       .then((root) => (root ? setRoute({ page: "editor", project: root }) : undefined));
   };
   return (
-    <Flex direction="horizontal" justify="space-between" align="center">
+    <div style={{ ...cssFlex({ direction: "horizontal", justify: "space-between", align: "center" }) }}>
       <IconButton size={80} onClick={() => setDialog("createProject")}>
         <NoteAddOutlined />
       </IconButton>
@@ -50,7 +48,7 @@ const Buttons: FC = () => {
       <IconButton size={80} onClick={() => setDialog("board")}>
         <DeveloperBoard />
       </IconButton>
-    </Flex>
+    </div>
   );
 };
 
