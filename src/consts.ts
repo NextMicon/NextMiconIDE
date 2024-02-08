@@ -14,7 +14,7 @@ export const WIRE_WIDTH = 3;
 
 export const GRID = 20;
 
-export const URL_HELP = "https://github.com/NextMicon";
+export const URL_NEXT_MICON = "https://github.com/NextMicon";
 export const URL_PACK_REPO = "https://raw.githubusercontent.com/NextMicon/Registory/main/Package";
 export const URL_BOARD_REPO = "https://raw.githubusercontent.com/NextMicon/Registory/main/Board";
 
@@ -29,3 +29,7 @@ void loop(){
   // Code Here!
 }
 `;
+
+export const COLORS = {
+  bg: "#282c34",
+} as const;

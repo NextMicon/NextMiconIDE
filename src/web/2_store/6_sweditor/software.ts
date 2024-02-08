@@ -21,7 +21,6 @@ export const useOpenSoftware = () => {
       const text = await window.ipc.fs.read(filePath);
       const textFile: TextFile = { path: filePath, text: text, uploading: false };
       setTextFile(textFile);
-      window.log.trace("openSoftware: textFile = ", textFile);
       window.log.info("openSoftware: Done");
     } catch (e) {
       window.log.error("openSoftware: Failed");

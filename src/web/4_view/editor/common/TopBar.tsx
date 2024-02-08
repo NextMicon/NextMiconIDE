@@ -1,7 +1,7 @@
-import { ArrowRightAlt, DeviceHub, EditNote, Home, QuestionMark, Send, Settings } from "@mui/icons-material";
+import { ArrowRightAlt, DeviceHub, EditNote, Home, Language, QuestionMark, Send, Settings } from "@mui/icons-material";
 import { FC } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { URL_HELP } from "~/consts";
+import { URL_NEXT_MICON } from "~/consts";
 import { dialogState, routeState } from "~/web/2_route";
 import { modeState, projectNameState, useColor, useGenerate, useRunMake } from "~/web/2_store";
 import { Center, Grid, IconButton } from "~/web/4_view/atom";
@@ -28,8 +28,8 @@ export const TopBar: FC = () => {
           </IconButton>
         </Center>
         <Center>
-          <IconButton size={40} onClick={() => window.ipc.web.open(URL_HELP)}>
-            <QuestionMark />
+          <IconButton size={40} onClick={() => window.ipc.web.open(URL_NEXT_MICON)}>
+            <Language />
           </IconButton>
         </Center>
         <Center style={{ color: "white", fontWeight: "bold", fontSize: "20px" }}>{projectName}</Center>

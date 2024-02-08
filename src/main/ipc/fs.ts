@@ -30,7 +30,7 @@ export const fsHandler = () => {
   ipcMain.handle(IPCKeys.FS_WRITE, (_, paths: string[], text: string): void => {
     const path = join(...paths);
     const dir = dirname(path);
-    log.trace(IPCKeys.FS_WRITE, path, text);
+    log.trace(IPCKeys.FS_WRITE, path);
     if (!existsSync(dir)) mkdirSync(dir);
     try {
       return writeFileSync(join(...paths), text, { flag: "w" });

@@ -15,8 +15,6 @@ export const TextEditor = () => {
   );
 };
 
-const cursorTheme = EditorView.theme({});
-
 const TextEditorBody = () => {
   const { path, value, update, save } = useSoftwareEditor();
   return (
@@ -26,7 +24,6 @@ const TextEditorBody = () => {
       theme="dark"
       extensions={[
         cpp(),
-        cursorTheme,
         keymap.of([
           {
             key: "Ctrl-s",
