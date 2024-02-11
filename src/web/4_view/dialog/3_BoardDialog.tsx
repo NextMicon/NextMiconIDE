@@ -13,8 +13,8 @@ export const BoardDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
   const home = useRecoilValue(pathState);
   return (
     <Dialog zIndex={zIndex} close={() => setDialog(undefined)}>
-      <div style={layout.grid({ row: ["50px", "1fr"] })}>
-        <div style={{ ...layout.grid({ row: ["1fr", "50px"] }), height: "50px" }}>
+      <div style={layout.rowGrid({ row: [50, null] })}>
+        <div style={{ ...layout.rowGrid({ row: [null, 50] }), height: "50px" }}>
           <div style={{ ...layout.left, fontSize: 25, fontWeight: "bold" }}>Boards</div>
           <IconButton color={color.dialog.btn} onClick={() => setDialog(undefined)}>
             <Close />

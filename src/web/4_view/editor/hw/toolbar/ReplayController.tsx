@@ -11,7 +11,7 @@ export const ReplayController: FC<{ size: number }> = ({ size }) => {
   const color = useColor().editor.toolbar;
 
   return (
-    <div style={layout.grid({ column: [`${size}px`, `${size}px`, `${size}px`, "1fr"] })}>
+    <div style={layout.colGrid({ column: [size, size, size, null] })}>
       <Center>
         <IconButton color={color.btn} size={size - 10} onClick={() => setTick(tick - 1)}>
           <NavigateBefore />

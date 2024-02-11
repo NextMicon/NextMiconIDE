@@ -138,15 +138,15 @@ export const colorThemes: Record<ColorName, ColorTheme> = {
           port: { _: C.white, hov: C.sakura.light },
           obj: {
             _: {
-              border: C.sakura.mid,
-              fill: C.sakura.dark,
+              border: C.sakura.dark,
+              fill: C.sakura.mid,
               text: getTextColor(C.sakura.dark),
               port_bg: C.gray.light,
               port_icon: C.sakura.dark,
             },
             hov: {
-              border: C.sakura.light,
-              fill: C.sakura.mid,
+              border: C.sakura.dark,
+              fill: C.sakura.dark,
               text: getTextColor(C.sakura.mid),
               port_bg: C.gray.light,
               port_icon: C.sakura.dark,
@@ -159,11 +159,11 @@ export const colorThemes: Record<ColorName, ColorTheme> = {
         },
         pane: {
           _: { bg: C.navy.dark, icon: C.white, text: C.white },
-          headder: { _: { bg: C.navy.dark, icon: C.white, text: C.white } },
+          headder: { _: { bg: C.navy.dark, icon: C.sakura.dark, text: C.white } },
           item: {
             _: { bg: C.navy.dark, icon: C.white, text: C.white },
-            sel: { bg: C.sakura.dark, icon: C.white, text: C.white },
-            hov: { bg: C.sakura.light, icon: C.white, text: C.white },
+            sel: { bg: C.sakura.dark, icon: C.white, text: C.black },
+            hov: { bg: C.sakura.light, icon: C.white, text: C.black },
             btn: {
               _: { bg: C.sakura.light, icon: C.sakura.dark, text: C.black },
               hov: { bg: C.white, icon: C.sakura.dark, text: C.black },

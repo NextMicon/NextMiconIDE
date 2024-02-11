@@ -17,7 +17,7 @@ export const PortComponent: FC<{ port: Port }> = ({ port }) => {
   return (
     <g onClick={onClick} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={{ cursor: "pointer" }}>
       {/* 表示 */}
-      <circle cx={x} cy={y} r={hover ? 9 : 3} fill={color._.fill} />
+      <circle cx={x} cy={y} r={hover ? 9 : 3} fill={color._.border} />
       {/* 当たり判定 */}
       <circle cx={x} cy={y} r={9} fillOpacity={0} />
     </g>

@@ -21,13 +21,13 @@ export const CreateProjectDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
 
   return (
     <Dialog zIndex={zIndex} close={() => setDialog(undefined)}>
-      <div style={{ ...layout.grid({ column: ["1fr", "50px"] }), height: "50px" }}>
+      <div style={{ ...layout.colGrid({ column: ["1fr", "50px"] }), height: "50px" }}>
         <div style={{ ...layout.left, fontSize: 25, fontWeight: "bold" }}>Create Project</div>
         <IconButton color={color.dialog.btn} onClick={() => setDialog(undefined)}>
           <Close />
         </IconButton>
       </div>
-      <div style={{ ...layout.grid({ column: ["100px", "200px"] }) }}>
+      <div style={{ ...layout.colGrid({ column: ["100px", "200px"] }) }}>
         <>
           <div style={{ ...layout.left }}>Board</div>
           <div>

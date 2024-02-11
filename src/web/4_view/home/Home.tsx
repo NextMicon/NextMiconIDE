@@ -10,7 +10,7 @@ export const Home: FC = () => {
   return (
     <div style={{ ...layout.center, height: "100%", background: color.home._.bg, color: color.home._.text }}>
       <div style={{ maxWidth: "500px", maxHeight: "600px", width: "100%", height: "100%" }}>
-        <div style={{ ...layout.grid({ row: ["1fr", "1fr", "3fr"] }) }}>
+        <div style={{ ...layout.rowGrid({ row: ["1fr", "1fr", "3fr"], column: "100%" }) }}>
           <div style={{ ...layout.center, fontWeight: "bold", fontSize: 40 }}>Next Micon IDE</div>
           <Buttons />
           <ProjectList />

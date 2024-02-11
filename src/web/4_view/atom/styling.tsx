@@ -10,6 +10,12 @@ const gridTemplate = (arr: (string | number | null)[]): string => {
     .join(" ");
 };
 
+const gridAuto = (e?: string | number) => {
+  if (typeof e === "string") return e;
+  if (typeof e === "number") return `${e}px`;
+  return "100%";
+};
+
 export const layout = {
   flex: ({
     direction,
@@ -27,13 +33,27 @@ export const layout = {
   left: { display: "flex", justifyContent: "left", alignItems: "center" } as CSSProperties,
   right: { display: "flex", justifyContent: "left", alignItems: "center" } as CSSProperties,
 
-  grid: ({ row, column }: { row?: (string | number | null)[]; column?: (string | number | null)[] }): CSSProperties => ({
-    display: "grid",
-    gridTemplateColumns: column ? gridTemplate(column) : "100%",
-    gridAutoColumns: undefined,
-    gridTemplateRows: row ? gridTemplate(row) : "100%",
-    gridAutoRows: undefined,
-  }),
+  grid: ({ row, column }: { row: (string | number | null)[]; column: (string | number | null)[] }): CSSProperties => {
+    return {
+      display: "grid",
+      gridTemplateColumns: gridTemplate(column),
+      gridTemplateRows: gridTemplate(row),
+    };
+  },
+  colGrid: ({ column, row }: { column: (string | number | null)[]; row?: string | number }): CSSProperties => {
+    return {
+      display: "grid",
+      gridTemplateColumns: gridTemplate(column),
+      gridAutoRows: gridAuto(row),
+    };
+  },
+  rowGrid: ({ row, column }: { row: (string | number | null)[]; column?: string | number }): CSSProperties => {
+    return {
+      display: "grid",
+      gridTemplateRows: gridTemplate(row),
+      gridAutoColumns: gridAuto(column),
+    };
+  },
 };
 
 export const Left: FC<{ children?: ReactNode }> = ({ children }) => <div style={layout.left}>{children}</div>;

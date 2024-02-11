@@ -9,7 +9,7 @@ export const PackagePane: FC<{ style?: CSSProperties }> = ({ style }) => {
   const [keyword, setKeyword] = useState("");
   const color = useColor().editor.hw.pane;
   return (
-    <div style={{ ...layout.grid({ row: ["48px", "1fr"] }), background: color._.bg, userSelect: "none", ...style }}>
+    <div style={{ ...layout.rowGrid({ row: ["48px", "1fr"] }), background: color._.bg, userSelect: "none", ...style }}>
       <SearchBox
         text={keyword}
         setText={setKeyword}
@@ -43,11 +43,17 @@ const PackageList = () => {
 };
 
 const Package: FC<{ pack: PackKey }> = ({ pack }) => {
+  // Global State
   const color = useColor().editor.hw.pane.item;
   const [fsm, setState] = useRecoilState(hwEditorFSM);
-  const selected = fsm.state === "AddInstance" && packEq(fsm.value.pack, pack);
-  const [hover, setHover] = useState(false);
   const getNewName = useGetNewInstanceName();
+
+  // Local State
+  const [hover, setHover] = useState(false);
+
+  // Calculate
+  const selected = fsm.state === "AddInstance" && packEq(fsm.value.pack, pack);
+  const _color = selected ? color.sel : hover ? color.hov : color._;
 
   // TODO: this is random value
   const ready = pack.name.includes("O");
@@ -55,16 +61,17 @@ const Package: FC<{ pack: PackKey }> = ({ pack }) => {
   return (
     <div
       style={{
-        height: "30px",
-        // background: selected ? color.hw_list.item.selected : hover ? color.hw_list.item.hover : color.hw_list.item.normal,
+        ...layout.colGrid({ column: [20, null, 50, 30, 30], row: 30 }),
+        height: "auto",
+        background: _color.bg,
+        color: _color.text,
         cursor: "pointer",
         display: "grid",
-        gridTemplateColumns: "20px 1fr 50px 30px 30px",
       }}
     >
       <div></div>
       <div
-        style={{ height: "100%", display: "flex", alignItems: "center" }}
+        style={{ display: "flex", alignItems: "center" }}
         onClick={() => {
           setState({ state: "AddInstance", value: { pack, name: getNewName(pack.name.toLocaleLowerCase()) } });
         }}

@@ -9,7 +9,7 @@ export const ButtonBar = () => {
   const { undo, redo, save, flip, del } = useButtonAction();
   const [infoPane, setInfoPane] = useRecoilState(paneState);
   return (
-    <div style={{ ...layout.grid({ row: [50, 50, 50, 50, 50, 50, 50, 50] }), width: 50, background: color._.bg }}>
+    <div style={{ ...layout.rowGrid({ row: [50, 50, 50, 50, 50, 50, 50, 50], column: 50 }), width: 50, background: color._.bg }}>
       <div style={layout.center}>
         <IconButton color={color.btn} size={40} onClick={() => setInfoPane({ type: "info" })}>
           <InfoOutlined />
@@ -58,7 +58,7 @@ export const PaneTabBar = () => {
   const color = useColor().editor.hw.toolbar;
   const [infoPane, setInfoPane] = useRecoilState(paneState);
   return (
-    <div style={{ ...layout.grid({ row: [50, 50, 50] }), width: 50, background: color._.bg }}>
+    <div style={{ ...layout.rowGrid({ row: [50, 50, 50], column: 50 }), background: color._.bg }}>
       <div style={layout.center}>
         <IconButton color={color.btn} size={40} onClick={() => setInfoPane({ type: "info" })}>
           <InfoOutlined />
@@ -82,7 +82,7 @@ export const EditorToolBar = () => {
   const color = useColor().editor.hw.toolbar;
   const { undo, redo, save, flip, del } = useButtonAction();
   return (
-    <div style={{ ...layout.grid({ row: [50, 50, 50, 50, 50] }), width: 50, background: color._.bg }}>
+    <div style={{ ...layout.rowGrid({ row: [50, 50, 50, 50, 50], column: 50 }), background: color._.bg }}>
       <div style={layout.center}>
         <IconButton color={color.btn} size={40} onClick={() => undo()}>
           <Undo />

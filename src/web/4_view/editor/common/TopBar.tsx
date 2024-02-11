@@ -18,7 +18,7 @@ export const TopBar: FC = () => {
     <>
       <div
         style={{
-          ...layout.grid({ column: ["50px", "50px", "50px", "1fr", "50px", "50px", "50px", "50px"] }),
+          ...layout.colGrid({ column: [50, 50, 50, null, 50, 50, 50, 50] }),
           background: color.editor.toolbar._.bg,
           color: color.editor.toolbar._.text,
         }}

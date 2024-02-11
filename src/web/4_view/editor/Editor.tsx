@@ -19,8 +19,8 @@ export const Editor: FC<{ projectPath: string[] }> = ({ projectPath }) => {
 
   return (
     <>
-      {loading.state === "loading" && <div>{`Loading project: ${projectPath} `}</div>}
-      {loading.state === "hasError" && <div>{`Failed to open project: ${projectPath}`}</div>}
+      {loading.state === "loading" && <div>{`Loading project: ${projectPath.join("/").replaceAll("///", "/")} `}</div>}
+      {loading.state === "hasError" && <div>{`Failed to open project: ${projectPath.join("/").replaceAll("///", "/")}`}</div>}
       {loading.state === "hasValue" && <EditorLoadded />}
     </>
   );
@@ -46,7 +46,7 @@ const EditorLoadded = () => {
   }, [keyboardEventHandler]);
 
   return (
-    <div style={{ height: "100%", ...layout.grid({ row: ["50px", "1fr", "20px"] }) }}>
+    <div style={{ height: "100%", ...layout.rowGrid({ row: ["50px", "1fr", "20px"] }) }}>
       <TopBar />
       {mode === "hardware" && <HWEditor />}
       {mode === "software" && <SWeditor />}

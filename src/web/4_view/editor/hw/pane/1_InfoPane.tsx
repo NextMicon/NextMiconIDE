@@ -2,7 +2,6 @@ import {
   Apps,
   ArrowRightAlt,
   Check,
-  Close,
   CommitSharp,
   DeveloperBoard,
   KeyboardArrowDown,
@@ -42,13 +41,16 @@ export const InfoPane: FC = () => {
 
 const BoardInfo: FC = () => {
   // Global State
+  const color = useColor().editor.hw.pane;
   const proj = useRecoilValue(projectState);
   const board = useRecoilValue(boardState);
-  const color = useColor().editor.hw.pane;
+
+  // Local State
   const [detail, setDetail] = useState(false);
+
   return (
     <>
-      <div style={{ ...layout.grid({ column: [20, null, null, 30] }), height: 30, cursor: "pointer" }}>
+      <div style={{ ...layout.colGrid({ column: [20, null, null, 30], row: 30 }), height: 30, cursor: "pointer" }}>
         <div></div>
         <Left>{proj.board.name}</Left>
         <Left>{proj.board.version}</Left>
@@ -87,54 +89,48 @@ const InstanceListItem: FC<{ instance: Instance }> = ({ instance }) => {
   const [newName, setNewName] = useState(instance.name);
 
   // Calculate
-  const _color = selected ? color.sel : hover ? color.sel : color._;
+  const _color = selected ? color.sel : hover ? color.hov : color._;
   const submitRename = () => {
     if (newName !== instance.name) rename(newName);
   };
 
   return (
-    <>
-      <div
-        style={{
-          ...layout.grid({ column: [20, null, null, 30] }),
-          height: 30,
-          cursor: "pointer",
-          background: _color.bg,
-          color: _color.text,
-        }}
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-        onClick={(e) => (e.ctrlKey ? append() : select())}
-      >
-        <div></div>
-        <Left>{instance.pack.name}</Left>
-        <Left>{instance.name}</Left>
-        <IconButton color={color.btn} style={{ margin: "2px" }} onClick={() => setDetail(!detail)}>
-          {detail ? <KeyboardArrowDown /> : <KeyboardArrowLeft />}
-        </IconButton>
-      </div>
+    <div
+      style={{
+        ...layout.colGrid({ column: [20, null, null, 30], row: 30 }),
+        cursor: "pointer",
+        background: _color.bg,
+        color: _color.text,
+      }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      onClick={(e) => (e.ctrlKey ? append() : select())}
+    >
+      <div></div>
+      <Left>{instance.pack.name}</Left>
+      <Left>{instance.name}</Left>
+      <IconButton color={color.btn} style={{ margin: "2px" }} onClick={() => setDetail(!detail)}>
+        {detail ? <KeyboardArrowDown /> : <KeyboardArrowLeft />}
+      </IconButton>
       {detail && (
-        <div style={{ height: "auto" }}>
-          <div style={{ ...layout.grid({ column: ["40px", "1fr", "1fr", "30px"] }), height: "30px" }}>
-            <div></div>
-            <Left>{"name"}</Left>
-            <input
-              style={{ display: "block", width: "100%", height: "100%" }}
-              onChange={(e) => setNewName(e.target.value)}
-              value={newName}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  submitRename();
-                }
-              }}
-            />
-            <IconButton color={color.btn} style={{ margin: "2px" }} onClick={submitRename}>
-              <Check />
-            </IconButton>
-          </div>
-        </div>
+        <>
+          <div></div>
+          <div></div>
+          <input
+            onChange={(e) => setNewName(e.target.value)}
+            value={newName}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                submitRename();
+              }
+            }}
+          />
+          <IconButton color={color.btn} style={{ margin: "2px" }} onClick={submitRename}>
+            <Check />
+          </IconButton>
+        </>
       )}
-    </>
+    </div>
   );
 };
 
@@ -151,8 +147,8 @@ const IoportList: FC = () => {
 
 const IoportListItem: FC<{ ioport: Ioport }> = ({ ioport }) => {
   // Global State
-  const color = useColor().editor.hw.pane.item;
   const { selected, append, select, rename } = useIoport(ioport);
+  const color = useColor().editor.hw.pane.item;
   const avalable = useAvailableIoports()(ioport.pack.type);
 
   // Local State
@@ -161,7 +157,7 @@ const IoportListItem: FC<{ ioport: Ioport }> = ({ ioport }) => {
   const [newName, setNewName] = useState(ioport.name);
 
   // Calculate
-  // const background = selected ? color.hw_list.item.selected : hover ? color.hw_list.item.hover : color.hw_list.item.normal;
+  const _color = selected ? color.sel : hover ? color.hov : color._;
   const submitRename = () => {
     if (newName !== ioport.name) rename(newName);
   };
@@ -169,7 +165,12 @@ const IoportListItem: FC<{ ioport: Ioport }> = ({ ioport }) => {
   return (
     <>
       <div
-        style={{ ...layout.grid({ column: ["20px", "1fr", "1fr", "30px"] }), height: "30px", cursor: "pointer" }}
+        style={{
+          ...layout.colGrid({ column: [20, null, null, 30], row: 30 }),
+          cursor: "pointer",
+          background: _color.bg,
+          color: _color.text,
+        }}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         onClick={(e) => (e.ctrlKey ? append() : select())}
@@ -180,80 +181,27 @@ const IoportListItem: FC<{ ioport: Ioport }> = ({ ioport }) => {
         <IconButton color={color.btn} style={{ margin: "2px" }} onClick={() => setDetail(!detail)}>
           {detail ? <KeyboardArrowDown /> : <KeyboardArrowLeft />}
         </IconButton>
+        {detail && (
+          <>
+            <div> </div>
+            <div></div>
+            <select onChange={(e) => setNewName(e.target.value)}>
+              {avalable.map((s) => (
+                <option key={s}>{s}</option>
+              ))}
+            </select>
+            <IconButton color={color.btn} style={{ margin: "2px" }} onClick={submitRename}>
+              <Check />
+            </IconButton>
+          </>
+        )}
       </div>
-      {detail && (
-        <div style={{ ...layout.grid({ column: ["40px", "1fr", "1fr"] }), height: "30px" }}>
-          <div></div>
-          <Left>{"name"}</Left>
-          <select
-            onChange={(e) => {
-              // if (e.target.value!==) {
-              // }
-            }}
-          ></select>
-          {/* <input style={{ display: "block", width: "100%", height: "100%" }} onChange={(e) => setNewName(e.target.value)} value={newName} /> */}
-        </div>
-      )}
     </>
-  );
-};
-
-const EdditableText: FC<{ text: string; onChange: (text: string) => void }> = ({ text, onChange }) => {
-  const color = useColor().editor.hw.pane.item;
-  const [editing, setEditing] = useState(false);
-  const [newText, setNewText] = useState(text);
-  return editing ? (
-    <div style={layout.grid({ column: ["1fr", "30px", "30px"] })}>
-      <input type={"text"} value={newText} onChange={(e) => setNewText(e.target.value)}></input>
-      <IconButton
-        color={color.btn}
-        style={{ margin: "2px" }}
-        onClick={() => {
-          onChange(newText);
-          setEditing(false);
-        }}
-      >
-        <Check />
-      </IconButton>
-      <IconButton color={color.btn} style={{ margin: "2px" }} onClick={() => setEditing(false)}>
-        <Close />
-      </IconButton>
-    </div>
-  ) : (
-    <div style={layout.left} onClick={() => setEditing(true)}>
-      {text}
-    </div>
-  );
-};
-
-const SellectableText: FC<{ text: string; options: string[]; onChange: (text: string) => void }> = ({ text, options, onChange }) => {
-  const [editing, setEditing] = useState(false);
-  const [newText, setNewText] = useState(text);
-  return editing ? (
-    <div>
-      <select onChange={(e) => setNewText(e.target.value)}>
-        {options.map((s, i) => (
-          <option key={i}>{s}</option>
-        ))}
-      </select>
-      <button
-        onClick={() => {
-          onChange(newText);
-          setEditing(false);
-        }}
-      >
-        Rename
-      </button>
-      <button onClick={() => setEditing(false)}>Cancel</button>
-    </div>
-  ) : (
-    <div onClick={() => setEditing(true)}>{text}</div>
   );
 };
 
 const WireList: FC = () => {
   const wires = useRecoilValue(wiresResolvedState);
-
   return (
     <>
       {wires.map((wire) => (
@@ -266,22 +214,21 @@ const WireList: FC = () => {
 const WireListItem: FC<{ wire: Wire }> = ({ wire }) => {
   // Global State
   const color = useColor().editor.hw.pane.item;
-
   const { selected, append, select } = useWire(wire);
 
   // Local State
   const [hover, setHover] = useState(false);
 
   // Calculate
-  // const background = selected ? color.hw_list.item.selected : hover ? color.hw_list.item.hover : color.hw_list.item.normal;
+  const _color = selected ? color.sel : hover ? color.hov : color._;
 
   return (
     <div
       style={{
-        ...layout.grid({ column: ["20px", "2fr", "20px", "40px", "2fr"] }),
-        height: "30px",
+        ...layout.colGrid({ column: [20, "2fr", 20, 40, "2fr"], row: 30 }),
+        background: _color.bg,
+        color: _color.text,
         cursor: "pointer",
-        // background,
         whiteSpace: "nowrap",
       }}
       onMouseEnter={() => setHover(true)}

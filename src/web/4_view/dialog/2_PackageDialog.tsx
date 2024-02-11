@@ -28,8 +28,8 @@ export const PackageDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
   console.table(merged);
   return (
     <Dialog zIndex={zIndex} close={() => setDialog(undefined)}>
-      <div style={layout.grid({ row: ["50px", "1fr"] })}>
-        <div style={layout.grid({ row: ["1fr", "50px"] })}>
+      <div style={layout.rowGrid({ row: ["50px", "1fr"] })}>
+        <div style={layout.rowGrid({ row: ["1fr", "50px"] })}>
           <div style={{ ...layout.left, fontSize: 25, fontWeight: "bold" }}>Package</div>
           <IconButton color={color.dialog.btn} onClick={() => setDialog(undefined)}>
             <Close />

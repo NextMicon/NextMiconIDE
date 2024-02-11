@@ -59,7 +59,7 @@ const MessageItem: FC<{ message: Message }> = ({ message }) => {
       onClick={() => setWidth(!width)}
       onDoubleClick={() => deleteMessage(message.id)}
     >
-      <div style={{ ...layout.grid({ column: ["1fr", "50px"] }), height: "50px" }}>
+      <div style={{ ...layout.colGrid({ column: [null, 50] }), height: "50px" }}>
         <div style={layout.center}>
           <span style={{ fontSize: 20, fontWeight: "bold", height: "auto" }}> {message.title}</span>
         </div>

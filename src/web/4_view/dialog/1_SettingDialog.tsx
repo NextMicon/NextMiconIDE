@@ -14,7 +14,7 @@ export const SettingDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
 
   return (
     <Dialog zIndex={zIndex} close={() => setDialog(undefined)}>
-      <div style={{ ...layout.grid({ column: ["1fr", "50px"] }), height: "50px" }}>
+      <div style={{ ...layout.colGrid({ column: ["1fr", "50px"] }), height: "50px" }}>
         <div style={{ ...layout.left, fontSize: 25, fontWeight: "bold" }}>Settings</div>
         <IconButton color={color.dialog.btn} onClick={() => setDialog(undefined)}>
           <Close />
@@ -22,7 +22,6 @@ export const SettingDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
       </div>
       <div
         style={{
-          height: "auto",
           display: "grid",
           gridTemplateColumns: "150px 200px",
         }}

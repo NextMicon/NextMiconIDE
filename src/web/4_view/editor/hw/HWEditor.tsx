@@ -22,23 +22,21 @@ export const HWEditor = () => {
   const color = useColor();
 
   return (
-    <Allotment onChange={setSizes} defaultSizes={sizes}>
-      <Allotment.Pane preferredSize={400} minSize={50}>
-        <div style={{ ...layout.grid({ column: [50, null] }), background: color.editor.hw.pane._.bg }}>
-          <PaneTabBar />
+    <div style={{ ...layout.colGrid({ column: [50, null, 50] }), background: color.editor.hw.graph.canvas.bg }}>
+      <PaneTabBar />
+      <Allotment onChange={setSizes} defaultSizes={sizes}>
+        <Allotment.Pane preferredSize={400} minSize={50}>
           <div style={{ overflow: "scroll" }}>
             {pane.type === "info" && <InfoPane />}
             {pane.type === "pack" && <PackagePane />}
             {pane.type === "ioport" && <IoportPane />}
           </div>
-        </div>
-      </Allotment.Pane>
-      <Allotment.Pane minSize={50}>
-        <div style={{ ...layout.grid({ column: [null, 50] }), background: color.editor.hw.graph.canvas.bg }}>
+        </Allotment.Pane>
+        <Allotment.Pane minSize={50}>
           <MiconEditor />
-          <EditorToolBar />
-        </div>
-      </Allotment.Pane>
-    </Allotment>
+        </Allotment.Pane>
+      </Allotment>
+      <EditorToolBar />
+    </div>
   );
 };
