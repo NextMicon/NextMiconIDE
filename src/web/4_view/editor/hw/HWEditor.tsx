@@ -4,9 +4,8 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { hweditorSizesState, paneState, useColor } from "~/web/2_store";
 import { useHWEditorFacade } from "~/web/3_facade";
 import { MiconEditor } from "./graph/MiconEditor";
-import { ReplayController } from "./toolbar/ReplayController";
 import { layout } from "../../atom";
-import { ToolBar } from "./toolbar/ToolBar";
+import { EditorToolBar, PaneTabBar } from "./toolbar/ButtonBar";
 import { InfoPane } from "./pane/1_InfoPane";
 import { PackagePane } from "./pane/2_PackagePane";
 import { IoportPane } from "./pane/3_IoportPane";
@@ -25,8 +24,8 @@ export const HWEditor = () => {
   return (
     <Allotment onChange={setSizes} defaultSizes={sizes}>
       <Allotment.Pane preferredSize={400} minSize={50}>
-        <div style={{ ...layout.grid({ column: ["50px", "1fr"] }), background: color.editor.hw.pane._.bg }}>
-          <ToolBar />
+        <div style={{ ...layout.grid({ column: [50, null] }), background: color.editor.hw.pane._.bg }}>
+          <PaneTabBar />
           <div style={{ overflow: "scroll" }}>
             {pane.type === "info" && <InfoPane />}
             {pane.type === "pack" && <PackagePane />}
@@ -34,10 +33,10 @@ export const HWEditor = () => {
           </div>
         </div>
       </Allotment.Pane>
-      <Allotment.Pane>
-        <div>
+      <Allotment.Pane minSize={50}>
+        <div style={{ ...layout.grid({ column: [null, 50] }), background: color.editor.hw.graph.canvas.bg }}>
           <MiconEditor />
-          {/* <ReplayController size={40} /> */}
+          <EditorToolBar />
         </div>
       </Allotment.Pane>
     </Allotment>

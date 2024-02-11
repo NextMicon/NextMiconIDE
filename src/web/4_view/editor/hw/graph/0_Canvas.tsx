@@ -21,6 +21,7 @@ export const Canvas: FC<{
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entry) => {
       setContainerSize([entry[0].contentRect.width, entry[0].contentRect.height]);
+      console.log("resize!");
     });
     if (containerRef.current) resizeObserver.observe(containerRef.current);
     return () => resizeObserver.disconnect();
