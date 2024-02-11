@@ -62,6 +62,7 @@ export interface ColorTheme {
       };
       list: {
         _: { bg: string };
+        headder: { _: { bg: string; icon: string; text: string } };
         item: {
           _: { bg: string; text: string; icon: string };
           btn: { _: { bg: string; icon: string; text: string }; hov: { bg: string; icon: string; text: string } };
@@ -95,11 +96,6 @@ export const defaultColorName: ColorName = "dark_sakura";
 // Collor pallete
 
 const C = {
-  // Placeholder
-  GREEN: "#00FF00",
-  RED: "#FF0000",
-  BLUE: "#0000FF",
-
   black: "#000",
   gray: { dark: "#333", middark: "#666", midlight: "#999", light: "#CCC" },
   white: "#FFF",
@@ -122,19 +118,18 @@ export const colorThemes: Record<ColorName, ColorTheme> = {
   dark_sakura: {
     home: {
       _: { bg: C.sakura.dark, text: C.white },
-      btn: { _: { bg: C.white, icon: C.sakura.dark, text: C.black }, hov: { bg: C.sakura.light, icon: C.sakura.dark, text: C.black } },
+      btn: { _: { bg: C.sakura.light, icon: C.sakura.dark, text: C.black }, hov: { bg: C.white, icon: C.sakura.dark, text: C.black } },
     },
     dialog: {
       _: { bg: C.sakura.dark, text: C.white },
-      btn: { _: { bg: C.RED, icon: C.BLUE, text: C.GREEN }, hov: { bg: C.BLUE, icon: C.RED, text: C.RED } },
+      btn: { _: { bg: C.sakura.light, icon: C.sakura.dark, text: C.black }, hov: { bg: C.white, icon: C.sakura.dark, text: C.black } },
       msg: { error: C.red, warn: C.yellow, info: C.blue, sucsess: C.green },
     },
     editor: {
       toolbar: {
         _: { bg: C.sakura.dark, text: C.white },
-        btn: { _: { bg: C.white, icon: C.sakura.dark, text: C.black }, hov: { bg: C.sakura.light, icon: C.sakura.dark, text: C.black } },
+        btn: { _: { bg: C.sakura.light, icon: C.sakura.dark, text: C.black }, hov: { bg: C.white, icon: C.sakura.dark, text: C.black } },
       },
-
       hw: {
         graph: {
           canvas: { bg: C.navy.dark, grid: C.gray.midlight },
@@ -160,18 +155,19 @@ export const colorThemes: Record<ColorName, ColorTheme> = {
         },
         sidebar: {
           _: { bg: C.sakura.mid, text: C.white },
-          btn: { _: { bg: C.white, icon: C.sakura.dark, text: C.black }, hov: { bg: C.sakura.light, icon: C.sakura.dark, text: C.black } },
+          btn: { _: { bg: C.sakura.light, icon: C.sakura.dark, text: C.black }, hov: { bg: C.white, icon: C.sakura.dark, text: C.black } },
         },
         list: {
-          _: { bg: C.GREEN },
+          _: { bg: C.navy.dark },
+          headder: { _: { bg: C.navy.dark, icon: C.white, text: C.white } },
           item: {
-            _: { bg: C.RED, icon: C.BLUE, text: C.GREEN },
+            _: { bg: C.navy.dark, icon: C.white, text: C.white },
+            sel: { bg: C.sakura.dark, icon: C.white, text: C.white },
+            hov: { bg: C.sakura.light, icon: C.white, text: C.white },
             btn: {
-              _: { bg: C.white, icon: C.sakura.dark, text: C.black },
-              hov: { bg: C.sakura.light, icon: C.sakura.dark, text: C.black },
+              _: { bg: C.sakura.light, icon: C.sakura.dark, text: C.black },
+              hov: { bg: C.white, icon: C.sakura.dark, text: C.black },
             },
-            sel: { bg: C.RED, icon: C.BLUE, text: C.GREEN },
-            hov: { bg: C.RED, icon: C.BLUE, text: C.GREEN },
           },
         },
       },
@@ -181,7 +177,7 @@ export const colorThemes: Record<ColorName, ColorTheme> = {
           _: { bg: C.navy.dark },
           inst: {
             _: { bg: C.navy.dark, text: C.white, icon: C.white },
-            hov: { bg: C.sakura.mid, text: C.white, icon: C.white },
+            hov: { bg: C.sakura.dark, text: C.white, icon: C.white },
           },
           func: {
             _: {
@@ -194,7 +190,7 @@ export const colorThemes: Record<ColorName, ColorTheme> = {
               varname: "#9cdcfe",
             },
             hov: {
-              bg: C.sakura.mid,
+              bg: C.sakura.dark,
               text: C.white,
               comment: "#6a9955",
               embtype: "#569cd6",

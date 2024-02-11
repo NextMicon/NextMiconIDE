@@ -16,8 +16,8 @@ export const SidePane = () => {
         <TabButton />
         <div style={{ overflow: "scroll" }}>
           {pane.type === "info" && <InfoPane />}
-          {/* {pane.type === "pack" && <PackagePane />} */}
-          {/* {pane.type === "ioport" && <IoportPane />} */}
+          {pane.type === "pack" && <PackagePane />}
+          {pane.type === "ioport" && <IoportPane />}
         </div>
       </div>
     </div>

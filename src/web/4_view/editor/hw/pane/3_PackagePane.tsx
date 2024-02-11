@@ -7,15 +7,15 @@ import { IconButton, SearchBox, TextButton, layout } from "~/web/4_view/atom";
 
 export const PackagePane: FC<{ style?: CSSProperties }> = ({ style }) => {
   const [keyword, setKeyword] = useState("");
-  const color = useColor();
+  const color = useColor().editor.hw.list;
   return (
-    <div style={{ ...layout.grid({ row: ["48px", "1fr"] }), background: color.hw_list.bg, userSelect: "none", ...style }}>
+    <div style={{ ...layout.grid({ row: ["48px", "1fr"] }), background: color._.bg, userSelect: "none", ...style }}>
       <SearchBox
         text={keyword}
         setText={setKeyword}
         // TODO
         onSubmit={() => console.warn("Search Package:", keyword)}
-        iconColor={color.toolbar.icon}
+        iconColor={color._.bg}
         inputColor={"white"}
       />
       <PackageList />
@@ -43,7 +43,7 @@ const PackageList = () => {
 };
 
 const Package: FC<{ pack: PackKey }> = ({ pack }) => {
-  const color = useColor().editor.hw.list;
+  const color = useColor().editor.hw.list.item;
   const [fsm, setState] = useRecoilState(hwEditorFSM);
   const selected = fsm.state === "AddInstance" && packEq(fsm.value.pack, pack);
   const [hover, setHover] = useState(false);
@@ -73,9 +73,13 @@ const Package: FC<{ pack: PackKey }> = ({ pack }) => {
       >
         {pack.name}
       </div>
-      <TextButton style={{ margin: "5px 2px", ...layout.center }}>v0.0</TextButton>
-      <IconButton style={{ margin: "2px" }}>{ready ? <Check /> : <ArrowDownward />}</IconButton>
-      <IconButton style={{ margin: "2px" }} onClick={() => window.ipc.web.open("https://example.com")}>
+      <TextButton color={color.btn} style={{ margin: "5px 2px", ...layout.center }}>
+        v0.0
+      </TextButton>
+      <IconButton color={color.btn} style={{ margin: "2px" }}>
+        {ready ? <Check /> : <ArrowDownward />}
+      </IconButton>
+      <IconButton color={color.btn} style={{ margin: "2px" }} onClick={() => window.ipc.web.open("https://example.com")}>
         <QuestionMark />
       </IconButton>
     </div>

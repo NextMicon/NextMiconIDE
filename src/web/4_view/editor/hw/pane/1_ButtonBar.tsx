@@ -48,7 +48,7 @@ export const TabButton = () => {
   const color = useColor();
   const [infoPane, setInfoPane] = useRecoilState(paneState);
   return (
-    <div style={{ ...layout.grid({ column: ["50px", "50px", "50px"] }), height: "50px", background: color.editor.hw.list.bg }}>
+    <div style={{ ...layout.grid({ column: ["50px", "50px", "50px"] }), height: "50px", background: color.editor.hw.list._.bg }}>
       <div style={layout.center}>
         <IconButton color={color.editor.hw.sidebar.btn} size={40} onClick={() => setInfoPane({ type: "info" })}>
           <InfoOutlined />

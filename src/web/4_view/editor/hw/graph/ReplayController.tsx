@@ -8,34 +8,33 @@ import { Center, IconButton, layout } from "~/web/4_view/atom";
 
 export const ReplayController: FC<{ size: number }> = ({ size }) => {
   const [tick, setTick] = useRecoilState(playTick);
-  const color = useColor();
+  const color = useColor().editor.toolbar;
 
   return (
     <div style={layout.grid({ column: [`${size}px`, `${size}px`, `${size}px`, "1fr"] })}>
       <Center>
-        <IconButton size={size - 10} onClick={() => setTick(tick - 1)}>
+        <IconButton color={color.btn} size={size - 10} onClick={() => setTick(tick - 1)}>
           <NavigateBefore />
         </IconButton>
       </Center>
       <Center>
-        <IconButton size={size - 10}>
+        <IconButton color={color.btn} size={size - 10}>
           <PlayArrow />
         </IconButton>
       </Center>
       <Center>
-        <IconButton size={size - 10} onClick={() => setTick(tick + 1)}>
+        <IconButton color={color.btn} size={size - 10} onClick={() => setTick(tick + 1)}>
           <NavigateNext />
         </IconButton>
       </Center>
-      <div style={{ padding: "5px", background: color.toolbar.bg }}>
-        <Seekbar pos={tick} />
+      <div style={{ padding: "5px", background: color._.bg }}>
+        <Seekbar color={color._.bg} pos={tick} />
       </div>
     </div>
   );
 };
 
-const Seekbar: FC<{ pos: number }> = ({ pos }) => {
-  const color = useColor();
+const Seekbar: FC<{ color: string; pos: number }> = ({ color, pos }) => {
   const [tick, setTick] = useRecoilState(playTick);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -55,7 +54,7 @@ const Seekbar: FC<{ pos: number }> = ({ pos }) => {
   return (
     <div
       ref={containerRef}
-      style={{ overflow: "hidden", cursor: "pointer", background: color.toolbar.bg }}
+      style={{ overflow: "hidden", cursor: "pointer", background: color }}
       onClick={(e) => {
         const xo = containerRef.current?.getBoundingClientRect().left;
         if (xo) {
@@ -73,7 +72,7 @@ const Seekbar: FC<{ pos: number }> = ({ pos }) => {
           left: pos - seekRange / 2,
           width: `${seekRange}px`,
           height: "100%",
-          background: color.toolbar.bg,
+          background: color,
         }}
       ></div>
     </div>

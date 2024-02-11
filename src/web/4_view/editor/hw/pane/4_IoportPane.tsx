@@ -1,3 +1,4 @@
+import test from "node:test";
 import { CSSProperties, FC, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { boardState, hwEditorFSM, useAvailableIoports, useColor } from "~/web/2_store";
@@ -10,7 +11,6 @@ export const IoportPane: FC<{ style?: CSSProperties }> = ({ style }) => {
   return (
     <div
       style={{
-        background: color.hw_list.bg,
         overflowY: "scroll",
         ...style,
       }}
@@ -27,15 +27,19 @@ export const IoportPane: FC<{ style?: CSSProperties }> = ({ style }) => {
 };
 
 const Ioport: FC<{ type: string; name: string }> = ({ type, name }) => {
-  const color = useColor();
+  const color = useColor().editor.hw.list.item;
   const [fsm, setState] = useRecoilState(hwEditorFSM);
   const selected = fsm.state === "AddIoport" && fsm.value.type === type && fsm.value.name === name;
   const [hover, setHover] = useState(false);
+
+  const _color = selected ? color.sel : hover ? color.hov : color._;
+
   return (
     <div
       style={{
         height: "30px",
-        background: selected ? color.hw_list.item.selected : hover ? color.hw_list.item.hover : color.hw_list.item.normal,
+        background: _color.bg,
+        color: _color.text,
         cursor: "pointer",
         display: "grid",
         gridTemplateColumns: "20px 1fr",
