@@ -12,31 +12,31 @@ export const ButtonBar = () => {
       style={{
         ...layout.grid({ row: ["50px", "50px", "50px", "50px", "50px", "50px", "50px"] }),
         width: "50px",
-        background: color.toolbar.bg,
+        background: color.editor.hw.sidebar._.bg,
       }}
     >
       <div style={layout.center}>
-        <IconButton size={40} onClick={() => undo()}>
+        <IconButton color={color.editor.hw.sidebar.btn} size={40} onClick={() => undo()}>
           <Undo />
         </IconButton>
       </div>
       <div style={layout.center}>
-        <IconButton size={40} onClick={() => redo()}>
+        <IconButton color={color.editor.hw.sidebar.btn} size={40} onClick={() => redo()}>
           <Redo />
         </IconButton>
       </div>
       <div style={layout.center}>
-        <IconButton size={40} onClick={() => save()}>
+        <IconButton color={color.editor.hw.sidebar.btn} size={40} onClick={() => save()}>
           <SaveOutlined />
         </IconButton>
       </div>
       <div style={layout.center}>
-        <IconButton size={40} onClick={() => flip()}>
+        <IconButton color={color.editor.hw.sidebar.btn} size={40} onClick={() => flip()}>
           <Flip />
         </IconButton>
       </div>
       <div style={layout.center}>
-        <IconButton size={40} onClick={() => del()}>
+        <IconButton color={color.editor.hw.sidebar.btn} size={40} onClick={() => del()}>
           <DeleteOutline />
         </IconButton>
       </div>
@@ -48,19 +48,19 @@ export const TabButton = () => {
   const color = useColor();
   const [infoPane, setInfoPane] = useRecoilState(paneState);
   return (
-    <div style={{ ...layout.grid({ column: ["50px", "50px", "50px"] }), height: "50px", background: color.hw_list.bg }}>
+    <div style={{ ...layout.grid({ column: ["50px", "50px", "50px"] }), height: "50px", background: color.editor.hw.list.bg }}>
       <div style={layout.center}>
-        <IconButton size={40} onClick={() => setInfoPane({ type: "info" })} forceHover={infoPane.type === "info"}>
+        <IconButton color={color.editor.hw.sidebar.btn} size={40} onClick={() => setInfoPane({ type: "info" })}>
           <InfoOutlined />
         </IconButton>
       </div>
       <div style={layout.center}>
-        <IconButton size={40} onClick={() => setInfoPane({ type: "pack" })} forceHover={infoPane.type === "pack"}>
+        <IconButton color={color.editor.hw.sidebar.btn} size={40} onClick={() => setInfoPane({ type: "pack" })}>
           <Apps />
         </IconButton>
       </div>
       <div style={layout.center}>
-        <IconButton size={40} onClick={() => setInfoPane({ type: "ioport" })} forceHover={infoPane.type === "ioport"}>
+        <IconButton color={color.editor.hw.sidebar.btn} size={40} onClick={() => setInfoPane({ type: "ioport" })}>
           <CommitSharp />
         </IconButton>
       </div>

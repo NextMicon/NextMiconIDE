@@ -30,11 +30,11 @@ export const InfoPane: FC = () => {
       <IconText Icon={DeveloperBoard} height={40} text={"Board"} />
       <BoardInfo />
       <IconText Icon={Apps} height={40} text={"Instances"} />
-      <InstanceList />
+      {/* <InstanceList /> */}
       <IconText Icon={CommitSharp} height={40} text={"IOPort"} />
-      <IoportList />
+      {/* <IoportList /> */}
       <IconText Icon={Timeline} height={40} text={"Wire"} />
-      <WireList />
+      {/* <WireList /> */}
     </div>
   );
 };
@@ -52,13 +52,12 @@ const BoardInfo: FC = () => {
           ...layout.grid({ column: ["20px", "1fr", "1fr", "30px"] }),
           height: "30px",
           cursor: "pointer",
-          background: color.hw_list.bg,
         }}
       >
         <div></div>
         <Left>{proj.board.name}</Left>
         <Left>{proj.board.version}</Left>
-        <IconButton style={{ margin: "2px" }} onClick={() => setDetail(!detail)}>
+        <IconButton color={color.editor.hw.list.item} style={{ margin: "2px" }} onClick={() => setDetail(!detail)}>
           {detail ? <KeyboardArrowDown /> : <KeyboardArrowLeft />}
         </IconButton>
       </div>

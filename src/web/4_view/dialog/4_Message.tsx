@@ -16,8 +16,6 @@ export const MessageList: FC = () => {
   return (
     <div
       style={{
-        ...color.message_list,
-
         pointerEvents: "all",
         borderTopLeftRadius: 20,
 
@@ -51,7 +49,7 @@ const MessageItem: FC<{ message: Message }> = ({ message }) => {
     <div
       style={{
         pointerEvents: "auto",
-        background: color.message[message.type],
+        background: color.dialog.msg[message.type],
         height: "auto",
         borderRadius: 20,
         marginBottom: 10,
@@ -66,8 +64,8 @@ const MessageItem: FC<{ message: Message }> = ({ message }) => {
           <span style={{ fontSize: 20, fontWeight: "bold", height: "auto" }}> {message.title}</span>
         </div>
         <div style={layout.center}>
-          <IconButton onClick={() => deleteMessage(message.id)} size={40} base={color.message_list.background}>
-            <Check style={{ background: color.message[message.type] }} />
+          <IconButton color={color.dialog.btn} onClick={() => deleteMessage(message.id)} size={40}>
+            <Check style={{ background: color.dialog.msg[message.type] }} />
           </IconButton>
         </div>
       </div>

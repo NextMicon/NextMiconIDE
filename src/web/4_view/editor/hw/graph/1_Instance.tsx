@@ -8,7 +8,7 @@ import { LeftIcon, RightIcon } from "~/web/4_view/atom";
 export const InstanceView: FC<{ instance: Instance }> = ({ instance }) => {
   // Global State
   const { onClick, onMouseDown, key, selected } = useInstance(instance);
-  const color = useColor();
+  const color = useColor().editor.hw.graph.obj;
 
   // Local State
   const [hover, setHover] = useState(false);
@@ -33,10 +33,10 @@ export const InstanceView: FC<{ instance: Instance }> = ({ instance }) => {
         y={oy - height / 2}
         width={width}
         height={height}
-        stroke={highlight ? color.obj.border.highlight : color.obj.border.normal}
+        stroke={highlight ? color.hov.border : color._.border}
         strokeWidth={2}
         rx={20}
-        fill={highlight ? color.obj.fill.highlight : color.obj.fill.normal}
+        fill={highlight ? color.hov.fill : color._.fill}
       />
       <text x={instance.flip ? ox - tx : ox + tx} y={oy} fontSize={25} textAnchor="middle" alignmentBaseline="middle">
         {instance.name}
@@ -50,7 +50,7 @@ export const InstanceView: FC<{ instance: Instance }> = ({ instance }) => {
 
 export const PackView: FC<{ pack: Pack; name: string; pos: Position }> = ({ pack, name, pos }) => {
   // Global State
-  const color = useColor();
+  const color = useColor().editor.hw.graph.obj;
 
   // Local State
   // const [hover, setHover] = useState(false);
@@ -69,10 +69,10 @@ export const PackView: FC<{ pack: Pack; name: string; pos: Position }> = ({ pack
         y={oy - height / 2}
         width={width}
         height={height}
-        stroke={highlight ? color.obj.border.highlight : color.obj.border.normal}
+        stroke={highlight ? color.hov.border : color._.border}
         strokeWidth={2}
         rx={20}
-        fill={highlight ? color.obj.fill.highlight : color.obj.fill.normal}
+        fill={highlight ? color.hov.fill : color._.fill}
       />
       <text x={ox + tx} y={oy} fontSize={25} textAnchor="middle" alignmentBaseline="middle">
         {name}
@@ -87,18 +87,14 @@ export const PackView: FC<{ pack: Pack; name: string; pos: Position }> = ({ pack
 const PortInfo: FC<{ port: Pack["ports"][number]; origin: Position; hover: boolean; flip: boolean }> = ({ port, origin, hover, flip }) => {
   const textOffset = 35;
   const side = port.pos[0] > 0 !== flip;
-  const color = useColor();
+  const color = useColor().editor.hw.graph.obj;
   const [x, y] = posAdd(origin, flip ? posFlip(port.pos) : port.pos);
   const io = port.direct === "input";
   const [cx, cy] = side ? [x - 18, y] : [x + 18, y];
   return (
     <>
-      <circle cx={cx} cy={cy} r={14} fill={hover ? color.obj.port_icon.highlight : color.obj.port_icon.normal} />
-      {side === io ? (
-        <LeftIcon cx={cx} cy={cy} color={color.obj.port_icon.normal} />
-      ) : (
-        <RightIcon cx={cx} cy={cy} color={color.obj.port_icon.normal} />
-      )}
+      <circle cx={cx} cy={cy} r={14} fill={hover ? color.hov.port_bg : color._.port_bg} />
+      {side === io ? <LeftIcon cx={cx} cy={cy} color={color._.port_icon} /> : <RightIcon cx={cx} cy={cy} color={color._.port_icon} />}
       <text x={side ? x - textOffset : x + textOffset} y={y} fontSize={18} textAnchor={side ? "end" : "start"} alignmentBaseline="middle">
         {port.name}
       </text>

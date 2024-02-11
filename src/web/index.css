@@ -17,7 +17,7 @@ div#root {
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #e36d8d;
+  /* background: #e36d8d; */
 }
 
 div {

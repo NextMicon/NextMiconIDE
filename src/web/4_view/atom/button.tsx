@@ -1,34 +1,33 @@
 import { CSSProperties, Children, FC, ReactElement, ReactNode, cloneElement, useState } from "react";
 import { useColor } from "~/web/2_store";
+import { layout } from "./styling";
 
 export const IconButton: FC<{
+  color: { _: { bg: string; icon: string }; hov: { bg: string; icon: string } };
   size?: number;
   style?: CSSProperties;
   children?: ReactElement;
   onClick?: () => void;
-  base?: string;
-  highlight?: string;
-  forceHover?: boolean;
-}> = ({ size, style, children, onClick, base, highlight, forceHover }) => {
-  const color = useColor();
+}> = ({ color, size, style, children, onClick }) => {
   const [hover, setHover] = useState(false);
-  const iconStyle = { color: "#CCCCCC", height: "80%", width: "80%" };
   const childs = Children.map(children, (child) =>
-    child ? cloneElement(child, { style: { ...iconStyle, ...child.props.style } }) : undefined,
+    child ? cloneElement(child, { style: { height: "80%", width: "80%", ...child.props.style } }) : undefined,
   );
   return (
     <button
       style={{
+        background: hover ? color.hov.bg : color._.bg,
+        color: hover ? color.hov.icon : color._.icon,
+
+        ...layout.center,
+
+        width: size,
+        height: size,
         padding: 0,
-        // background: hover || forceHover ? highlight ?? color.gray.light : base ?? color.primary.light,
         borderRadius: "50%",
         border: "none",
         cursor: "pointer",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: `${size}px`,
-        height: `${size}px`,
+
         ...style,
       }}
       onClick={onClick}
@@ -41,18 +40,19 @@ export const IconButton: FC<{
 };
 
 export const TextButton: FC<{
+  color: { _: { bg: string; text: string }; hov: { bg: string; text: string } };
   style?: CSSProperties;
   children?: ReactNode;
   onClick?: () => void;
   base?: string;
   highlight?: string;
-}> = ({ style, children, onClick, base, highlight }) => {
-  const color = useColor();
+}> = ({ color, style, children, onClick, base, highlight }) => {
   const [hover, setHover] = useState(false);
   return (
     <button
       style={{
-        // background: hover ? highlight ?? color.gray.light : base ?? color.primary.light,
+        background: hover ? color.hov.bg : color._.bg,
+        color: hover ? color.hov.text : color._.text,
         borderRadius: "5px",
         border: "none",
         cursor: "pointer",

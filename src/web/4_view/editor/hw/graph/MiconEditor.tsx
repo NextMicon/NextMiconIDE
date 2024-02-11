@@ -49,8 +49,8 @@ const SelectRect: FC<{ start: Position; end?: Position }> = ({ start, end }) => 
   const color = useColor();
   return (
     <>
-      <rect x={x} y={y} width={width} height={height} fill={color.select.fill} opacity={0.3} />
-      <rect x={x} y={y} width={width} height={height} fill="none" stroke={color.select.stroke} strokeWidth={1} />
+      <rect x={x} y={y} width={width} height={height} fill={color.editor.hw.graph.select.fill} opacity={0.3} />
+      <rect x={x} y={y} width={width} height={height} fill="none" stroke={color.editor.hw.graph.select.stroke} strokeWidth={1} />
     </>
   );
 };
@@ -63,7 +63,7 @@ const ConnectingWire: FC<{ path: Position[] }> = ({ path }) => {
     <g fill="none" strokeLinecap="round" strokeLinejoin="round">
       <polyline
         points={[...path, stickeyMouse].map(([x, y]) => `${x},${y}`).reduce((p, c) => `${p} ${c}`, "")}
-        stroke={color.wire.normal}
+        stroke={color.editor.hw.graph.wire._}
         strokeWidth={3}
       />
     </g>

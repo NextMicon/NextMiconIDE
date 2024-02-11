@@ -2,10 +2,11 @@ import { Close } from "@mui/icons-material";
 import { CSSProperties, FC, useState } from "react";
 import { useRecoilRefresher_UNSTABLE, useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { dialogState } from "~/web/2_route";
-import { boardListState, projectListState, useCreateProject } from "~/web/2_store";
+import { boardListState, projectListState, useColor, useCreateProject } from "~/web/2_store";
 import { layout, Dialog, IconButton } from "../atom";
 
 export const CreateProjectDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
+  const color = useColor();
   const setDialog = useSetRecoilState(dialogState);
   const boardListLoaddable = useRecoilValueLoadable(boardListState);
 
@@ -22,7 +23,7 @@ export const CreateProjectDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
     <Dialog zIndex={zIndex} close={() => setDialog(undefined)}>
       <div style={{ ...layout.grid({ column: ["1fr", "50px"] }), height: "50px" }}>
         <div style={{ ...layout.left, fontSize: 25, fontWeight: "bold" }}>Create Project</div>
-        <IconButton onClick={() => setDialog(undefined)}>
+        <IconButton color={color.dialog.btn} onClick={() => setDialog(undefined)}>
           <Close />
         </IconButton>
       </div>

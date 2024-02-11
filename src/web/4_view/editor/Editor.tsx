@@ -1,7 +1,7 @@
 import "allotment/dist/style.css";
 import { FC, useEffect } from "react";
 import { useRecoilState, useRecoilValueLoadable } from "recoil";
-import { boardState, modeState, useOpenProject, useOpenSoftware, useRunMake } from "~/web/2_store";
+import { boardState, modeState, useColor, useOpenProject, useOpenSoftware, useRunMake } from "~/web/2_store";
 import { BottomBar } from "./common/BottomBar";
 import { TopBar } from "./common/TopBar";
 import { HWEditor } from "./hw/HWEditor";

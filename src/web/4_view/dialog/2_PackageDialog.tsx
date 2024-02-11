@@ -2,10 +2,19 @@ import { Check, Close, Download, ReplayRounded, Upload } from "@mui/icons-materi
 import { FC, Fragment } from "react";
 import { useRecoilRefresher_UNSTABLE, useRecoilValue, useSetRecoilState } from "recoil";
 import { dialogState } from "~/web/2_route";
-import { localPacksState, mergedPackList, pathState, registoryPackListState, useDownloadPackage, useUpdateRegistory } from "~/web/2_store";
+import {
+  localPacksState,
+  mergedPackList,
+  pathState,
+  registoryPackListState,
+  useColor,
+  useDownloadPackage,
+  useUpdateRegistory,
+} from "~/web/2_store";
 import { Dialog, IconButton, layout } from "../atom";
 
 export const PackageDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
+  const color = useColor();
   const setDialog = useSetRecoilState(dialogState);
   const appHome = useRecoilValue(pathState);
   const localPacks = useRecoilValue(localPacksState);
@@ -22,7 +31,7 @@ export const PackageDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
       <div style={layout.grid({ row: ["50px", "1fr"] })}>
         <div style={layout.grid({ row: ["1fr", "50px"] })}>
           <div style={{ ...layout.left, fontSize: 25, fontWeight: "bold" }}>Package</div>
-          <IconButton onClick={() => setDialog(undefined)}>
+          <IconButton color={color.dialog.btn} onClick={() => setDialog(undefined)}>
             <Close />
           </IconButton>
         </div>
@@ -40,7 +49,7 @@ export const PackageDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
               <div style={{ ...layout.left, fontWeight: "bold" }}>Package</div>
               <div style={{ ...layout.left, fontWeight: "bold" }}>Version</div>
               <div style={{ ...layout.left }}>
-                <IconButton size={30} onClick={() => reloadRegistory().then(() => reload())}>
+                <IconButton color={color.dialog.btn} size={30} onClick={() => reloadRegistory().then(() => reload())}>
                   <ReplayRounded />
                 </IconButton>
               </div>
@@ -52,17 +61,17 @@ export const PackageDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
                 <div style={{ ...layout.left }}>{pack.version}</div>
                 <div style={{ ...layout.center }}>
                   {pack.remote && !pack.local && (
-                    <IconButton size={30} onClick={() => downloadPackage(pack).then(() => reload())}>
+                    <IconButton color={color.dialog.btn} size={30} onClick={() => downloadPackage(pack).then(() => reload())}>
                       <Download />
                     </IconButton>
                   )}
                   {!pack.remote && pack.local && (
-                    <IconButton size={30} onClick={() => console.log("Upload", pack.name)}>
+                    <IconButton color={color.dialog.btn} size={30} onClick={() => console.log("Upload", pack.name)}>
                       <Upload />
                     </IconButton>
                   )}
                   {pack.remote && pack.local && (
-                    <IconButton size={30} onClick={() => downloadPackage(pack).then(() => reload())}>
+                    <IconButton color={color.dialog.btn} size={30} onClick={() => downloadPackage(pack).then(() => reload())}>
                       <Check />
                     </IconButton>
                   )}

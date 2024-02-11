@@ -2,10 +2,11 @@ import { Close } from "@mui/icons-material";
 import { CSSProperties, FC } from "react";
 import { useSetRecoilState } from "recoil";
 import { dialogState } from "~/web/2_route";
-import { useSetColorName } from "~/web/2_store";
+import { useColor, useSetColorName } from "~/web/2_store";
 import { Dialog, IconButton, layout } from "../atom";
 
 export const SettingDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
+  const color = useColor();
   const setDialog = useSetRecoilState(dialogState);
   const { colorName, setColorName } = useSetColorName();
 
@@ -15,7 +16,7 @@ export const SettingDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
     <Dialog zIndex={zIndex} close={() => setDialog(undefined)}>
       <div style={{ ...layout.grid({ column: ["1fr", "50px"] }), height: "50px" }}>
         <div style={{ ...layout.left, fontSize: 25, fontWeight: "bold" }}>Settings</div>
-        <IconButton onClick={() => setDialog(undefined)}>
+        <IconButton color={color.dialog.btn} onClick={() => setDialog(undefined)}>
           <Close />
         </IconButton>
       </div>

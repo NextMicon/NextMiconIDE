@@ -13,7 +13,7 @@ export const Canvas: FC<{
   // External states
   const fore = useCanvasForeground();
   const back = useCanvasBackground();
-  const color = useColor();
+  const color = useColor().editor.hw.graph.canvas;
 
   // Container
   const [containerSize, setContainerSize] = useState<Position>([0, 0]);
@@ -75,7 +75,7 @@ export const Canvas: FC<{
   return (
     <div ref={containerRef} style={{ overflow: "hidden", ...containerStyle }}>
       <svg
-        style={{ background: color.canvas.bg, userSelect: "none", ...svgStyle }}
+        style={{ background: color.bg, userSelect: "none", ...svgStyle }}
         viewBox={svgViewBox}
         onMouseMove={updateMousePosition}
         onMouseDown={(e) => {
@@ -102,7 +102,7 @@ export const Canvas: FC<{
             }
           }}
         >
-          <Grid offset={svgOffset} />
+          <Grid offset={svgOffset} color={color.grid} />
         </g>
         {children}
       </svg>
@@ -110,23 +110,23 @@ export const Canvas: FC<{
   );
 };
 
-const Grid: FC<{ offset: Position; interval?: [number, number]; strokeWidth?: [number, number] }> = ({
+const Grid: FC<{ offset: Position; interval?: [number, number]; strokeWidth?: [number, number]; color: string }> = ({
+  color,
   offset,
   interval = [GRID * 5, GRID],
   strokeWidth = [1, 0.5],
 }) => {
-  const color = useColor();
   const [mainInterval, subInterval] = interval;
   const [mainLineWidth, subLineWidth] = strokeWidth;
   return (
     <>
       <defs>
         <pattern id="smallGrid" width={subInterval} height={subInterval} patternUnits="userSpaceOnUse">
-          <path d={`M ${subInterval} 0 L 0 0 0 ${subInterval}`} fill="none" stroke={color.canvas.grid} strokeWidth={subLineWidth} />
+          <path d={`M ${subInterval} 0 L 0 0 0 ${subInterval}`} fill="none" stroke={color} strokeWidth={subLineWidth} />
         </pattern>
         <pattern id="grid" width={mainInterval} height={mainInterval} patternUnits="userSpaceOnUse">
           <rect width={mainInterval} height={mainInterval} fill="url(#smallGrid)" />
-          <path d={`M ${mainInterval} 0 L 0 0 0 ${mainInterval}`} fill="none" stroke={color.canvas.grid} strokeWidth={mainLineWidth} />
+          <path d={`M ${mainInterval} 0 L 0 0 0 ${mainInterval}`} fill="none" stroke={color} strokeWidth={mainLineWidth} />
         </pattern>
       </defs>
       <rect x={offset[0]} y={offset[1]} width="100%" height="100%" fill="url(#grid)" />

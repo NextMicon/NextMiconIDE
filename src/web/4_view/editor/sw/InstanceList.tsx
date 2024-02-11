@@ -10,7 +10,7 @@ export const InstanceList = () => {
   const instances = useRecoilValue(instancesResolvedState);
   const color = useColor();
   return (
-    <div style={{ overflow: "scroll", background: color.home.background }}>
+    <div style={{ overflow: "scroll", background: color.editor.sw.list.bg }}>
       <div
         style={{
           height: "auto",
@@ -71,20 +71,8 @@ const Func: FC<{ inst: string; note: string; method: Func }> = ({ inst, note, me
 
   const use = `${inst}.${method.name}();`;
 
-  const ccolor = {
-    comment: "#6a9955",
-    embtype: "#569cd6",
-    objtype: "#4ec9b0",
-    funcname: "#dcdcaa",
-    varname: "#9cdcfe",
-  } as const;
-
-  const startWithLowercase = (str: string) => {
-    return str.charAt(0) === str.charAt(0).toLowerCase();
-  };
-  const typeColor = (str: string) => {
-    return startWithLowercase(str) ? ccolor.embtype : ccolor.objtype;
-  };
+  const startWithLowercase = (str: string) => str.charAt(0) === str.charAt(0).toLowerCase();
+  const typeColor = (str: string) => (startWithLowercase(str) ? color.editor.sw.list.embtype : color.editor.sw.list.objtype);
 
   return (
     <div
@@ -101,13 +89,13 @@ const Func: FC<{ inst: string; note: string; method: Func }> = ({ inst, note, me
     >
       <div style={{ ...layout.left, height: 20, whiteSpace: "nowrap" }}>
         <pre> </pre>
-        <pre style={{ color: ccolor.comment }}>{note}</pre>
+        <pre style={{ color: color.editor.sw.list.comment }}>{note}</pre>
       </div>
       <div style={{ ...layout.left, height: 20, whiteSpace: "nowrap" }}>
         <pre> </pre>
         <pre style={{ color: typeColor(method.type) }}>{method.type}</pre>
         <pre> </pre>
-        <pre style={{ color: ccolor.funcname, fontWeight: "bold" }}>{method.name}</pre>
+        <pre style={{ color: color.editor.sw.list.funcname, fontWeight: "bold" }}>{method.name}</pre>
         <pre>(</pre>
         {method.args.map((arg, i, arr) => {
           const sep = i < arr.length - 1;
@@ -115,7 +103,7 @@ const Func: FC<{ inst: string; note: string; method: Func }> = ({ inst, note, me
             <Fragment key={i}>
               <pre style={{ color: typeColor(arg.type) }}>{arg.type}</pre>
               <pre> </pre>
-              <pre style={{ color: ccolor.varname }}>{arg.name}</pre>
+              <pre style={{ color: color.editor.sw.list.varname }}>{arg.name}</pre>
               {sep && <pre>, </pre>}
             </Fragment>
           );

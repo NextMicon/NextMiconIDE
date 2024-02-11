@@ -1,7 +1,6 @@
 import { Apps, DeveloperBoard, NoteAddOutlined, OpenInBrowser, Settings } from "@mui/icons-material";
 import { FC } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import "~/assets/logo.png";
 import { dialogState, routeState } from "~/web/2_route";
 import { IconButton, TextButton, layout } from "~/web/4_view/atom";
 import { projectListState, useColor } from "../../2_store";
@@ -9,10 +8,10 @@ import { projectListState, useColor } from "../../2_store";
 export const Home: FC = () => {
   const color = useColor();
   return (
-    <div style={{ ...layout.center, height: "100%", ...color.home }}>
+    <div style={{ ...layout.center, height: "100%", background: color.home._.bg, color: color.home._.text }}>
       <div style={{ maxWidth: "500px", maxHeight: "600px", width: "100%", height: "100%" }}>
         <div style={{ ...layout.grid({ row: ["1fr", "1fr", "3fr"] }) }}>
-          <div style={{ ...layout.center, fontWeight: "bold", fontSize: 40, color: "white" }}>Next Micon IDE</div>
+          <div style={{ ...layout.center, fontWeight: "bold", fontSize: 40 }}>Next Micon IDE</div>
           <Buttons />
           <ProjectList />
         </div>
@@ -22,6 +21,7 @@ export const Home: FC = () => {
 };
 
 const Buttons: FC = () => {
+  const color = useColor();
   const setRoute = useSetRecoilState(routeState);
   const setDialog = useSetRecoilState(dialogState);
   const openProjectWithDialog = () => {
@@ -32,19 +32,19 @@ const Buttons: FC = () => {
   };
   return (
     <div style={{ ...layout.flex({ direction: "horizontal", justify: "space-between", align: "center" }) }}>
-      <IconButton size={80} onClick={() => setDialog("createProject")}>
+      <IconButton color={color.home.btn} size={80} onClick={() => setDialog("createProject")}>
         <NoteAddOutlined />
       </IconButton>
-      <IconButton size={80} onClick={openProjectWithDialog}>
+      <IconButton color={color.home.btn} size={80} onClick={openProjectWithDialog}>
         <OpenInBrowser />
       </IconButton>
-      <IconButton size={80} onClick={() => setDialog("setting")}>
+      <IconButton color={color.home.btn} size={80} onClick={() => setDialog("setting")}>
         <Settings />
       </IconButton>
-      <IconButton size={80} onClick={() => setDialog("package")}>
+      <IconButton color={color.home.btn} size={80} onClick={() => setDialog("package")}>
         <Apps />
       </IconButton>
-      <IconButton size={80} onClick={() => setDialog("board")}>
+      <IconButton color={color.home.btn} size={80} onClick={() => setDialog("board")}>
         <DeveloperBoard />
       </IconButton>
     </div>
@@ -65,8 +65,11 @@ const ProjectList: FC = () => {
 
 const ProjectItem: FC<{ name: string; path: string[] }> = ({ name, path }) => {
   const setRoute = useSetRecoilState(routeState);
+  const color = useColor();
+
   return (
     <TextButton
+      color={color.home.btn}
       style={{
         height: "30px",
         textAlign: "left",

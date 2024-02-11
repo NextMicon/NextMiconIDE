@@ -9,7 +9,7 @@ import { ExclamationIcon, LeftIcon, QuestionIcon, RightIcon } from "~/web/4_view
 export const IoportComponent: FC<{ ioport: Ioport }> = ({ ioport }) => {
   // Global State
   const { selected, onClick, onMouseDown } = useIoport(ioport);
-  const color = useColor();
+  const color = useColor().editor.hw.graph.obj;
 
   // Local State
   const [hover, setHover] = useState(false);
@@ -32,10 +32,10 @@ export const IoportComponent: FC<{ ioport: Ioport }> = ({ ioport }) => {
         y={oy - height / 2}
         width={width}
         height={height}
-        stroke={color.obj.border.normal}
+        stroke={highlight ? color.hov.border : color._.border}
         strokeWidth={2}
         rx={18}
-        fill={highlight ? color.obj.fill.highlight : color.obj.fill.normal}
+        fill={highlight ? color.hov.fill : color._.fill}
       />
       <text
         x={ioport.flip ? ox - width / 2 + 40 : ox + width / 2 - 40}
@@ -63,7 +63,7 @@ export const IoifView: FC<{ ioif: Board["ioifs"][number]; ioName: string; pos: P
   flip,
 }) => {
   // Global State
-  const color = useColor();
+  const color = useColor().editor.hw.graph.obj;
 
   // Local State
   const [hover, setHover] = useState(false);
@@ -80,10 +80,10 @@ export const IoifView: FC<{ ioif: Board["ioifs"][number]; ioName: string; pos: P
         y={oy - height / 2}
         width={width}
         height={height}
-        stroke={highlight ? color.obj.border.highlight : color.obj.border.normal}
+        stroke={highlight ? color.hov.border : color._.border}
         strokeWidth={2}
         rx={18}
-        fill={highlight ? color.obj.fill.highlight : color.obj.fill.normal}
+        fill={highlight ? color.hov.fill : color._.fill}
       />
       <text
         x={flip ? ox - width / 2 + 40 : ox + width / 2 - 40}
@@ -111,10 +111,10 @@ const IOPortBg: FC<{
   flip: boolean;
 }> = ({ port, origin, hover, flip }) => {
   const side = port.pos[0] > 0 !== flip;
-  const color = useColor();
+  const color = useColor().editor.hw.graph.obj;
   const [x, y] = posAdd(origin, flip ? posFlip(port.pos) : port.pos);
   const [cx, cy] = side ? [x - 18, y] : [x + 18, y];
-  return <circle cx={cx} cy={cy} r={14} fill={hover ? color.obj.port_bg.highlight : color.obj.port_bg.normal} />;
+  return <circle cx={cx} cy={cy} r={14} fill={hover ? color.hov.port_bg : color._.port_bg} />;
 };
 
 const IOPortIcon: FC<{
@@ -124,21 +124,18 @@ const IOPortIcon: FC<{
   flip: boolean;
 }> = ({ port, origin, hover, flip }) => {
   const side = port.pos[0] > 0 !== flip;
-  const color = useColor();
+  const color = useColor().editor.hw.graph.obj;
   const [x, y] = posAdd(origin, flip ? posFlip(port.pos) : port.pos);
   const io = port.direct === "input";
   const [cx, cy] = side ? [x - 18, y] : [x + 18, y];
   const icon = port.icon;
+
+  const _color = hover ? color.hov.port_icon : color._.port_icon;
   return (
     <>
-      {icon === "!" && <ExclamationIcon cx={cx} cy={cy} color={color.obj.port_icon.normal} />}
-      {icon === "?" && <QuestionIcon cx={cx} cy={cy} color={color.obj.port_icon.normal} />}
-      {icon === undefined &&
-        (side === io ? (
-          <LeftIcon cx={cx} cy={cy} color={color.obj.port_icon.normal} />
-        ) : (
-          <RightIcon cx={cx} cy={cy} color={color.obj.port_icon.normal} />
-        ))}
+      {icon === "!" && <ExclamationIcon cx={cx} cy={cy} color={_color} />}
+      {icon === "?" && <QuestionIcon cx={cx} cy={cy} color={_color} />}
+      {icon === undefined && (side === io ? <LeftIcon cx={cx} cy={cy} color={_color} /> : <RightIcon cx={cx} cy={cy} color={_color} />)}
     </>
   );
 };

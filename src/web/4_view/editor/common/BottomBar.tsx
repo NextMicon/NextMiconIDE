@@ -9,8 +9,8 @@ export const BottomBar = () => {
     <div
       style={{
         ...layout.left,
-        background: color.toolbar.bg,
-        color: color.toolbar.text,
+        background: color.editor.toolbar._.bg,
+        color: color.editor.toolbar._.text,
       }}
     >
       {rootdir.join("/").replaceAll("///", "/")}

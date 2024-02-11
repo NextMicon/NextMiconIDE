@@ -19,42 +19,43 @@ export const TopBar: FC = () => {
       <div
         style={{
           ...layout.grid({ column: ["50px", "50px", "50px", "1fr", "50px", "50px", "50px", "50px"] }),
-          background: color.toolbar.bg,
+          background: color.editor.toolbar._.bg,
+          color: color.editor.toolbar._.text,
         }}
       >
         <Center>
-          <IconButton size={40} onClick={() => setRoute({ page: "home" })}>
+          <IconButton color={color.editor.toolbar.btn} size={40} onClick={() => setRoute({ page: "home" })}>
             <Home />
           </IconButton>
         </Center>
         <Center>
-          <IconButton size={40} onClick={() => setDialog("setting")}>
+          <IconButton color={color.editor.toolbar.btn} size={40} onClick={() => setDialog("setting")}>
             <Settings />
           </IconButton>
         </Center>
         <Center>
-          <IconButton size={40} onClick={() => window.ipc.web.open(URL_NEXT_MICON)}>
+          <IconButton color={color.editor.toolbar.btn} size={40} onClick={() => window.ipc.web.open(URL_NEXT_MICON)}>
             <Language />
           </IconButton>
         </Center>
-        <div style={{ ...layout.center, color: "white", fontWeight: "bold", fontSize: "20px" }}>{projectName}</div>
+        <div style={{ ...layout.center, color: color.editor.toolbar._.text, fontWeight: "bold", fontSize: "20px" }}>{projectName}</div>
         <Center>
-          <IconButton size={40} onClick={() => setMode("hardware")} forceHover={mode === "hardware"}>
+          <IconButton color={color.editor.toolbar.btn} size={40} onClick={() => setMode("hardware")}>
             <DeviceHub />
           </IconButton>
         </Center>
         <Center>
-          <IconButton size={40} onClick={() => generate()}>
+          <IconButton color={color.editor.toolbar.btn} size={40} onClick={() => generate()}>
             <Build />
           </IconButton>
         </Center>
         <Center>
-          <IconButton size={40} onClick={() => setMode("software")} forceHover={mode === "software"}>
+          <IconButton color={color.editor.toolbar.btn} size={40} onClick={() => setMode("software")}>
             <EditNote />
           </IconButton>
         </Center>
         <Center>
-          <IconButton size={40} onClick={async () => runMake("upload")}>
+          <IconButton color={color.editor.toolbar.btn} size={40} onClick={async () => runMake("upload")}>
             <Send />
           </IconButton>
         </Center>

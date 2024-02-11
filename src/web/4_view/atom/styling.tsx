@@ -1,5 +1,15 @@
 import { CSSProperties, FC, ReactNode } from "react";
 
+const gridTemplate = (arr: (string | number | null)[]): string => {
+  return arr
+    .map((e) => {
+      if (typeof e === "string") return e;
+      if (typeof e === "number") return `${e}px`;
+      return "1fr";
+    })
+    .join(" ");
+};
+
 export const layout = {
   flex: ({
     direction,
@@ -17,11 +27,11 @@ export const layout = {
   left: { display: "flex", justifyContent: "left", alignItems: "center" } as CSSProperties,
   right: { display: "flex", justifyContent: "left", alignItems: "center" } as CSSProperties,
 
-  grid: ({ row, column }: { row?: string[]; column?: string[] }): CSSProperties => ({
+  grid: ({ row, column }: { row?: (string | number | null)[]; column?: (string | number | null)[] }): CSSProperties => ({
     display: "grid",
-    gridTemplateColumns: column?.join(" ") ?? "100%",
+    gridTemplateColumns: column ? gridTemplate(column) : "100%",
     gridAutoColumns: undefined,
-    gridTemplateRows: row?.join(" ") ?? "100%",
+    gridTemplateRows: row ? gridTemplate(row) : "100%",
     gridAutoRows: undefined,
   }),
 };

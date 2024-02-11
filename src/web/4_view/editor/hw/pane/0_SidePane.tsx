@@ -10,14 +10,14 @@ export const SidePane = () => {
   const pane = useRecoilValue(paneState);
   const color = useColor();
   return (
-    <div style={{ ...layout.grid({ column: ["50px", "1fr"] }), background: color.hw_list.bg }}>
+    <div style={{ ...layout.grid({ column: ["50px", "1fr"] }) }}>
       <ButtonBar />
       <div style={layout.grid({ row: ["50px", "1fr"] })}>
         <TabButton />
-        <div style={{ overflow: "scroll", background: color.hw_list.bg }}>
+        <div style={{ overflow: "scroll", background: color.editor.hw.sidebar._.bg }}>
           {pane.type === "info" && <InfoPane />}
-          {pane.type === "pack" && <PackagePane />}
-          {pane.type === "ioport" && <IoportPane />}
+          {/* {pane.type === "pack" && <PackagePane />} */}
+          {/* {pane.type === "ioport" && <IoportPane />} */}
         </div>
       </div>
     </div>
