@@ -8,9 +8,9 @@ import { layout } from "~/web/4_view/atom";
 
 export const InstanceList = () => {
   const instances = useRecoilValue(instancesResolvedState);
-  const color = useColor();
+  const color = useColor().editor.sw.list;
   return (
-    <div style={{ overflow: "scroll", background: color.editor.sw.list.bg }}>
+    <div style={{ overflow: "scroll", background: color._.bg }}>
       <div
         style={{
           height: "auto",
@@ -31,10 +31,12 @@ export const InstanceList = () => {
 };
 
 const InstanceDoc: FC<{ instance: Instance }> = ({ instance }) => {
-  const color = useColor();
+  const color = useColor().editor.sw.list.inst;
 
   const [open, setOpen] = useState(false);
   const [hover, setHover] = useState(false);
+
+  const _color = hover ? color.hov : color._;
 
   const SIZE = 30;
   const iconCss: CSSProperties = { height: `${SIZE}px`, width: `${SIZE}px` };
@@ -47,7 +49,8 @@ const InstanceDoc: FC<{ instance: Instance }> = ({ instance }) => {
           cursor: "pointer",
           display: "grid",
           gridTemplateColumns: `${SIZE}px 1fr`,
-          // background: hover ? color.primary.dark : COLORS.sw.bg,
+          background: _color.bg,
+          color: _color.text,
         }}
         onClick={() => setOpen(!open)}
         onMouseEnter={() => setHover(true)}
@@ -66,19 +69,21 @@ const InstanceDoc: FC<{ instance: Instance }> = ({ instance }) => {
 };
 
 const Func: FC<{ inst: string; note: string; method: Func }> = ({ inst, note, method }) => {
-  const color = useColor();
+  const color = useColor().editor.sw.list.func;
   const [hover, setHover] = useState(false);
 
   const use = `${inst}.${method.name}();`;
+  const _color = hover ? color.hov : color._;
 
   const startWithLowercase = (str: string) => str.charAt(0) === str.charAt(0).toLowerCase();
-  const typeColor = (str: string) => (startWithLowercase(str) ? color.editor.sw.list.embtype : color.editor.sw.list.objtype);
+  const typeColor = (str: string) => (startWithLowercase(str) ? _color.embtype : _color.objtype);
 
   return (
     <div
       style={{
         height: "auto",
-        // background: hover ? color.primary.dark : COLORS.sw.bg,
+        background: _color.bg,
+        color: _color.text,
         cursor: "pointer",
         display: "flex",
         flexDirection: "column",
@@ -89,13 +94,13 @@ const Func: FC<{ inst: string; note: string; method: Func }> = ({ inst, note, me
     >
       <div style={{ ...layout.left, height: 20, whiteSpace: "nowrap" }}>
         <pre> </pre>
-        <pre style={{ color: color.editor.sw.list.comment }}>{note}</pre>
+        <pre style={{ color: _color.comment }}>{note}</pre>
       </div>
       <div style={{ ...layout.left, height: 20, whiteSpace: "nowrap" }}>
         <pre> </pre>
         <pre style={{ color: typeColor(method.type) }}>{method.type}</pre>
         <pre> </pre>
-        <pre style={{ color: color.editor.sw.list.funcname, fontWeight: "bold" }}>{method.name}</pre>
+        <pre style={{ color: _color.funcname, fontWeight: "bold" }}>{method.name}</pre>
         <pre>(</pre>
         {method.args.map((arg, i, arr) => {
           const sep = i < arr.length - 1;
@@ -103,7 +108,7 @@ const Func: FC<{ inst: string; note: string; method: Func }> = ({ inst, note, me
             <Fragment key={i}>
               <pre style={{ color: typeColor(arg.type) }}>{arg.type}</pre>
               <pre> </pre>
-              <pre style={{ color: color.editor.sw.list.varname }}>{arg.name}</pre>
+              <pre style={{ color: _color.varname }}>{arg.name}</pre>
               {sep && <pre>, </pre>}
             </Fragment>
           );

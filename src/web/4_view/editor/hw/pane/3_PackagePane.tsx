@@ -43,7 +43,7 @@ const PackageList = () => {
 };
 
 const Package: FC<{ pack: PackKey }> = ({ pack }) => {
-  const color = useColor();
+  const color = useColor().editor.hw.list;
   const [fsm, setState] = useRecoilState(hwEditorFSM);
   const selected = fsm.state === "AddInstance" && packEq(fsm.value.pack, pack);
   const [hover, setHover] = useState(false);
@@ -56,7 +56,7 @@ const Package: FC<{ pack: PackKey }> = ({ pack }) => {
     <div
       style={{
         height: "30px",
-        background: selected ? color.hw_list.item.selected : hover ? color.hw_list.item.hover : color.hw_list.item.normal,
+        // background: selected ? color.hw_list.item.selected : hover ? color.hw_list.item.hover : color.hw_list.item.normal,
         cursor: "pointer",
         display: "grid",
         gridTemplateColumns: "20px 1fr 50px 30px 30px",

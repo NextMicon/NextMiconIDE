@@ -30,11 +30,11 @@ export const InfoPane: FC = () => {
       <IconText Icon={DeveloperBoard} height={40} text={"Board"} />
       <BoardInfo />
       <IconText Icon={Apps} height={40} text={"Instances"} />
-      {/* <InstanceList /> */}
+      <InstanceList />
       <IconText Icon={CommitSharp} height={40} text={"IOPort"} />
-      {/* <IoportList /> */}
+      <IoportList />
       <IconText Icon={Timeline} height={40} text={"Wire"} />
-      {/* <WireList /> */}
+      <WireList />
     </div>
   );
 };
@@ -43,7 +43,7 @@ const BoardInfo: FC = () => {
   // Global State
   const proj = useRecoilValue(projectState);
   const board = useRecoilValue(boardState);
-  const color = useColor();
+  const color = useColor().editor.hw.list;
   const [detail, setDetail] = useState(false);
   return (
     <>
@@ -57,7 +57,7 @@ const BoardInfo: FC = () => {
         <div></div>
         <Left>{proj.board.name}</Left>
         <Left>{proj.board.version}</Left>
-        <IconButton color={color.editor.hw.list.item} style={{ margin: "2px" }} onClick={() => setDetail(!detail)}>
+        <IconButton color={color.item.btn} style={{ margin: "2px" }} onClick={() => setDetail(!detail)}>
           {detail ? <KeyboardArrowDown /> : <KeyboardArrowLeft />}
         </IconButton>
       </div>
@@ -84,7 +84,7 @@ const InstanceList: FC = () => {
 const InstanceListItem: FC<{ instance: Instance }> = ({ instance }) => {
   // Global State
   const { selected, select, append, rename } = useInstance(instance);
-  const color = useColor();
+  const color = useColor().editor.hw.list.item;
 
   // Local State
   const [detail, setDetail] = useState(false);
@@ -92,7 +92,7 @@ const InstanceListItem: FC<{ instance: Instance }> = ({ instance }) => {
   const [newName, setNewName] = useState(instance.name);
 
   // Calculate
-  const background = selected ? color.hw_list.item.selected : hover ? color.hw_list.item.hover : color.hw_list.item.normal;
+  // const background = selected ? color.hw_list.item.selected : hover ? color.hw_list.item.hover : color.hw_list.item.normal;
   const submitRename = () => {
     if (newName !== instance.name) rename(newName);
   };
@@ -100,7 +100,7 @@ const InstanceListItem: FC<{ instance: Instance }> = ({ instance }) => {
   return (
     <>
       <div
-        style={{ ...layout.grid({ column: ["20px", "1fr", "1fr", "30px"] }), height: "30px", cursor: "pointer", background }}
+        style={{ ...layout.grid({ column: ["20px", "1fr", "1fr", "30px"] }), height: "30px", cursor: "pointer" }}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         onClick={(e) => (e.ctrlKey ? append() : select())}
@@ -108,7 +108,7 @@ const InstanceListItem: FC<{ instance: Instance }> = ({ instance }) => {
         <div></div>
         <Left>{instance.pack.name}</Left>
         <Left>{instance.name}</Left>
-        <IconButton style={{ margin: "2px" }} onClick={() => setDetail(!detail)}>
+        <IconButton color={color.btn} style={{ margin: "2px" }} onClick={() => setDetail(!detail)}>
           {detail ? <KeyboardArrowDown /> : <KeyboardArrowLeft />}
         </IconButton>
       </div>
@@ -127,7 +127,7 @@ const InstanceListItem: FC<{ instance: Instance }> = ({ instance }) => {
                 }
               }}
             />
-            <IconButton style={{ margin: "2px" }} onClick={submitRename}>
+            <IconButton color={color.btn} style={{ margin: "2px" }} onClick={submitRename}>
               <Check />
             </IconButton>
           </div>
@@ -151,7 +151,7 @@ const IoportList: FC = () => {
 
 const IoportListItem: FC<{ ioport: Ioport }> = ({ ioport }) => {
   // Global State
-  const color = useColor();
+  const color = useColor().editor.hw.list.item;
   const { selected, append, select, rename } = useIoport(ioport);
   const avalable = useAvailableIoports()(ioport.pack.type);
 
@@ -161,7 +161,7 @@ const IoportListItem: FC<{ ioport: Ioport }> = ({ ioport }) => {
   const [newName, setNewName] = useState(ioport.name);
 
   // Calculate
-  const background = selected ? color.hw_list.item.selected : hover ? color.hw_list.item.hover : color.hw_list.item.normal;
+  // const background = selected ? color.hw_list.item.selected : hover ? color.hw_list.item.hover : color.hw_list.item.normal;
   const submitRename = () => {
     if (newName !== ioport.name) rename(newName);
   };
@@ -169,7 +169,7 @@ const IoportListItem: FC<{ ioport: Ioport }> = ({ ioport }) => {
   return (
     <>
       <div
-        style={{ ...layout.grid({ column: ["20px", "1fr", "1fr", "30px"] }), height: "30px", cursor: "pointer", background }}
+        style={{ ...layout.grid({ column: ["20px", "1fr", "1fr", "30px"] }), height: "30px", cursor: "pointer" }}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         onClick={(e) => (e.ctrlKey ? append() : select())}
@@ -177,7 +177,7 @@ const IoportListItem: FC<{ ioport: Ioport }> = ({ ioport }) => {
         <div></div>
         <Left>{ioport.pack.type}</Left>
         <Left>{ioport.name}</Left>
-        <IconButton style={{ margin: "2px" }} onClick={() => setDetail(!detail)}>
+        <IconButton color={color.btn} style={{ margin: "2px" }} onClick={() => setDetail(!detail)}>
           {detail ? <KeyboardArrowDown /> : <KeyboardArrowLeft />}
         </IconButton>
       </div>
@@ -199,12 +199,14 @@ const IoportListItem: FC<{ ioport: Ioport }> = ({ ioport }) => {
 };
 
 const EdditableText: FC<{ text: string; onChange: (text: string) => void }> = ({ text, onChange }) => {
+  const color = useColor().editor.hw.list.item;
   const [editing, setEditing] = useState(false);
   const [newText, setNewText] = useState(text);
   return editing ? (
     <div style={layout.grid({ column: ["1fr", "30px", "30px"] })}>
       <input type={"text"} value={newText} onChange={(e) => setNewText(e.target.value)}></input>
       <IconButton
+        color={color.btn}
         style={{ margin: "2px" }}
         onClick={() => {
           onChange(newText);
@@ -213,7 +215,7 @@ const EdditableText: FC<{ text: string; onChange: (text: string) => void }> = ({
       >
         <Check />
       </IconButton>
-      <IconButton style={{ margin: "2px" }} onClick={() => setEditing(false)}>
+      <IconButton color={color.btn} style={{ margin: "2px" }} onClick={() => setEditing(false)}>
         <Close />
       </IconButton>
     </div>
@@ -263,14 +265,15 @@ const WireList: FC = () => {
 
 const WireListItem: FC<{ wire: Wire }> = ({ wire }) => {
   // Global State
-  const color = useColor();
+  const color = useColor().editor.hw.list.item;
+
   const { selected, append, select } = useWire(wire);
 
   // Local State
   const [hover, setHover] = useState(false);
 
   // Calculate
-  const background = selected ? color.hw_list.item.selected : hover ? color.hw_list.item.hover : color.hw_list.item.normal;
+  // const background = selected ? color.hw_list.item.selected : hover ? color.hw_list.item.hover : color.hw_list.item.normal;
 
   return (
     <div
@@ -278,7 +281,7 @@ const WireListItem: FC<{ wire: Wire }> = ({ wire }) => {
         ...layout.grid({ column: ["20px", "2fr", "20px", "40px", "2fr"] }),
         height: "30px",
         cursor: "pointer",
-        background,
+        // background,
         whiteSpace: "nowrap",
       }}
       onMouseEnter={() => setHover(true)}

@@ -14,7 +14,7 @@ export const SidePane = () => {
       <ButtonBar />
       <div style={layout.grid({ row: ["50px", "1fr"] })}>
         <TabButton />
-        <div style={{ overflow: "scroll", background: color.editor.hw.sidebar._.bg }}>
+        <div style={{ overflow: "scroll" }}>
           {pane.type === "info" && <InfoPane />}
           {/* {pane.type === "pack" && <PackagePane />} */}
           {/* {pane.type === "ioport" && <IoportPane />} */}
