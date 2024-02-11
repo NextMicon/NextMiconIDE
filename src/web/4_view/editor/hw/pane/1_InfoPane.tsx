@@ -24,16 +24,16 @@ import { useInstance, useIoport, useWire } from "~/web/3_facade";
 import { Center, IconButton, IconText, Left, layout } from "~/web/4_view/atom";
 
 export const InfoPane: FC = () => {
-  const color = useColor().editor.hw.pane._;
+  const color = useColor().editor.hw.pane;
   return (
-    <div style={{ background: color.bg, color: color.text }}>
-      <IconText Icon={DeveloperBoard} height={40} text={"Board"} />
+    <div style={{ background: color._.bg, color: color._.text }}>
+      <IconText color={color.headder._} Icon={DeveloperBoard} height={40} text={"Board"} />
       <BoardInfo />
-      <IconText Icon={Apps} height={40} text={"Instances"} />
+      <IconText color={color.headder._} Icon={Apps} height={40} text={"Instances"} />
       <InstanceList />
-      <IconText Icon={CommitSharp} height={40} text={"IOPort"} />
+      <IconText color={color.headder._} Icon={CommitSharp} height={40} text={"IOPort"} />
       <IoportList />
-      <IconText Icon={Timeline} height={40} text={"Wire"} />
+      <IconText color={color.headder._} Icon={Timeline} height={40} text={"Wire"} />
       <WireList />
     </div>
   );

@@ -61,7 +61,7 @@ const Package: FC<{ pack: PackKey }> = ({ pack }) => {
   return (
     <div
       style={{
-        ...layout.colGrid({ column: [20, null, 50, 30, 30], row: 30 }),
+        ...layout.colGrid({ column: [20, null, 30], row: 30 }),
         height: "auto",
         background: _color.bg,
         color: _color.text,
@@ -80,12 +80,12 @@ const Package: FC<{ pack: PackKey }> = ({ pack }) => {
       >
         {pack.name}
       </div>
-      <TextButton color={color.btn} style={{ margin: "5px 2px", ...layout.center }}>
+      {/* <TextButton color={color.btn} style={{ margin: "5px 2px", ...layout.center }}>
         v0.0
       </TextButton>
       <IconButton color={color.btn} style={{ margin: "2px" }}>
         {ready ? <Check /> : <ArrowDownward />}
-      </IconButton>
+      </IconButton> */}
       <IconButton color={color.btn} style={{ margin: "2px" }} onClick={() => window.ipc.web.open("https://example.com")}>
         <QuestionMark />
       </IconButton>

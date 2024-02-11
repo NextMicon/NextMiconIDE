@@ -159,13 +159,13 @@ export const colorThemes: Record<ColorName, ColorTheme> = {
         },
         pane: {
           _: { bg: C.navy.dark, icon: C.white, text: C.white },
-          headder: { _: { bg: C.navy.dark, icon: C.sakura.dark, text: C.sakura.dark } },
+          headder: { _: { bg: C.gray.dark, icon: C.sakura.dark, text: C.white } },
           item: {
             _: { bg: C.navy.dark, icon: C.white, text: C.white },
             sel: { bg: C.sakura.dark, icon: C.white, text: C.black },
             hov: { bg: C.sakura.light, icon: C.white, text: C.black },
             btn: {
-              _: { bg: C.gray.light, icon: C.gray.dark, text: C.black },
+              _: { bg: C.gray.midlight, icon: C.gray.dark, text: C.black },
               hov: { bg: C.white, icon: C.sakura.dark, text: C.black },
             },
           },
