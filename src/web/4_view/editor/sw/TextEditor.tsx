@@ -16,7 +16,7 @@ export const TextEditor = () => {
 };
 
 const TextEditorBody = () => {
-  const { path, value, update, save } = useSoftwareEditor();
+  const { value, update, save } = useSoftwareEditor();
   return (
     <CodeMirror
       value={value}

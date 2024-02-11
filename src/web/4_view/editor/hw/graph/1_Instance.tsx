@@ -33,10 +33,10 @@ export const InstanceView: FC<{ instance: Instance }> = ({ instance }) => {
         y={oy - height / 2}
         width={width}
         height={height}
-        stroke={color.primary.dark}
+        stroke={highlight ? color.obj.border.highlight : color.obj.border.normal}
         strokeWidth={2}
         rx={20}
-        fill={highlight ? color.primary.dark : color.primary.light}
+        fill={highlight ? color.obj.fill.highlight : color.obj.fill.normal}
       />
       <text x={instance.flip ? ox - tx : ox + tx} y={oy} fontSize={25} textAnchor="middle" alignmentBaseline="middle">
         {instance.name}
@@ -69,10 +69,10 @@ export const PackView: FC<{ pack: Pack; name: string; pos: Position }> = ({ pack
         y={oy - height / 2}
         width={width}
         height={height}
-        stroke={color.primary.dark}
+        stroke={highlight ? color.obj.border.highlight : color.obj.border.normal}
         strokeWidth={2}
         rx={20}
-        fill={highlight ? color.primary.dark : color.primary.light}
+        fill={highlight ? color.obj.fill.highlight : color.obj.fill.normal}
       />
       <text x={ox + tx} y={oy} fontSize={25} textAnchor="middle" alignmentBaseline="middle">
         {name}
@@ -93,8 +93,12 @@ const PortInfo: FC<{ port: Pack["ports"][number]; origin: Position; hover: boole
   const [cx, cy] = side ? [x - 18, y] : [x + 18, y];
   return (
     <>
-      <circle cx={cx} cy={cy} r={14} fill={hover ? color.gray.mid : color.gray.light} />
-      {side === io ? <LeftIcon cx={cx} cy={cy} color={color.primary.dark} /> : <RightIcon cx={cx} cy={cy} color={color.primary.dark} />}
+      <circle cx={cx} cy={cy} r={14} fill={hover ? color.obj.port_icon.highlight : color.obj.port_icon.normal} />
+      {side === io ? (
+        <LeftIcon cx={cx} cy={cy} color={color.obj.port_icon.normal} />
+      ) : (
+        <RightIcon cx={cx} cy={cy} color={color.obj.port_icon.normal} />
+      )}
       <text x={side ? x - textOffset : x + textOffset} y={y} fontSize={18} textAnchor={side ? "end" : "start"} alignmentBaseline="middle">
         {port.name}
       </text>

@@ -2,11 +2,13 @@ import { Check, Search } from "@mui/icons-material";
 import { FC } from "react";
 import { useColor } from "~/web/2_store";
 
-export const SearchBox: FC<{ text: string; setText: (text: string) => void; onSubmit: () => void }> = ({
-  text,
-  setText,
-  onSubmit,
-}) => {
+export const SearchBox: FC<{
+  text: string;
+  setText: (text: string) => void;
+  onSubmit: () => void;
+  inputColor: string;
+  iconColor: string;
+}> = ({ text, setText, onSubmit, inputColor, iconColor }) => {
   const color = useColor();
   return (
     <div style={{ height: "48px", padding: "2px" }}>
@@ -16,7 +18,7 @@ export const SearchBox: FC<{ text: string; setText: (text: string) => void; onSu
             width: "100%",
             display: "grid",
             gridTemplateColumns: "30px 1fr",
-            backgroundColor: color.gray.white,
+            backgroundColor: inputColor,
             padding: "5px",
             borderRadius: "20px",
           }}
@@ -26,7 +28,7 @@ export const SearchBox: FC<{ text: string; setText: (text: string) => void; onSu
           }}
         >
           <button type="submit" style={{ height: 30, width: 30, borderRadius: "50%", border: "none" }}>
-            <Search style={{ color: color.primary.dark, height: "100%", width: "100%" }} />
+            <Search style={{ color: iconColor, height: "100%", width: "100%" }} />
           </button>
           <input
             style={{ display: "block", border: "none", backgroundColor: "rgba(0,0,0,0)", width: "100%" }}
@@ -40,12 +42,13 @@ export const SearchBox: FC<{ text: string; setText: (text: string) => void; onSu
   );
 };
 
-export const InputBox: FC<{ text: string; setText: (text: string) => void; onSubmit: () => void }> = ({
-  text,
-  setText,
-  onSubmit,
-}) => {
-  const color = useColor();
+export const InputBox: FC<{
+  text: string;
+  setText: (text: string) => void;
+  onSubmit: () => void;
+  inputColor: string;
+  iconColor: string;
+}> = ({ text, setText, onSubmit, inputColor, iconColor }) => {
   return (
     <div style={{ height: "48px", padding: "2px" }}>
       <div style={{ display: "flex", justifyContent: "center", padding: "2px" }}>
@@ -54,9 +57,9 @@ export const InputBox: FC<{ text: string; setText: (text: string) => void; onSub
             width: "100%",
             display: "grid",
             gridTemplateColumns: "1fr 30px",
-            backgroundColor: color.gray.white,
             padding: "5px",
             borderRadius: "20px",
+            background: inputColor,
           }}
           onSubmit={(e) => {
             e.preventDefault();
@@ -69,11 +72,8 @@ export const InputBox: FC<{ text: string; setText: (text: string) => void; onSub
             value={text}
             onChange={(e) => setText(e.target.value)}
           />
-          <button
-            type="submit"
-            style={{ height: 30, width: 30, borderRadius: "50%", border: "none", cursor: "pointer" }}
-          >
-            <Check style={{ color: color.primary.dark, height: "100%", width: "100%" }} />
+          <button type="submit" style={{ height: 30, width: 30, borderRadius: "50%", border: "none", cursor: "pointer" }}>
+            <Check style={{ color: iconColor, height: "100%", width: "100%" }} />
           </button>
         </form>
       </div>

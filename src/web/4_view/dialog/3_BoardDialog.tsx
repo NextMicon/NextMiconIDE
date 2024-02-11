@@ -3,7 +3,7 @@ import { FC, Fragment } from "react";
 import { useRecoilRefresher_UNSTABLE, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { dialogState } from "~/web/2_route";
 import { boardListState, pathState } from "~/web/2_store";
-import { Center, Dialog, Grid, IconButton, Left } from "~/web/4_view/atom";
+import { Dialog, IconButton, layout } from "~/web/4_view/atom";
 
 export const BoardDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
   const setDialog = useSetRecoilState(dialogState);
@@ -12,13 +12,13 @@ export const BoardDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
   const home = useRecoilValue(pathState);
   return (
     <Dialog zIndex={zIndex} close={() => setDialog(undefined)}>
-      <Grid row={["50px", "1fr"]}>
-        <Grid style={{ height: "50px" }} column={["1fr", "50px"]}>
-          <Left style={{ fontSize: 25, fontWeight: "bold" }}>Boards</Left>
+      <div style={layout.grid({ row: ["50px", "1fr"] })}>
+        <div style={{ ...layout.grid({ row: ["1fr", "50px"] }), height: "50px" }}>
+          <div style={{ ...layout.left, fontSize: 25, fontWeight: "bold" }}>Boards</div>
           <IconButton onClick={() => setDialog(undefined)}>
             <Close />
           </IconButton>
-        </Grid>
+        </div>
         <div style={{ overflow: "scroll" }}>
           <div
             style={{
@@ -29,21 +29,21 @@ export const BoardDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
             }}
           >
             <>
-              <Left style={{ fontWeight: "bold" }}>Owner</Left>
-              <Left style={{ fontWeight: "bold" }}>Package</Left>
-              <Left style={{ fontWeight: "bold" }}>Version</Left>
-              <Left>
+              <div style={{ ...layout.left, fontWeight: "bold" }}>Owner</div>
+              <div style={{ ...layout.left, fontWeight: "bold" }}>Package</div>
+              <div style={{ ...layout.left, fontWeight: "bold" }}>Version</div>
+              <div>
                 <IconButton size={30} onClick={() => console.log("Reload Packages")}>
                   <ReplayRounded />
                 </IconButton>
-              </Left>
+              </div>
             </>
             {boardList.getValue().map((pack, i) => (
               <Fragment key={i}>
-                <Left>{pack.owner}</Left>
-                <Left>{pack.name}</Left>
-                <Left>{pack.version}</Left>
-                <Center>
+                <div style={layout.left}>{pack.owner}</div>
+                <div style={layout.left}>{pack.name}</div>
+                <div style={layout.left}>{pack.version}</div>
+                <div style={layout.center}>
                   {i % 3 === 0 && (
                     <IconButton size={30} onClick={() => console.log("Download", pack.name)}>
                       <Download />
@@ -59,12 +59,12 @@ export const BoardDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
                       <Check />
                     </IconButton>
                   )}
-                </Center>
+                </div>
               </Fragment>
             ))}
           </div>
         </div>
-      </Grid>
+      </div>
     </Dialog>
   );
 };

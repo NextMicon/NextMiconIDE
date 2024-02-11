@@ -32,10 +32,10 @@ export const IoportComponent: FC<{ ioport: Ioport }> = ({ ioport }) => {
         y={oy - height / 2}
         width={width}
         height={height}
-        stroke={color.primary.dark}
+        stroke={color.obj.border.normal}
         strokeWidth={2}
         rx={18}
-        fill={highlight ? color.primary.dark : color.primary.light}
+        fill={highlight ? color.obj.fill.highlight : color.obj.fill.normal}
       />
       <text
         x={ioport.flip ? ox - width / 2 + 40 : ox + width / 2 - 40}
@@ -80,10 +80,10 @@ export const IoifView: FC<{ ioif: Board["ioifs"][number]; ioName: string; pos: P
         y={oy - height / 2}
         width={width}
         height={height}
-        stroke={color.primary.dark}
+        stroke={highlight ? color.obj.border.highlight : color.obj.border.normal}
         strokeWidth={2}
         rx={18}
-        fill={highlight ? color.primary.dark : color.primary.light}
+        fill={highlight ? color.obj.fill.highlight : color.obj.fill.normal}
       />
       <text
         x={flip ? ox - width / 2 + 40 : ox + width / 2 - 40}
@@ -114,7 +114,7 @@ const IOPortBg: FC<{
   const color = useColor();
   const [x, y] = posAdd(origin, flip ? posFlip(port.pos) : port.pos);
   const [cx, cy] = side ? [x - 18, y] : [x + 18, y];
-  return <circle cx={cx} cy={cy} r={14} fill={hover ? color.gray.mid : color.gray.light} />;
+  return <circle cx={cx} cy={cy} r={14} fill={hover ? color.obj.port_bg.highlight : color.obj.port_bg.normal} />;
 };
 
 const IOPortIcon: FC<{
@@ -131,11 +131,14 @@ const IOPortIcon: FC<{
   const icon = port.icon;
   return (
     <>
-      {/* <circle cx={cx} cy={cy} r={14} fill={hover ? color.gray.mid : color.gray.light} /> */}
-      {icon === "!" && <ExclamationIcon cx={cx} cy={cy} color={color.primary.dark} />}
-      {icon === "?" && <QuestionIcon cx={cx} cy={cy} color={color.primary.dark} />}
+      {icon === "!" && <ExclamationIcon cx={cx} cy={cy} color={color.obj.port_icon.normal} />}
+      {icon === "?" && <QuestionIcon cx={cx} cy={cy} color={color.obj.port_icon.normal} />}
       {icon === undefined &&
-        (side === io ? <LeftIcon cx={cx} cy={cy} color={color.primary.dark} /> : <RightIcon cx={cx} cy={cy} color={color.primary.dark} />)}
+        (side === io ? (
+          <LeftIcon cx={cx} cy={cy} color={color.obj.port_icon.normal} />
+        ) : (
+          <RightIcon cx={cx} cy={cy} color={color.obj.port_icon.normal} />
+        ))}
     </>
   );
 };

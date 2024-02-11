@@ -75,7 +75,7 @@ export const Canvas: FC<{
   return (
     <div ref={containerRef} style={{ overflow: "hidden", ...containerStyle }}>
       <svg
-        style={{ background: color.gray.white, userSelect: "none", ...svgStyle }}
+        style={{ background: color.canvas.bg, userSelect: "none", ...svgStyle }}
         viewBox={svgViewBox}
         onMouseMove={updateMousePosition}
         onMouseDown={(e) => {
@@ -122,11 +122,11 @@ const Grid: FC<{ offset: Position; interval?: [number, number]; strokeWidth?: [n
     <>
       <defs>
         <pattern id="smallGrid" width={subInterval} height={subInterval} patternUnits="userSpaceOnUse">
-          <path d={`M ${subInterval} 0 L 0 0 0 ${subInterval}`} fill="none" stroke={color.gray.mid} strokeWidth={subLineWidth} />
+          <path d={`M ${subInterval} 0 L 0 0 0 ${subInterval}`} fill="none" stroke={color.canvas.grid} strokeWidth={subLineWidth} />
         </pattern>
         <pattern id="grid" width={mainInterval} height={mainInterval} patternUnits="userSpaceOnUse">
           <rect width={mainInterval} height={mainInterval} fill="url(#smallGrid)" />
-          <path d={`M ${mainInterval} 0 L 0 0 0 ${mainInterval}`} fill="none" stroke={color.gray.mid} strokeWidth={mainLineWidth} />
+          <path d={`M ${mainInterval} 0 L 0 0 0 ${mainInterval}`} fill="none" stroke={color.canvas.grid} strokeWidth={mainLineWidth} />
         </pattern>
       </defs>
       <rect x={offset[0]} y={offset[1]} width="100%" height="100%" fill="url(#grid)" />

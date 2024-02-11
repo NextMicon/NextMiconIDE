@@ -3,7 +3,7 @@ import { FC, Fragment } from "react";
 import { useSetRecoilState, useRecoilValueLoadable, useRecoilRefresher_UNSTABLE, useRecoilValue } from "recoil";
 import { dialogState } from "~/web/2_route";
 import { boardListState, boardState, pathState } from "~/web/2_store";
-import { Dialog, Grid, Left, IconButton, Center } from "../atom";
+import { Dialog, IconButton } from "../atom";
 
 export const BuildDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
   const setDialog = useSetRecoilState(dialogState);

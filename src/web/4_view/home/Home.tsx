@@ -3,17 +3,16 @@ import { FC } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import "~/assets/logo.png";
 import { dialogState, routeState } from "~/web/2_route";
-import { Center, Flex, Grid, IconButton, TextButton, cssCenter, cssFlex, cssGrid } from "~/web/4_view/atom";
+import { IconButton, TextButton, layout } from "~/web/4_view/atom";
 import { projectListState, useColor } from "../../2_store";
 
 export const Home: FC = () => {
   const color = useColor();
-
   return (
-    <div style={{ ...cssCenter, height: "100%", background: color.primary.dark }}>
+    <div style={{ ...layout.center, height: "100%", ...color.home }}>
       <div style={{ maxWidth: "500px", maxHeight: "600px", width: "100%", height: "100%" }}>
-        <div style={{ ...cssGrid({ row: ["1fr", "1fr", "3fr"] }) }}>
-          <div style={{ ...cssCenter, fontWeight: "bold", fontSize: 40, color: "white" }}>Next Micon IDE</div>
+        <div style={{ ...layout.grid({ row: ["1fr", "1fr", "3fr"] }) }}>
+          <div style={{ ...layout.center, fontWeight: "bold", fontSize: 40, color: "white" }}>Next Micon IDE</div>
           <Buttons />
           <ProjectList />
         </div>
@@ -32,7 +31,7 @@ const Buttons: FC = () => {
       .then((root) => (root ? setRoute({ page: "editor", project: root }) : undefined));
   };
   return (
-    <div style={{ ...cssFlex({ direction: "horizontal", justify: "space-between", align: "center" }) }}>
+    <div style={{ ...layout.flex({ direction: "horizontal", justify: "space-between", align: "center" }) }}>
       <IconButton size={80} onClick={() => setDialog("createProject")}>
         <NoteAddOutlined />
       </IconButton>
@@ -56,11 +55,11 @@ const ProjectList: FC = () => {
   const recent = useRecoilValue(projectListState);
   // TODO: Last Modified 順に並べなおす
   return (
-    <Flex direction="vertical">
+    <div style={{ ...layout.flex({ direction: "vertical" }) }}>
       {recent.map(({ name, path }, i) => (
         <ProjectItem key={i} name={`${i + 1}. ${name}`} path={path} />
       ))}
-    </Flex>
+    </div>
   );
 };
 

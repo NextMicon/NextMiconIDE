@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { hweditorSizesState } from "~/web/2_store";
 import { useHWEditorFacade } from "~/web/3_facade";
-import { Grid } from "../../atom";
 import { MiconEditor } from "./graph/MiconEditor";
 import { ReplayController } from "./graph/ReplayController";
 import { SidePane } from "./pane";
@@ -23,10 +22,10 @@ export const HWEditor = () => {
         <SidePane />
       </Allotment.Pane>
       <Allotment.Pane>
-        <Grid row={["1fr", "40px"]}>
+        <div>
           <MiconEditor />
-          <ReplayController size={40} />
-        </Grid>
+          {/* <ReplayController size={40} /> */}
+        </div>
       </Allotment.Pane>
     </Allotment>
   );

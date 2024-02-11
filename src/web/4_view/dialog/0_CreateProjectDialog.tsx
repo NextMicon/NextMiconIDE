@@ -3,7 +3,7 @@ import { CSSProperties, FC, useState } from "react";
 import { useRecoilRefresher_UNSTABLE, useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { dialogState } from "~/web/2_route";
 import { boardListState, projectListState, useCreateProject } from "~/web/2_store";
-import { Dialog, Grid, IconButton, Left, cssLeft } from "../atom";
+import { layout, Dialog, IconButton } from "../atom";
 
 export const CreateProjectDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
   const setDialog = useSetRecoilState(dialogState);
@@ -20,21 +20,15 @@ export const CreateProjectDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
 
   return (
     <Dialog zIndex={zIndex} close={() => setDialog(undefined)}>
-      <Grid style={{ height: "50px" }} column={["1fr", "50px"]}>
-        <Left style={{ fontSize: 25, fontWeight: "bold" }}>Create Project</Left>
+      <div style={{ ...layout.grid({ column: ["1fr", "50px"] }), height: "50px" }}>
+        <div style={{ ...layout.left, fontSize: 25, fontWeight: "bold" }}>Create Project</div>
         <IconButton onClick={() => setDialog(undefined)}>
           <Close />
         </IconButton>
-      </Grid>
-      <div
-        style={{
-          height: "auto",
-          display: "grid",
-          gridTemplateColumns: "100px 200px",
-        }}
-      >
+      </div>
+      <div style={{ ...layout.grid({ column: ["100px", "200px"] }) }}>
         <>
-          <div style={{ ...cssLeft }}>Board</div>
+          <div style={{ ...layout.left }}>Board</div>
           <div>
             <select onChange={(e) => setBoard(e.target.value)} value={board} style={{ ...cssBorder }}>
               <option value={undefined}>-</option>
@@ -47,7 +41,7 @@ export const CreateProjectDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
           </div>
         </>
         <>
-          <div style={{ ...cssLeft }}>Version</div>
+          <div style={{ ...layout.left }}>Version</div>
           <div>
             <select onChange={(e) => setVersion(e.target.value)} style={{ ...cssBorder }}>
               <option value={undefined}>-</option>
@@ -56,7 +50,7 @@ export const CreateProjectDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
           </div>
         </>
         <>
-          <div style={{ ...cssLeft }}>Name</div>
+          <div style={{ ...layout.left }}>Name</div>
           <div>
             <input type="text" style={{ ...cssBorder }} value={proj} onChange={(e) => setProj(e.target.value)} />
           </div>

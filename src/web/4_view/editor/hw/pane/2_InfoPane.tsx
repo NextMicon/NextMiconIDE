@@ -22,7 +22,7 @@ import {
   wiresResolvedState,
 } from "~/web/2_store";
 import { useInstance, useIoport, useWire } from "~/web/3_facade";
-import { Center, Grid, IconButton, IconText, Left, cssLeft } from "~/web/4_view/atom";
+import { Center, IconButton, IconText, Left, layout } from "~/web/4_view/atom";
 
 export const InfoPane: FC = () => {
   return (
@@ -47,14 +47,21 @@ const BoardInfo: FC = () => {
   const [detail, setDetail] = useState(false);
   return (
     <>
-      <Grid column={["20px", "1fr", "1fr", "30px"]} style={{ height: "30px", cursor: "pointer", background: color.gray.light }}>
+      <div
+        style={{
+          ...layout.grid({ column: ["20px", "1fr", "1fr", "30px"] }),
+          height: "30px",
+          cursor: "pointer",
+          background: color.hw_list.bg,
+        }}
+      >
         <div></div>
         <Left>{proj.board.name}</Left>
         <Left>{proj.board.version}</Left>
         <IconButton style={{ margin: "2px" }} onClick={() => setDetail(!detail)}>
           {detail ? <KeyboardArrowDown /> : <KeyboardArrowLeft />}
         </IconButton>
-      </Grid>
+      </div>
       {detail && (
         <div style={{ height: "auto" }}>
           <pre>{JSON.stringify(board, undefined, 2)}</pre>
@@ -86,18 +93,17 @@ const InstanceListItem: FC<{ instance: Instance }> = ({ instance }) => {
   const [newName, setNewName] = useState(instance.name);
 
   // Calculate
-  const background = selected ? color.primary.dark : hover ? color.primary.light : color.gray.light;
+  const background = selected ? color.hw_list.item.selected : hover ? color.hw_list.item.hover : color.hw_list.item.normal;
   const submitRename = () => {
     if (newName !== instance.name) rename(newName);
   };
 
   return (
     <>
-      <Grid
-        column={["20px", "1fr", "1fr", "30px"]}
-        style={{ height: "30px", cursor: "pointer", background }}
-        hoverOn={() => setHover(true)}
-        hoverOff={() => setHover(false)}
+      <div
+        style={{ ...layout.grid({ column: ["20px", "1fr", "1fr", "30px"] }), height: "30px", cursor: "pointer", background }}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
         onClick={(e) => (e.ctrlKey ? append() : select())}
       >
         <div></div>
@@ -106,10 +112,10 @@ const InstanceListItem: FC<{ instance: Instance }> = ({ instance }) => {
         <IconButton style={{ margin: "2px" }} onClick={() => setDetail(!detail)}>
           {detail ? <KeyboardArrowDown /> : <KeyboardArrowLeft />}
         </IconButton>
-      </Grid>
+      </div>
       {detail && (
         <div style={{ height: "auto" }}>
-          <Grid style={{ height: "30px" }} column={["40px", "1fr", "1fr", "30px"]}>
+          <div style={{ ...layout.grid({ column: ["40px", "1fr", "1fr", "30px"] }), height: "30px" }}>
             <div></div>
             <Left>{"name"}</Left>
             <input
@@ -125,7 +131,7 @@ const InstanceListItem: FC<{ instance: Instance }> = ({ instance }) => {
             <IconButton style={{ margin: "2px" }} onClick={submitRename}>
               <Check />
             </IconButton>
-          </Grid>
+          </div>
           {/* <pre>{JSON.stringify(instance, undefined, 2)}</pre> */}
         </div>
       )}
@@ -156,18 +162,17 @@ const IoportListItem: FC<{ ioport: Ioport }> = ({ ioport }) => {
   const [newName, setNewName] = useState(ioport.name);
 
   // Calculate
-  const background = selected ? color.primary.dark : hover ? color.primary.light : color.gray.light;
+  const background = selected ? color.hw_list.item.selected : hover ? color.hw_list.item.hover : color.hw_list.item.normal;
   const submitRename = () => {
     if (newName !== ioport.name) rename(newName);
   };
 
   return (
     <>
-      <Grid
-        column={["20px", "1fr", "1fr", "30px"]}
-        style={{ height: "30px", cursor: "pointer", background }}
-        hoverOn={() => setHover(true)}
-        hoverOff={() => setHover(false)}
+      <div
+        style={{ ...layout.grid({ column: ["20px", "1fr", "1fr", "30px"] }), height: "30px", cursor: "pointer", background }}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
         onClick={(e) => (e.ctrlKey ? append() : select())}
       >
         <div></div>
@@ -176,9 +181,9 @@ const IoportListItem: FC<{ ioport: Ioport }> = ({ ioport }) => {
         <IconButton style={{ margin: "2px" }} onClick={() => setDetail(!detail)}>
           {detail ? <KeyboardArrowDown /> : <KeyboardArrowLeft />}
         </IconButton>
-      </Grid>
+      </div>
       {detail && (
-        <Grid style={{ height: "30px" }} column={["40px", "1fr", "1fr"]}>
+        <div style={{ ...layout.grid({ column: ["40px", "1fr", "1fr"] }), height: "30px" }}>
           <div></div>
           <Left>{"name"}</Left>
           <select
@@ -188,7 +193,7 @@ const IoportListItem: FC<{ ioport: Ioport }> = ({ ioport }) => {
             }}
           ></select>
           {/* <input style={{ display: "block", width: "100%", height: "100%" }} onChange={(e) => setNewName(e.target.value)} value={newName} /> */}
-        </Grid>
+        </div>
       )}
     </>
   );
@@ -198,7 +203,7 @@ const EdditableText: FC<{ text: string; onChange: (text: string) => void }> = ({
   const [editing, setEditing] = useState(false);
   const [newText, setNewText] = useState(text);
   return editing ? (
-    <Grid column={["1fr", "30px", "30px"]}>
+    <div style={layout.grid({ column: ["1fr", "30px", "30px"] })}>
       <input type={"text"} value={newText} onChange={(e) => setNewText(e.target.value)}></input>
       <IconButton
         style={{ margin: "2px" }}
@@ -212,9 +217,9 @@ const EdditableText: FC<{ text: string; onChange: (text: string) => void }> = ({
       <IconButton style={{ margin: "2px" }} onClick={() => setEditing(false)}>
         <Close />
       </IconButton>
-    </Grid>
+    </div>
   ) : (
-    <div style={cssLeft} onClick={() => setEditing(true)}>
+    <div style={layout.left} onClick={() => setEditing(true)}>
       {text}
     </div>
   );
@@ -266,14 +271,19 @@ const WireListItem: FC<{ wire: Wire }> = ({ wire }) => {
   const [hover, setHover] = useState(false);
 
   // Calculate
-  const background = selected ? color.primary.dark : hover ? color.primary.light : color.gray.light;
+  const background = selected ? color.hw_list.item.selected : hover ? color.hw_list.item.hover : color.hw_list.item.normal;
 
   return (
-    <Grid
-      column={["20px", "2fr", "20px", "40px", "2fr"]}
-      style={{ height: "30px", cursor: "pointer", background, whiteSpace: "nowrap" }}
-      hoverOn={() => setHover(true)}
-      hoverOff={() => setHover(false)}
+    <div
+      style={{
+        ...layout.grid({ column: ["20px", "2fr", "20px", "40px", "2fr"] }),
+        height: "30px",
+        cursor: "pointer",
+        background,
+        whiteSpace: "nowrap",
+      }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
       onClick={(e) => (e.ctrlKey ? append() : select())}
     >
       <div></div>
@@ -283,6 +293,6 @@ const WireListItem: FC<{ wire: Wire }> = ({ wire }) => {
         <ArrowRightAlt />
       </Left>
       <Left>{wire.last.join(".")}</Left>
-    </Grid>
+    </div>
   );
 };

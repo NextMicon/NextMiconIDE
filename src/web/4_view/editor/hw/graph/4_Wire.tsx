@@ -28,8 +28,8 @@ export const WireComponent: FC<{ wire: Wire }> = ({ wire }) => {
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <polyline points={points} stroke={color.primary.dark} opacity={highlight ? 0.5 : 0} strokeWidth={12} />
-        <polyline points={points} stroke={color.gray.black} strokeWidth={3} />
+        <polyline points={points} stroke={color.wire.highlight} opacity={highlight ? 0.5 : 0} strokeWidth={12} />
+        <polyline points={points} stroke={color.wire.normal} strokeWidth={3} />
         {midPoints.map((pos, i) => (
           <MidpointSVG key={i} wire={wire} idx={i} pos={pos} onMouseDown={() => startAddWaypoint(i)} />
         ))}
@@ -61,14 +61,14 @@ const WaypointSVG: FC<{ wire: Wire; idx: number; pos: Position }> = ({ wire, idx
       onMouseLeave={() => setHover(false)}
       style={{ cursor: "pointer" }}
     >
-      <circle cx={x} cy={y} r={4} fillOpacity={highlight ? 1 : 0} fill={color.gray.black} />
+      <circle cx={x} cy={y} r={4} fillOpacity={highlight ? 1 : 0} fill={color.wire.normal} />
       <circle
         cx={x}
         cy={y}
         r={10}
         fillOpacity={highlight ? 0.3 : 0}
-        fill={color.primary.light}
-        stroke={highlight ? color.primary.dark : "none"}
+        fill={color.wire.normal}
+        stroke={highlight ? color.wire.highlight : "none"}
       />
     </g>
   );
@@ -86,14 +86,14 @@ const MidpointSVG: FC<{ wire: Wire; idx: number; pos: Position; onMouseDown: () 
 
   return (
     <g onMouseDown={onMouseDown} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={{ cursor: "pointer" }}>
-      <circle cx={x} cy={y} r={4} fillOpacity={hover ? 1 : 0} fill={color.gray.black} />
+      <circle cx={x} cy={y} r={4} fillOpacity={hover ? 1 : 0} fill={color.wire.normal} />
       <circle
         cx={x}
         cy={y}
         r={10}
         fillOpacity={hover ? 0.3 : 0}
-        fill={color.primary.light}
-        stroke={hover ? color.primary.dark : "none"}
+        fill={color.wire.normal}
+        stroke={hover ? color.wire.highlight : "none"}
         strokeDasharray={"2 2"}
       />
     </g>

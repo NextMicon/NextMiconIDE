@@ -1,17 +1,16 @@
 import { KeyboardArrowDown, KeyboardArrowRight } from "@mui/icons-material";
 import { CSSProperties, FC, Fragment, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { COLORS } from "~/consts";
 import { Func, Package } from "~/files";
 import { Instance } from "~/web/1_type";
 import { instancesResolvedState, useColor } from "~/web/2_store";
-import { cssCenter, cssLeft } from "~/web/4_view/atom";
+import { layout } from "~/web/4_view/atom";
 
 export const InstanceList = () => {
   const instances = useRecoilValue(instancesResolvedState);
   const color = useColor();
   return (
-    <div style={{ overflow: "scroll", backgroundColor: COLORS.sw_back, color: color.gray.white }}>
+    <div style={{ overflow: "scroll", background: color.home.background }}>
       <div
         style={{
           height: "auto",
@@ -48,14 +47,14 @@ const InstanceDoc: FC<{ instance: Instance }> = ({ instance }) => {
           cursor: "pointer",
           display: "grid",
           gridTemplateColumns: `${SIZE}px 1fr`,
-          background: hover ? color.primary.dark : COLORS.sw_back,
+          // background: hover ? color.primary.dark : COLORS.sw.bg,
         }}
         onClick={() => setOpen(!open)}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        <div style={{ ...cssCenter }}>{open ? <KeyboardArrowDown style={iconCss} /> : <KeyboardArrowRight style={iconCss} />}</div>
-        <div style={{ ...cssLeft, fontSize: SIZE - 10 }}>{instance.name}</div>
+        <div style={{ ...layout.center }}>{open ? <KeyboardArrowDown style={iconCss} /> : <KeyboardArrowRight style={iconCss} />}</div>
+        <div style={{ ...layout.left, fontSize: SIZE - 10 }}>{instance.name}</div>
       </div>
       {open && (
         <div style={{ display: "flex", flexDirection: "column", rowGap: 10 }}>
@@ -91,7 +90,7 @@ const Func: FC<{ inst: string; note: string; method: Func }> = ({ inst, note, me
     <div
       style={{
         height: "auto",
-        background: hover ? color.primary.dark : COLORS.sw_back,
+        // background: hover ? color.primary.dark : COLORS.sw.bg,
         cursor: "pointer",
         display: "flex",
         flexDirection: "column",
@@ -100,11 +99,11 @@ const Func: FC<{ inst: string; note: string; method: Func }> = ({ inst, note, me
       onMouseLeave={() => setHover(false)}
       onClick={() => window.ipc.clipboard.copy(use)}
     >
-      <div style={{ ...cssLeft, height: 20, whiteSpace: "nowrap" }}>
+      <div style={{ ...layout.left, height: 20, whiteSpace: "nowrap" }}>
         <pre> </pre>
         <pre style={{ color: ccolor.comment }}>{note}</pre>
       </div>
-      <div style={{ ...cssLeft, height: 20, whiteSpace: "nowrap" }}>
+      <div style={{ ...layout.left, height: 20, whiteSpace: "nowrap" }}>
         <pre> </pre>
         <pre style={{ color: typeColor(method.type) }}>{method.type}</pre>
         <pre> </pre>

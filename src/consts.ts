@@ -29,9 +29,3 @@ void loop(){
   // Code Here!
 }
 `;
-
-export const COLORS = {
-  hw_back: "#282c34",
-  hw_grid: "",
-  sw_back: "#282c34",
-} as const;

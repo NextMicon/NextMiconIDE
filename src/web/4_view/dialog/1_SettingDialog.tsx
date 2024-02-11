@@ -3,7 +3,7 @@ import { CSSProperties, FC } from "react";
 import { useSetRecoilState } from "recoil";
 import { dialogState } from "~/web/2_route";
 import { useSetColorName } from "~/web/2_store";
-import { Dialog, Grid, IconButton, Left, cssLeft } from "../atom";
+import { Dialog, IconButton, layout } from "../atom";
 
 export const SettingDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
   const setDialog = useSetRecoilState(dialogState);
@@ -13,12 +13,12 @@ export const SettingDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
 
   return (
     <Dialog zIndex={zIndex} close={() => setDialog(undefined)}>
-      <Grid style={{ height: "50px" }} column={["1fr", "50px"]}>
-        <Left style={{ fontSize: 25, fontWeight: "bold" }}>Settings</Left>
+      <div style={{ ...layout.grid({ column: ["1fr", "50px"] }), height: "50px" }}>
+        <div style={{ ...layout.left, fontSize: 25, fontWeight: "bold" }}>Settings</div>
         <IconButton onClick={() => setDialog(undefined)}>
           <Close />
         </IconButton>
-      </Grid>
+      </div>
       <div
         style={{
           height: "auto",
@@ -27,7 +27,7 @@ export const SettingDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
         }}
       >
         <>
-          <div style={{ ...cssLeft }}>Color</div>
+          <div style={{ ...layout.left }}>Color</div>
           <div>
             <select value={colorName} onChange={(e) => setColorName(e.target.value)} style={{ ...cssBorder }}>
               <option value={"ai"}>Ai</option>
@@ -37,7 +37,7 @@ export const SettingDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
           </div>
         </>
         <>
-          <div style={{ ...cssLeft }}>GitHub Token</div>
+          <div style={{ ...layout.left }}>GitHub Token</div>
           <div>
             <input style={{ ...cssBorder }} />
           </div>

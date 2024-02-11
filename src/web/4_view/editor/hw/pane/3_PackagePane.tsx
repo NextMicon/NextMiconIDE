@@ -3,21 +3,23 @@ import { CSSProperties, FC, useState } from "react";
 import { useRecoilState, useRecoilValueLoadable } from "recoil";
 import { PackKey, packEq, packToString } from "~/web/1_type";
 import { hwEditorFSM, localPacksState, useColor, useGetNewInstanceName } from "~/web/2_store";
-import { Grid, IconButton, SearchBox, TextButton, cssCenter } from "~/web/4_view/atom";
+import { IconButton, SearchBox, TextButton, layout } from "~/web/4_view/atom";
 
 export const PackagePane: FC<{ style?: CSSProperties }> = ({ style }) => {
   const [keyword, setKeyword] = useState("");
   const color = useColor();
   return (
-    <Grid row={["48px", "1fr"]} style={{ background: color.gray.mid, userSelect: "none", ...style }}>
+    <div style={{ ...layout.grid({ row: ["48px", "1fr"] }), background: color.hw_list.bg, userSelect: "none", ...style }}>
       <SearchBox
         text={keyword}
         setText={setKeyword}
         // TODO
         onSubmit={() => console.warn("Search Package:", keyword)}
+        iconColor={color.toolbar.icon}
+        inputColor={"white"}
       />
       <PackageList />
-    </Grid>
+    </div>
   );
 };
 
@@ -54,7 +56,7 @@ const Package: FC<{ pack: PackKey }> = ({ pack }) => {
     <div
       style={{
         height: "30px",
-        background: selected ? color.primary.dark : hover ? color.primary.light : color.gray.mid,
+        background: selected ? color.hw_list.item.selected : hover ? color.hw_list.item.hover : color.hw_list.item.normal,
         cursor: "pointer",
         display: "grid",
         gridTemplateColumns: "20px 1fr 50px 30px 30px",
@@ -71,7 +73,7 @@ const Package: FC<{ pack: PackKey }> = ({ pack }) => {
       >
         {pack.name}
       </div>
-      <TextButton style={{ margin: "5px 2px", ...cssCenter }}>v0.0</TextButton>
+      <TextButton style={{ margin: "5px 2px", ...layout.center }}>v0.0</TextButton>
       <IconButton style={{ margin: "2px" }}>{ready ? <Check /> : <ArrowDownward />}</IconButton>
       <IconButton style={{ margin: "2px" }} onClick={() => window.ipc.web.open("https://example.com")}>
         <QuestionMark />

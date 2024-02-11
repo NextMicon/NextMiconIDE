@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { URL_NEXT_MICON } from "~/consts";
 import { dialogState, routeState } from "~/web/2_route";
 import { modeState, projectNameState, useColor, useGenerate, useRunMake } from "~/web/2_store";
-import { Center, Grid, IconButton } from "~/web/4_view/atom";
+import { Center, IconButton, layout } from "~/web/4_view/atom";
 
 export const TopBar: FC = () => {
   const color = useColor();
@@ -16,7 +16,12 @@ export const TopBar: FC = () => {
   const generate = useGenerate();
   return (
     <>
-      <Grid column={["50px", "50px", "50px", "1fr", "50px", "50px", "50px", "50px"]} style={{ background: color.primary.dark }}>
+      <div
+        style={{
+          ...layout.grid({ column: ["50px", "50px", "50px", "1fr", "50px", "50px", "50px", "50px"] }),
+          background: color.toolbar.bg,
+        }}
+      >
         <Center>
           <IconButton size={40} onClick={() => setRoute({ page: "home" })}>
             <Home />
@@ -32,7 +37,7 @@ export const TopBar: FC = () => {
             <Language />
           </IconButton>
         </Center>
-        <Center style={{ color: "white", fontWeight: "bold", fontSize: "20px" }}>{projectName}</Center>
+        <div style={{ ...layout.center, color: "white", fontWeight: "bold", fontSize: "20px" }}>{projectName}</div>
         <Center>
           <IconButton size={40} onClick={() => setMode("hardware")} forceHover={mode === "hardware"}>
             <DeviceHub />
@@ -53,7 +58,7 @@ export const TopBar: FC = () => {
             <Send />
           </IconButton>
         </Center>
-      </Grid>
+      </div>
     </>
   );
 };

@@ -1,7 +1,7 @@
 import { Check } from "@mui/icons-material";
 import { FC, useState } from "react";
 import { Message, useColor, useMessage } from "~/web/2_store";
-import { Center, Grid, IconButton } from "../atom";
+import { IconButton, layout } from "../atom";
 
 export const MessageList: FC = () => {
   const color = useColor();
@@ -16,8 +16,9 @@ export const MessageList: FC = () => {
   return (
     <div
       style={{
+        ...color.message_list,
+
         pointerEvents: "all",
-        background: color.gray.dark,
         borderTopLeftRadius: 20,
 
         position: "absolute",
@@ -50,7 +51,7 @@ const MessageItem: FC<{ message: Message }> = ({ message }) => {
     <div
       style={{
         pointerEvents: "auto",
-        background: color.note[message.type],
+        background: color.message[message.type],
         height: "auto",
         borderRadius: 20,
         marginBottom: 10,
@@ -60,16 +61,16 @@ const MessageItem: FC<{ message: Message }> = ({ message }) => {
       onClick={() => setWidth(!width)}
       onDoubleClick={() => deleteMessage(message.id)}
     >
-      <Grid column={["1fr", "50px"]} style={{ height: "50px" }}>
-        <Center>
+      <div style={{ ...layout.grid({ column: ["1fr", "50px"] }), height: "50px" }}>
+        <div style={layout.center}>
           <span style={{ fontSize: 20, fontWeight: "bold", height: "auto" }}> {message.title}</span>
-        </Center>
-        <Center>
-          <IconButton onClick={() => deleteMessage(message.id)} size={40} base={color.gray.mid}>
-            <Check style={{ color: color.note[message.type] }} />
+        </div>
+        <div style={layout.center}>
+          <IconButton onClick={() => deleteMessage(message.id)} size={40} base={color.message_list.background}>
+            <Check style={{ background: color.message[message.type] }} />
           </IconButton>
-        </Center>
-      </Grid>
+        </div>
+      </div>
       <div style={{ whiteSpace: "break-spaces", height: "auto", padding: "0 20px 20px 20px", overflowX: "scroll" }}>{message.text}</div>
     </div>
   );

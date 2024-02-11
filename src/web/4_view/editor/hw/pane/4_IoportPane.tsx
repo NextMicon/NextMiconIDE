@@ -10,7 +10,7 @@ export const IoportPane: FC<{ style?: CSSProperties }> = ({ style }) => {
   return (
     <div
       style={{
-        background: color.gray.mid,
+        background: color.hw_list.bg,
         overflowY: "scroll",
         ...style,
       }}
@@ -35,7 +35,7 @@ const Ioport: FC<{ type: string; name: string }> = ({ type, name }) => {
     <div
       style={{
         height: "30px",
-        background: selected ? color.primary.dark : hover ? color.primary.light : color.gray.mid,
+        background: selected ? color.hw_list.item.selected : hover ? color.hw_list.item.hover : color.hw_list.item.normal,
         cursor: "pointer",
         display: "grid",
         gridTemplateColumns: "20px 1fr",
