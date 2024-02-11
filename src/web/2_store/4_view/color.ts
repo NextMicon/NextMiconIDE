@@ -56,12 +56,12 @@ export interface ColorTheme {
           hov: { border: string; fill: string; text: string; port_bg: string; port_icon: string };
         };
       };
-      sidebar: {
+      toolbar: {
         _: { bg: string; text: string };
         btn: { _: { bg: string; icon: string; text: string }; hov: { bg: string; icon: string; text: string } };
       };
-      list: {
-        _: { bg: string };
+      pane: {
+        _: { bg: string; icon: string; text: string };
         headder: { _: { bg: string; icon: string; text: string } };
         item: {
           _: { bg: string; text: string; icon: string };
@@ -73,7 +73,7 @@ export interface ColorTheme {
     };
     sw: {
       text: {};
-      list: {
+      pane: {
         _: { bg: string };
         inst: {
           _: { bg: string; text: string; icon: string };
@@ -153,12 +153,12 @@ export const colorThemes: Record<ColorName, ColorTheme> = {
             },
           },
         },
-        sidebar: {
+        toolbar: {
           _: { bg: C.sakura.mid, text: C.white },
           btn: { _: { bg: C.sakura.light, icon: C.sakura.dark, text: C.black }, hov: { bg: C.white, icon: C.sakura.dark, text: C.black } },
         },
-        list: {
-          _: { bg: C.navy.dark },
+        pane: {
+          _: { bg: C.navy.dark, icon: C.white, text: C.white },
           headder: { _: { bg: C.navy.dark, icon: C.white, text: C.white } },
           item: {
             _: { bg: C.navy.dark, icon: C.white, text: C.white },
@@ -173,7 +173,7 @@ export const colorThemes: Record<ColorName, ColorTheme> = {
       },
       sw: {
         text: {},
-        list: {
+        pane: {
           _: { bg: C.navy.dark },
           inst: {
             _: { bg: C.navy.dark, text: C.white, icon: C.white },

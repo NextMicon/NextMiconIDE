@@ -27,7 +27,7 @@ export const IoportPane: FC<{ style?: CSSProperties }> = ({ style }) => {
 };
 
 const Ioport: FC<{ type: string; name: string }> = ({ type, name }) => {
-  const color = useColor().editor.hw.list.item;
+  const color = useColor().editor.hw.pane.item;
   const [fsm, setState] = useRecoilState(hwEditorFSM);
   const selected = fsm.state === "AddIoport" && fsm.value.type === type && fsm.value.name === name;
   const [hover, setHover] = useState(false);

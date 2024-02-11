@@ -8,7 +8,7 @@ import { layout } from "~/web/4_view/atom";
 
 export const InstanceList = () => {
   const instances = useRecoilValue(instancesResolvedState);
-  const color = useColor().editor.sw.list;
+  const color = useColor().editor.sw.pane;
   return (
     <div style={{ overflow: "scroll", background: color._.bg }}>
       <div
@@ -31,7 +31,7 @@ export const InstanceList = () => {
 };
 
 const InstanceDoc: FC<{ instance: Instance }> = ({ instance }) => {
-  const color = useColor().editor.sw.list.inst;
+  const color = useColor().editor.sw.pane.inst;
 
   const [open, setOpen] = useState(false);
   const [hover, setHover] = useState(false);
@@ -69,7 +69,7 @@ const InstanceDoc: FC<{ instance: Instance }> = ({ instance }) => {
 };
 
 const Func: FC<{ inst: string; note: string; method: Func }> = ({ inst, note, method }) => {
-  const color = useColor().editor.sw.list.func;
+  const color = useColor().editor.sw.pane.func;
   const [hover, setHover] = useState(false);
 
   const use = `${inst}.${method.name}();`;

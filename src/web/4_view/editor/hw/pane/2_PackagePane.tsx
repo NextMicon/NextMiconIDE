@@ -7,7 +7,7 @@ import { IconButton, SearchBox, TextButton, layout } from "~/web/4_view/atom";
 
 export const PackagePane: FC<{ style?: CSSProperties }> = ({ style }) => {
   const [keyword, setKeyword] = useState("");
-  const color = useColor().editor.hw.list;
+  const color = useColor().editor.hw.pane;
   return (
     <div style={{ ...layout.grid({ row: ["48px", "1fr"] }), background: color._.bg, userSelect: "none", ...style }}>
       <SearchBox
@@ -43,7 +43,7 @@ const PackageList = () => {
 };
 
 const Package: FC<{ pack: PackKey }> = ({ pack }) => {
-  const color = useColor().editor.hw.list.item;
+  const color = useColor().editor.hw.pane.item;
   const [fsm, setState] = useRecoilState(hwEditorFSM);
   const selected = fsm.state === "AddInstance" && packEq(fsm.value.pack, pack);
   const [hover, setHover] = useState(false);
