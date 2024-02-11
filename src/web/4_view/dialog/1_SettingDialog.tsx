@@ -2,13 +2,14 @@ import { Close } from "@mui/icons-material";
 import { FC } from "react";
 import { useSetRecoilState } from "recoil";
 import { dialogState } from "~/web/2_route";
-import { useColor, useSetColorName } from "~/web/2_store";
+import { colorThemes, useColor, useSetColorName } from "~/web/2_store";
 import { Dialog, IconButton, layout } from "../atom";
 
 export const SettingDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
   const color = useColor();
   const setDialog = useSetRecoilState(dialogState);
   const { colorName, setColorName } = useSetColorName();
+  const colors = Object.entries(colorThemes);
 
   return (
     <Dialog zIndex={zIndex} close={() => setDialog(undefined)}>
@@ -22,9 +23,9 @@ export const SettingDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
         <>
           <div style={layout.left}>Color</div>
           <select value={colorName} onChange={(e) => setColorName(e.target.value)}>
-            <option value={"ai"}>Ai</option>
-            <option value={"sakura"}>Sakura</option>
-            <option value={"dark"}>Dark Ai</option>
+            {colors.map(([k, _]) => (
+              <option key={k}>{k}</option>
+            ))}
           </select>
         </>
         <>

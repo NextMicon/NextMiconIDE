@@ -5,3 +5,9 @@
 ![](img/ide_hw.png)
 
 ![](img/ide_sw.png)
+
+## TODO
+
+- add registor
+- hide command log
+- change io pane ui design
