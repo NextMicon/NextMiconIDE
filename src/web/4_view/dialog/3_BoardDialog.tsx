@@ -14,21 +14,14 @@ export const BoardDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
   return (
     <Dialog zIndex={zIndex} close={() => setDialog(undefined)}>
       <div style={layout.rowGrid({ row: [50, null] })}>
-        <div style={{ ...layout.rowGrid({ row: [null, 50] }), height: "50px" }}>
+        <div style={layout.colGrid({ column: [null, 50] })}>
           <div style={{ ...layout.left, fontSize: 25, fontWeight: "bold" }}>Boards</div>
           <IconButton color={color.dialog.btn} onClick={() => setDialog(undefined)}>
             <Close />
           </IconButton>
         </div>
         <div style={{ overflow: "scroll" }}>
-          <div
-            style={{
-              height: "auto",
-              display: "grid",
-              gridAutoColumns: "30px",
-              gridTemplateColumns: "1fr 1fr 1fr 30px",
-            }}
-          >
+          <div style={layout.colGrid({ column: [null, null, null, 30], row: 30 })}>
             <>
               <div style={{ ...layout.left, fontWeight: "bold" }}>Owner</div>
               <div style={{ ...layout.left, fontWeight: "bold" }}>Package</div>

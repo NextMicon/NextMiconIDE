@@ -55,10 +55,12 @@ const ProjectList: FC = () => {
   const recent = useRecoilValue(projectListState);
   // TODO: Last Modified 順に並べなおす
   return (
-    <div style={{ ...layout.flex({ direction: "vertical" }) }}>
-      {recent.map(({ name, path }, i) => (
-        <ProjectItem key={i} name={`${i + 1}. ${name}`} path={path} />
-      ))}
+    <div style={{ overflowY: "scroll" }}>
+      <div>
+        {recent.map(({ name, path }, i) => (
+          <ProjectItem key={i} name={`${i + 1}. ${name}`} path={path} />
+        ))}
+      </div>
     </div>
   );
 };
@@ -66,12 +68,12 @@ const ProjectList: FC = () => {
 const ProjectItem: FC<{ name: string; path: string[] }> = ({ name, path }) => {
   const setRoute = useSetRecoilState(routeState);
   const color = useColor();
-
   return (
     <TextButton
       color={color.home.btn}
       style={{
         height: "30px",
+        width: "100%",
         textAlign: "left",
         margin: "5px 0",
         padding: "0 5px",

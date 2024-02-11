@@ -31,7 +31,7 @@ export const layout = {
   },
   center: { display: "flex", justifyContent: "center", alignItems: "center" } as CSSProperties,
   left: { display: "flex", justifyContent: "left", alignItems: "center" } as CSSProperties,
-  right: { display: "flex", justifyContent: "left", alignItems: "center" } as CSSProperties,
+  right: { display: "flex", justifyContent: "right", alignItems: "center" } as CSSProperties,
 
   grid: ({ row, column }: { row: (string | number | null)[]; column: (string | number | null)[] }): CSSProperties => {
     return {

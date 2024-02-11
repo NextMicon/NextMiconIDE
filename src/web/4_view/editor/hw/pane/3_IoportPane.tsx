@@ -2,19 +2,14 @@ import test from "node:test";
 import { CSSProperties, FC, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { boardState, hwEditorFSM, useAvailableIoports, useColor } from "~/web/2_store";
-import { Accordion } from "~/web/4_view/atom";
+import { Accordion, layout } from "~/web/4_view/atom";
 
-export const IoportPane: FC<{ style?: CSSProperties }> = ({ style }) => {
-  const color = useColor();
+export const IoportPane: FC = () => {
+  const color = useColor().editor.hw.pane;
   const board = useRecoilValue(boardState);
   const getAvailableIOPorts = useAvailableIoports();
   return (
-    <div
-      style={{
-        overflowY: "scroll",
-        ...style,
-      }}
-    >
+    <div style={{ overflowY: "scroll", background: color._.bg, color: color._.text }}>
       {board.ioifs.map(({ type }) => (
         <Accordion key={type} title={type}>
           {getAvailableIOPorts(type).map((name) => (
@@ -37,17 +32,16 @@ const Ioport: FC<{ type: string; name: string }> = ({ type, name }) => {
   return (
     <div
       style={{
+        ...layout.colGrid({ column: [20, null] }),
         height: "30px",
         background: _color.bg,
         color: _color.text,
         cursor: "pointer",
-        display: "grid",
-        gridTemplateColumns: "20px 1fr",
       }}
     >
       <div></div>
       <div
-        style={{ height: "100%", display: "flex", alignItems: "center" }}
+        style={layout.left}
         onClick={() => {
           setState({ state: "AddIoport", value: { type, name } });
         }}

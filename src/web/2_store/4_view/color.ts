@@ -134,7 +134,7 @@ export const colorThemes: Record<ColorName, ColorTheme> = {
         graph: {
           canvas: { bg: C.navy.dark, grid: C.gray.midlight },
           select: { fill: C.gray.light, stroke: C.sakura.mid },
-          wire: { _: C.white, hov: C.sakura.light },
+          wire: { _: C.white, hov: C.sakura.dark },
           port: { _: C.white, hov: C.sakura.light },
           obj: {
             _: {
@@ -159,13 +159,13 @@ export const colorThemes: Record<ColorName, ColorTheme> = {
         },
         pane: {
           _: { bg: C.navy.dark, icon: C.white, text: C.white },
-          headder: { _: { bg: C.navy.dark, icon: C.sakura.dark, text: C.white } },
+          headder: { _: { bg: C.navy.dark, icon: C.sakura.dark, text: C.sakura.dark } },
           item: {
             _: { bg: C.navy.dark, icon: C.white, text: C.white },
             sel: { bg: C.sakura.dark, icon: C.white, text: C.black },
             hov: { bg: C.sakura.light, icon: C.white, text: C.black },
             btn: {
-              _: { bg: C.sakura.light, icon: C.sakura.dark, text: C.black },
+              _: { bg: C.gray.light, icon: C.gray.dark, text: C.black },
               hov: { bg: C.white, icon: C.sakura.dark, text: C.black },
             },
           },

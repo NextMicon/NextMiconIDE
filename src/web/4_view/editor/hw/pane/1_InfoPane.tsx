@@ -26,7 +26,7 @@ import { Center, IconButton, IconText, Left, layout } from "~/web/4_view/atom";
 export const InfoPane: FC = () => {
   const color = useColor().editor.hw.pane._;
   return (
-    <div style={{ background: color.bg, color: color.text, height: "auto" }}>
+    <div style={{ background: color.bg, color: color.text }}>
       <IconText Icon={DeveloperBoard} height={40} text={"Board"} />
       <BoardInfo />
       <IconText Icon={Apps} height={40} text={"Instances"} />
@@ -98,6 +98,7 @@ const InstanceListItem: FC<{ instance: Instance }> = ({ instance }) => {
     <div
       style={{
         ...layout.colGrid({ column: [20, null, null, 30], row: 30 }),
+        height: "auto",
         cursor: "pointer",
         background: _color.bg,
         color: _color.text,
@@ -167,6 +168,7 @@ const IoportListItem: FC<{ ioport: Ioport }> = ({ ioport }) => {
       <div
         style={{
           ...layout.colGrid({ column: [20, null, null, 30], row: 30 }),
+          height: "auto",
           cursor: "pointer",
           background: _color.bg,
           color: _color.text,
@@ -225,7 +227,8 @@ const WireListItem: FC<{ wire: Wire }> = ({ wire }) => {
   return (
     <div
       style={{
-        ...layout.colGrid({ column: [20, "2fr", 20, 40, "2fr"], row: 30 }),
+        ...layout.colGrid({ column: [20, null, 20, 40, null], row: 30 }),
+        height: "auto",
         background: _color.bg,
         color: _color.text,
         cursor: "pointer",

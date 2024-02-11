@@ -2,48 +2,33 @@ import { Check, Close, Download, ReplayRounded, Upload } from "@mui/icons-materi
 import { FC, Fragment } from "react";
 import { useRecoilRefresher_UNSTABLE, useRecoilValue, useSetRecoilState } from "recoil";
 import { dialogState } from "~/web/2_route";
-import {
-  localPacksState,
-  mergedPackList,
-  pathState,
-  registoryPackListState,
-  useColor,
-  useDownloadPackage,
-  useUpdateRegistory,
-} from "~/web/2_store";
+import { localPacksState, mergedPackList, registoryPackListState, useColor, useDownloadPackage, useUpdateRegistory } from "~/web/2_store";
 import { Dialog, IconButton, layout } from "../atom";
 
 export const PackageDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
   const color = useColor();
   const setDialog = useSetRecoilState(dialogState);
-  const appHome = useRecoilValue(pathState);
   const localPacks = useRecoilValue(localPacksState);
   const merged = useRecoilValue(mergedPackList);
   const reload = useRecoilRefresher_UNSTABLE(localPacksState);
   const registory = useRecoilValue(registoryPackListState);
   const reloadRegistory = useUpdateRegistory();
   const downloadPackage = useDownloadPackage();
+
   console.log(localPacks);
   console.log(registory);
   console.table(merged);
   return (
     <Dialog zIndex={zIndex} close={() => setDialog(undefined)}>
-      <div style={layout.rowGrid({ row: ["50px", "1fr"] })}>
-        <div style={layout.rowGrid({ row: ["1fr", "50px"] })}>
+      <div style={layout.rowGrid({ row: [50, null] })}>
+        <div style={layout.colGrid({ column: [null, 50] })}>
           <div style={{ ...layout.left, fontSize: 25, fontWeight: "bold" }}>Package</div>
           <IconButton color={color.dialog.btn} onClick={() => setDialog(undefined)}>
             <Close />
           </IconButton>
         </div>
         <div style={{ overflow: "scroll" }}>
-          <div
-            style={{
-              height: "auto",
-              display: "grid",
-              gridAutoColumns: "30px",
-              gridTemplateColumns: "1fr 1fr 1fr 30px",
-            }}
-          >
+          <div style={layout.colGrid({ column: [null, null, null, 30], row: 30 })}>
             <>
               <div style={{ ...layout.left, fontWeight: "bold" }}>Owner</div>
               <div style={{ ...layout.left, fontWeight: "bold" }}>Package</div>

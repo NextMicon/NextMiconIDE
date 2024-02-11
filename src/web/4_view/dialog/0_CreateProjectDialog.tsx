@@ -1,5 +1,5 @@
 import { Close } from "@mui/icons-material";
-import { CSSProperties, FC, useState } from "react";
+import { FC, useState } from "react";
 import { useRecoilRefresher_UNSTABLE, useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { dialogState } from "~/web/2_route";
 import { boardListState, projectListState, useColor, useCreateProject } from "~/web/2_store";
@@ -17,61 +17,55 @@ export const CreateProjectDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
   const createProject = useCreateProject();
   const refreshProjectList = useRecoilRefresher_UNSTABLE(projectListState);
 
-  const cssBorder: CSSProperties = { width: "100%", borderWidth: 1, borderColor: "black", borderStyle: "solid" };
-
   return (
     <Dialog zIndex={zIndex} close={() => setDialog(undefined)}>
-      <div style={{ ...layout.colGrid({ column: ["1fr", "50px"] }), height: "50px" }}>
+      <div style={{ ...layout.colGrid({ column: [null, 50], row: 50 }), height: 50 }}>
         <div style={{ ...layout.left, fontSize: 25, fontWeight: "bold" }}>Create Project</div>
         <IconButton color={color.dialog.btn} onClick={() => setDialog(undefined)}>
           <Close />
         </IconButton>
       </div>
-      <div style={{ ...layout.colGrid({ column: ["100px", "200px"] }) }}>
+      <div style={layout.colGrid({ column: [150, 200], row: 30 })}>
         <>
-          <div style={{ ...layout.left }}>Board</div>
-          <div>
-            <select onChange={(e) => setBoard(e.target.value)} value={board} style={{ ...cssBorder }}>
-              <option value={undefined}>-</option>
-              {boardListLoaddable.getValue().map((board, i) => (
-                <option key={i} value={board.name}>
-                  {board.name}
-                </option>
-              ))}
-            </select>
-          </div>
+          <div style={layout.left}>Board</div>
+          <select onChange={(e) => setBoard(e.target.value)} value={board}>
+            <option value={undefined}>-</option>
+            {boardListLoaddable.getValue().map((board, i) => (
+              <option key={i} value={board.name}>
+                {board.name}
+              </option>
+            ))}
+          </select>
         </>
         <>
-          <div style={{ ...layout.left }}>Version</div>
-          <div>
-            <select onChange={(e) => setVersion(e.target.value)} style={{ ...cssBorder }}>
-              <option value={undefined}>-</option>
-              <option>0.0.0</option>
-            </select>
-          </div>
+          <div style={layout.left}>Version</div>
+          <select onChange={(e) => setVersion(e.target.value)}>
+            <option value={undefined}>-</option>
+            <option>0.0.0</option>
+          </select>
         </>
         <>
-          <div style={{ ...layout.left }}>Name</div>
-          <div>
-            <input type="text" style={{ ...cssBorder }} value={proj} onChange={(e) => setProj(e.target.value)} />
-          </div>
+          <div style={layout.left}>Name</div>
+          <input type="text" value={proj} onChange={(e) => setProj(e.target.value)} />
         </>
         <>
-          <div></div>
-          <div>
-            {board && version && proj && (
+          <div style={layout.left}>Create</div>
+          <>
+            {board && version && proj ? (
               <button
-                style={{ ...cssBorder, background: "lightgray" }}
+                style={{ background: "lightgray" }}
                 onClick={() =>
-                  createProject(proj, { owner: "NextMicon", name: board, version: "0.0.0" })
+                  createProject(proj, { owner: "NextMicon", name: board, version: version })
                     .then(() => refreshProjectList())
                     .then(() => setDialog(undefined))
                 }
               >
-                Create!
+                {`${proj} <= ${board}/${version}`}
               </button>
+            ) : (
+              <div></div>
             )}
-          </div>
+          </>
         </>
       </div>
     </Dialog>
