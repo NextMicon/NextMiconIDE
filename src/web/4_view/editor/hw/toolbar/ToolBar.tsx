@@ -4,7 +4,7 @@ import { paneState, useColor } from "~/web/2_store";
 import { useButtonAction } from "~/web/3_facade";
 import { IconButton, layout } from "~/web/4_view/atom";
 
-export const ButtonBar = () => {
+export const ToolBar = () => {
   const color = useColor();
   const { undo, redo, save, flip, del } = useButtonAction();
   return (
