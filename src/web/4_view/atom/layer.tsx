@@ -2,16 +2,7 @@ import { FC, ReactNode } from "react";
 
 export const Layer: FC<{ children: ReactNode; zIndex: number }> = ({ children, zIndex }) => {
   return (
-    <div
-      style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        background: "transparent",
-        pointerEvents: "none",
-        zIndex: zIndex,
-      }}
-    >
+    <div style={{ position: "absolute", top: 0, left: 0, background: "transparent", pointerEvents: "none", zIndex: zIndex }}>
       {children}
     </div>
   );

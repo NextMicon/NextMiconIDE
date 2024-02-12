@@ -1,6 +1,5 @@
 import { Check, Search } from "@mui/icons-material";
 import { FC } from "react";
-import { useColor } from "~/web/2_store";
 
 export const SearchBox: FC<{
   text: string;
@@ -9,7 +8,6 @@ export const SearchBox: FC<{
   inputColor: string;
   iconColor: string;
 }> = ({ text, setText, onSubmit, inputColor, iconColor }) => {
-  const color = useColor();
   return (
     <div style={{ height: "48px", padding: "2px" }}>
       <div style={{ display: "flex", justifyContent: "center", padding: "2px" }}>

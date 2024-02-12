@@ -10,6 +10,5 @@
 
 - add registor
 - hide command log
-- change io pane ui design
 - add parameter
 - add logging
