@@ -1,7 +1,7 @@
 import { useRecoilValue } from "recoil";
 import { dialogState, routeState } from "../2_route";
 import { Layer } from "./atom";
-import { BoardDialog, CreateProjectDialog, MessageList, PackageDialog, SettingDialog } from "./dialog";
+import { BoardDialog, BuildDialog, CreateProjectDialog, MessageList, PackageDialog, SettingDialog } from "./dialog";
 import { Editor } from "./editor/Editor";
 import { Home } from "./home/Home";
 
@@ -20,6 +20,7 @@ export const App = () => {
       {dialog === "setting" && <SettingDialog zIndex={40} />}
       {dialog === "package" && <PackageDialog zIndex={40} />}
       {dialog === "board" && <BoardDialog zIndex={40} />}
+      {dialog === "build" && <BuildDialog zIndex={40} />}
       <Layer zIndex={41}>
         <MessageList />
       </Layer>

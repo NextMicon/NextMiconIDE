@@ -1,4 +1,4 @@
-import { ArrowRightAlt, Build, DeviceHub, EditNote, Home, Language, QuestionMark, Send, Settings } from "@mui/icons-material";
+import { DeviceHub, EditNote, Handyman, Home, Language, Send, Settings } from "@mui/icons-material";
 import { FC } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { URL_NEXT_MICON } from "~/consts";
@@ -44,11 +44,7 @@ export const TopBar: FC = () => {
             <DeviceHub />
           </IconButton>
         </Center>
-        <Center>
-          <IconButton color={color.editor.toolbar.btn} size={40} onClick={() => generate()}>
-            <Build />
-          </IconButton>
-        </Center>
+
         <Center>
           <IconButton color={color.editor.toolbar.btn} size={40} onClick={() => setMode("software")}>
             <EditNote />
@@ -57,6 +53,11 @@ export const TopBar: FC = () => {
         <Center>
           <IconButton color={color.editor.toolbar.btn} size={40} onClick={async () => runMake("upload")}>
             <Send />
+          </IconButton>
+        </Center>
+        <Center>
+          <IconButton color={color.editor.toolbar.btn} size={40} onClick={() => setDialog("build")}>
+            <Handyman />
           </IconButton>
         </Center>
       </div>

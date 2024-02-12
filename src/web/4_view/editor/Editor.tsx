@@ -46,7 +46,7 @@ const EditorLoadded = () => {
   }, [keyboardEventHandler]);
 
   return (
-    <div style={{ height: "100%", ...layout.rowGrid({ row: ["50px", "1fr", "20px"] }) }}>
+    <div style={{ ...layout.rowGrid({ row: [50, null, 20] }), height: "100%" }}>
       <TopBar />
       {mode === "hardware" && <HWEditor />}
       {mode === "software" && <SWeditor />}

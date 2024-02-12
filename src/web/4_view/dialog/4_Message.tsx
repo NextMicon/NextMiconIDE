@@ -7,11 +7,7 @@ export const MessageList: FC = () => {
   const color = useColor();
   const { messages } = useMessage();
 
-  // const instsErrors = useRecoilValueLoadable(instancesResolveErrorState);
-
-  const msg = [...messages];
-
-  if (msg.length === 0) return <></>;
+  if (messages.length === 0) return <></>;
 
   return (
     <div

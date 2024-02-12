@@ -32,17 +32,17 @@ export const useColor = () => useRecoilValue(colorState);
 
 export interface ColorTheme {
   home: {
-    _: { bg: string; text: string };
+    _: { bg: string; icon: string; text: string };
     btn: { _: { bg: string; icon: string; text: string }; hov: { bg: string; icon: string; text: string } };
   };
   dialog: {
-    _: { bg: string; text: string };
+    _: { bg: string; icon: string; text: string };
     btn: { _: { bg: string; icon: string; text: string }; hov: { bg: string; icon: string; text: string } };
     msg: { error: string; warn: string; sucsess: string; info: string };
   };
   editor: {
     toolbar: {
-      _: { bg: string; text: string };
+      _: { bg: string; icon: string; text: string };
       btn: { _: { bg: string; icon: string; text: string }; hov: { bg: string; icon: string; text: string } };
     };
     hw: {
@@ -117,17 +117,17 @@ const getTextColor = (bg: string) => {
 export const colorThemes: Record<ColorName, ColorTheme> = {
   dark_sakura: {
     home: {
-      _: { bg: C.sakura.dark, text: C.white },
+      _: { bg: C.sakura.dark, icon: C.sakura.dark, text: C.white },
       btn: { _: { bg: C.sakura.light, icon: C.sakura.dark, text: C.black }, hov: { bg: C.white, icon: C.sakura.dark, text: C.black } },
     },
     dialog: {
-      _: { bg: C.sakura.dark, text: C.white },
+      _: { bg: C.white, icon: C.sakura.dark, text: C.black },
       btn: { _: { bg: C.sakura.light, icon: C.sakura.dark, text: C.black }, hov: { bg: C.white, icon: C.sakura.dark, text: C.black } },
       msg: { error: C.red, warn: C.yellow, info: C.blue, sucsess: C.green },
     },
     editor: {
       toolbar: {
-        _: { bg: C.sakura.dark, text: C.white },
+        _: { bg: C.sakura.dark, icon: C.sakura.dark, text: C.white },
         btn: { _: { bg: C.sakura.light, icon: C.sakura.dark, text: C.black }, hov: { bg: C.white, icon: C.sakura.dark, text: C.black } },
       },
       hw: {
