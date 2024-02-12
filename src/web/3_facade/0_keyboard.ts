@@ -35,8 +35,8 @@ export const useHWEditorFacade = () => {
     if (e.ctrlKey && e.key === "y") redo();
     if (e.ctrlKey && e.key === "s") save();
     if (e.ctrlKey && e.key === "1") setPane({ type: "info" });
-    if (e.ctrlKey && e.key === "2") setPane({ type: "pack" });
-    if (e.ctrlKey && e.key === "3") setPane({ type: "ioport" });
+    if (e.ctrlKey && e.key === "2") setPane({ type: "primitive" });
+    if (e.ctrlKey && e.key === "3") setPane({ type: "pack" });
   };
   return { keyboard };
 };

@@ -2,7 +2,7 @@ import { Apps, CommitSharp, DeleteOutline, Flip, InfoOutlined, Redo, SaveOutline
 import { useRecoilState } from "recoil";
 import { paneState, useColor } from "~/web/2_store";
 import { useButtonAction } from "~/web/3_facade";
-import { IconButton, layout } from "~/web/4_view/atom";
+import { Center, IconButton, layout } from "~/web/4_view/atom";
 
 export const ButtonBar = () => {
   const color = useColor().editor.hw.toolbar;
@@ -10,46 +10,46 @@ export const ButtonBar = () => {
   const [infoPane, setInfoPane] = useRecoilState(paneState);
   return (
     <div style={{ ...layout.rowGrid({ row: [50, 50, 50, 50, 50, 50, 50, 50], column: 50 }), width: 50, background: color._.bg }}>
-      <div style={layout.center}>
+      <Center>
         <IconButton color={color.btn} size={40} onClick={() => setInfoPane({ type: "info" })}>
           <InfoOutlined />
         </IconButton>
-      </div>
-      <div style={layout.center}>
+      </Center>
+      <Center>
         <IconButton color={color.btn} size={40} onClick={() => setInfoPane({ type: "pack" })}>
           <Apps />
         </IconButton>
-      </div>
-      <div style={layout.center}>
-        <IconButton color={color.btn} size={40} onClick={() => setInfoPane({ type: "ioport" })}>
+      </Center>
+      <Center>
+        <IconButton color={color.btn} size={40} onClick={() => setInfoPane({ type: "primitive" })}>
           <CommitSharp />
         </IconButton>
-      </div>
-      <div style={layout.center}>
+      </Center>
+      <Center>
         <IconButton color={color.btn} size={40} onClick={() => undo()}>
           <Undo />
         </IconButton>
-      </div>
-      <div style={layout.center}>
+      </Center>
+      <Center>
         <IconButton color={color.btn} size={40} onClick={() => redo()}>
           <Redo />
         </IconButton>
-      </div>
-      <div style={layout.center}>
+      </Center>
+      <Center>
         <IconButton color={color.btn} size={40} onClick={() => save()}>
           <SaveOutlined />
         </IconButton>
-      </div>
-      <div style={layout.center}>
+      </Center>
+      <Center>
         <IconButton color={color.btn} size={40} onClick={() => flip()}>
           <Flip />
         </IconButton>
-      </div>
-      <div style={layout.center}>
+      </Center>
+      <Center>
         <IconButton color={color.btn} size={40} onClick={() => del()}>
           <DeleteOutline />
         </IconButton>
-      </div>
+      </Center>
     </div>
   );
 };
@@ -59,21 +59,21 @@ export const PaneTabBar = () => {
   const [infoPane, setInfoPane] = useRecoilState(paneState);
   return (
     <div style={{ ...layout.rowGrid({ row: [50, 50, 50], column: 50 }), background: color._.bg }}>
-      <div style={layout.center}>
+      <Center>
         <IconButton color={color.btn} size={40} onClick={() => setInfoPane({ type: "info" })}>
           <InfoOutlined />
         </IconButton>
-      </div>
-      <div style={layout.center}>
+      </Center>
+      <Center>
+        <IconButton color={color.btn} size={40} onClick={() => setInfoPane({ type: "primitive" })}>
+          <CommitSharp />
+        </IconButton>
+      </Center>
+      <Center>
         <IconButton color={color.btn} size={40} onClick={() => setInfoPane({ type: "pack" })}>
           <Apps />
         </IconButton>
-      </div>
-      <div style={layout.center}>
-        <IconButton color={color.btn} size={40} onClick={() => setInfoPane({ type: "ioport" })}>
-          <CommitSharp />
-        </IconButton>
-      </div>
+      </Center>
     </div>
   );
 };
@@ -83,31 +83,31 @@ export const EditorToolBar = () => {
   const { undo, redo, save, flip, del } = useButtonAction();
   return (
     <div style={{ ...layout.rowGrid({ row: [50, 50, 50, 50, 50], column: 50 }), background: color._.bg }}>
-      <div style={layout.center}>
+      <Center>
         <IconButton color={color.btn} size={40} onClick={() => undo()}>
           <Undo />
         </IconButton>
-      </div>
-      <div style={layout.center}>
+      </Center>
+      <Center>
         <IconButton color={color.btn} size={40} onClick={() => redo()}>
           <Redo />
         </IconButton>
-      </div>
-      <div style={layout.center}>
+      </Center>
+      <Center>
         <IconButton color={color.btn} size={40} onClick={() => save()}>
           <SaveOutlined />
         </IconButton>
-      </div>
-      <div style={layout.center}>
+      </Center>
+      <Center>
         <IconButton color={color.btn} size={40} onClick={() => flip()}>
           <Flip />
         </IconButton>
-      </div>
-      <div style={layout.center}>
+      </Center>
+      <Center>
         <IconButton color={color.btn} size={40} onClick={() => del()}>
           <DeleteOutline />
         </IconButton>
-      </div>
+      </Center>
     </div>
   );
 };

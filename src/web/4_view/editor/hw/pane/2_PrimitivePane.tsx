@@ -1,10 +1,9 @@
-import test from "node:test";
-import { CSSProperties, FC, useState } from "react";
+import { FC, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { boardState, hwEditorFSM, useAvailableIoports, useColor } from "~/web/2_store";
 import { Accordion, layout } from "~/web/4_view/atom";
 
-export const IoportPane: FC = () => {
+export const PrimitivePane: FC = () => {
   const color = useColor().editor.hw.pane;
   const board = useRecoilValue(boardState);
   const getAvailableIOPorts = useAvailableIoports();

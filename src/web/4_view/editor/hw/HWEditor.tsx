@@ -6,9 +6,7 @@ import { useHWEditorFacade } from "~/web/3_facade";
 import { MiconEditor } from "./graph/MiconEditor";
 import { layout } from "../../atom";
 import { EditorToolBar, PaneTabBar } from "./toolbar/ButtonBar";
-import { InfoPane } from "./pane/1_InfoPane";
-import { PackagePane } from "./pane/2_PackagePane";
-import { IoportPane } from "./pane/3_IoportPane";
+import { InfoPane, PrimitivePane, PackagePane } from "./pane";
 
 export const HWEditor = () => {
   const { keyboard } = useHWEditorFacade();
@@ -28,8 +26,8 @@ export const HWEditor = () => {
         <Allotment.Pane preferredSize={400} minSize={50}>
           <div style={{ overflow: "scroll" }}>
             {pane.type === "info" && <InfoPane />}
+            {pane.type === "primitive" && <PrimitivePane />}
             {pane.type === "pack" && <PackagePane />}
-            {pane.type === "ioport" && <IoportPane />}
           </div>
         </Allotment.Pane>
         <Allotment.Pane minSize={50}>
