@@ -21,8 +21,8 @@ const primitives = [
   { type: "out", nameSel: "select", Icon: KeyboardArrowLeft },
   { type: "inout", nameSel: "select", Icon: Code },
   { type: "irq", nameSel: "select", Icon: PriorityHigh },
-  { type: "ro_reg", nameSel: "input", Icon: Numbers },
-  { type: "rw_reg", nameSel: "input", Icon: Numbers },
+  { type: "in_reg", nameSel: "input", Icon: Numbers },
+  { type: "out_reg", nameSel: "input", Icon: Numbers },
   // { type: "slice", nameSel: "none", Icon: DataArray },
   // { type: "concat", nameSel: "none", Icon: DataObject },
   // { type: "const", nameSel: "none", Icon: Percent },
@@ -58,7 +58,7 @@ const PrimitiveSelector: FC<{ type: string; nameSel: "select" | "input" | "none"
     <div
       key={type}
       style={{
-        ...layout.colGrid({ column: [50, null, null], row: 50 }),
+        ...layout.colGrid({ column: [40, null, null], row: 40 }),
         height: "auto",
         background: _color.bg,
         color: _color.text,
@@ -68,9 +68,9 @@ const PrimitiveSelector: FC<{ type: string; nameSel: "select" | "input" | "none"
       onMouseLeave={() => setHover(false)}
     >
       <Center>
-        <Icon style={{ height: 40, width: 40, color: _color.icon }} />
+        <Icon style={{ height: 30, width: 30, color: _color.icon }} />
       </Center>
-      <div style={{ ...layout.left, fontSize: 30 }}>{type}</div>
+      <div style={{ ...layout.left, fontSize: 20 }}>{type}</div>
       <div style={{ padding: 5 }}>
         {nameSel === "select" && (
           <select

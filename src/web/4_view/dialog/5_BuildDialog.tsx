@@ -13,7 +13,7 @@ import {
 import { FC, Fragment } from "react";
 import { useSetRecoilState, useRecoilValueLoadable, useRecoilRefresher_UNSTABLE, useRecoilValue } from "recoil";
 import { dialogState } from "~/web/2_route";
-import { boardListState, boardState, pathState, useColor } from "~/web/2_store";
+import { boardListState, boardState, pathState, useColor, useGenerate, useRunMake } from "~/web/2_store";
 import { Center, Dialog, IconButton, IconText, Left, layout } from "../atom";
 
 // Replace ${ }
@@ -24,6 +24,8 @@ export const BuildDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
   const setDialog = useSetRecoilState(dialogState);
   const board = useRecoilValue(boardState);
   const color = useColor().dialog;
+  const gen = useGenerate();
+  const runMake = useRunMake();
   return (
     <Dialog zIndex={zIndex} close={() => setDialog(undefined)}>
       <div style={{ ...layout.colGrid({ column: [null, null] }), overflow: "hidden" }}>
@@ -52,7 +54,13 @@ export const BuildDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
                 ))}
                 <>
                   <div></div>
-                  <button style={{ width: "100%", padding: 0, cursor: "pointer", gridColumn: "2 / 4" }}>
+                  <button
+                    style={{ width: "100%", padding: 0, cursor: "pointer", gridColumn: "2 / 4" }}
+                    onClick={() => {
+                      if (task.cmd === "mgen") gen();
+                      else if (task.cmd === "make") runMake();
+                    }}
+                  >
                     <IconText color={color._} text={task.cmd} Icon={DoubleArrow} height={30} />
                   </button>
                 </>

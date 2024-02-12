@@ -3,7 +3,7 @@ import { FC, useState } from "react";
 import { useRecoilRefresher_UNSTABLE, useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { dialogState } from "~/web/2_route";
 import { boardListState, projectListState, useColor, useCreateProject } from "~/web/2_store";
-import { layout, Dialog, IconButton } from "../atom";
+import { layout, Dialog, IconButton, Left } from "../atom";
 
 export const CreateProjectDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
   const color = useColor();
@@ -27,7 +27,7 @@ export const CreateProjectDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
       </div>
       <div style={layout.colGrid({ column: [150, 200], row: 30 })}>
         <>
-          <div style={layout.left}>Board</div>
+          <Left>Board</Left>
           <select onChange={(e) => setBoard(e.target.value)} value={board}>
             <option value={undefined}>-</option>
             {boardListLoaddable.getValue().map((board, i) => (
@@ -38,29 +38,29 @@ export const CreateProjectDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
           </select>
         </>
         <>
-          <div style={layout.left}>Version</div>
+          <Left>Version</Left>
           <select onChange={(e) => setVersion(e.target.value)}>
             <option value={undefined}>-</option>
             <option>0.0.0</option>
           </select>
         </>
         <>
-          <div style={layout.left}>Name</div>
+          <Left>Name</Left>
           <input type="text" value={proj} onChange={(e) => setProj(e.target.value)} />
         </>
         <>
-          <div style={layout.left}>Create</div>
+          <Left>Create</Left>
           <>
             {board && version && proj ? (
               <button
-                style={{ background: "lightgray" }}
+                style={{ background: "lightgray", cursor: "pointer" }}
                 onClick={() =>
                   createProject(proj, { owner: "NextMicon", name: board, version: version })
                     .then(() => refreshProjectList())
                     .then(() => setDialog(undefined))
                 }
               >
-                {`${proj} <= ${board}/${version}`}
+                {"Create!"}
               </button>
             ) : (
               <div></div>

@@ -27,7 +27,7 @@ export const InfoPane: FC = () => {
   const color = useColor().editor.hw.pane;
   return (
     <div style={{ background: color._.bg, color: color._.text }}>
-      <IconText color={color.headder._} Icon={DeveloperBoard} height={40} text={"Board"} />
+      <IconText color={color.headder._} Icon={DeveloperBoard} height={40} text={"Target"} />
       <BoardInfo />
       <IconText color={color.headder._} Icon={Apps} height={40} text={"Instances"} />
       <InstanceList />
@@ -49,21 +49,12 @@ const BoardInfo: FC = () => {
   const [detail, setDetail] = useState(false);
 
   return (
-    <>
-      <div style={{ ...layout.colGrid({ column: [20, null, null, 30], row: 30 }), height: 30, cursor: "pointer" }}>
-        <div></div>
-        <Left>{proj.board.name}</Left>
-        <Left>{proj.board.version}</Left>
-        <IconButton color={color.item.btn} style={{ margin: "2px" }} onClick={() => setDetail(!detail)}>
-          {detail ? <KeyboardArrowDown /> : <KeyboardArrowLeft />}
-        </IconButton>
-      </div>
-      {detail && (
-        <div style={{ height: "auto" }}>
-          <pre>{JSON.stringify(board, undefined, 2)}</pre>
-        </div>
-      )}
-    </>
+    <div style={{ ...layout.colGrid({ column: [20, null, null, 30], row: 30 }), height: 30 }}>
+      <div></div>
+      <Left>{proj.board.name}</Left>
+      <Left>{proj.board.version}</Left>
+      <div></div>
+    </div>
   );
 };
 
