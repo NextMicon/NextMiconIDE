@@ -23,9 +23,9 @@ const primitives = [
   { type: "irq", nameSel: "select", Icon: PriorityHigh },
   { type: "ro_reg", nameSel: "input", Icon: Numbers },
   { type: "rw_reg", nameSel: "input", Icon: Numbers },
-  { type: "slice", nameSel: "none", Icon: DataArray },
-  { type: "concat", nameSel: "none", Icon: DataObject },
-  { type: "const", nameSel: "none", Icon: Percent },
+  // { type: "slice", nameSel: "none", Icon: DataArray },
+  // { type: "concat", nameSel: "none", Icon: DataObject },
+  // { type: "const", nameSel: "none", Icon: Percent },
 ] as { type: string; nameSel: "select" | "input" | "none"; Icon: SvgIconComponent }[];
 
 export const PrimitivePane: FC = () => {
