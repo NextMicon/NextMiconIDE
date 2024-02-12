@@ -1,7 +1,7 @@
-import { Check } from "@mui/icons-material";
+import { Check, KeyboardArrowDown, KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { FC, useState } from "react";
 import { Message, useColor, useMessage } from "~/web/2_store";
-import { IconButton, layout } from "../atom";
+import { Center, IconButton, layout } from "../atom";
 
 export const MessageList: FC = () => {
   const color = useColor();
@@ -14,6 +14,8 @@ export const MessageList: FC = () => {
       style={{
         pointerEvents: "all",
         borderTopLeftRadius: 20,
+
+        background: "gray",
 
         position: "absolute",
         right: 0,
@@ -39,33 +41,29 @@ export const MessageList: FC = () => {
 
 const MessageItem: FC<{ message: Message }> = ({ message }) => {
   const color = useColor();
-  const [width, setWidth] = useState(false);
+  const [open, setOpen] = useState(false);
   const { deleteMessage } = useMessage();
+
   return (
-    <div
-      style={{
-        pointerEvents: "auto",
-        background: color.dialog.msg[message.type],
-        height: "auto",
-        borderRadius: 20,
-        marginBottom: 10,
-        width: width ? "100%" : "400px",
-        cursor: "pointer",
-      }}
-      onClick={() => setWidth(!width)}
-      onDoubleClick={() => deleteMessage(message.id)}
-    >
-      <div style={{ ...layout.colGrid({ column: [null, 50] }), height: "50px" }}>
-        <div style={layout.center}>
-          <span style={{ fontSize: 20, fontWeight: "bold", height: "auto" }}> {message.title}</span>
-        </div>
-        <div style={layout.center}>
-          <IconButton color={color.dialog.btn} onClick={() => deleteMessage(message.id)} size={40}>
-            <Check style={{ background: color.dialog.msg[message.type] }} />
+    <div style={{ height: "auto", borderRadius: 20, marginBottom: 10, background: color.dialog.msg[message.type], width: "400px" }}>
+      <div style={{ ...layout.colGrid({ column: [50, null, 50] }), height: 50 }}>
+        <Center>
+          <IconButton color={color.dialog.btn} onClick={() => setOpen(!open)} size={40}>
+            {open ? <KeyboardArrowDown /> : <KeyboardArrowRight />}
           </IconButton>
-        </div>
+        </Center>
+        <Center>
+          <span style={{ fontSize: 20, fontWeight: "bold", height: "auto" }}> {message.title}</span>
+        </Center>
+        <Center>
+          <IconButton color={color.dialog.btn} onClick={() => deleteMessage(message.id)} size={40}>
+            <Check />
+          </IconButton>
+        </Center>
       </div>
-      <div style={{ whiteSpace: "break-spaces", height: "auto", padding: "0 20px 20px 20px", overflowX: "scroll" }}>{message.text}</div>
+      {open && (
+        <div style={{ whiteSpace: "break-spaces", height: "auto", padding: "0 20px 20px 20px", overflowX: "scroll" }}>{message.text}</div>
+      )}
     </div>
   );
 };

@@ -13,10 +13,11 @@ export const useRunMake = () => {
     try {
       const result = await window.ipc.run.execa("make", target ? [target] : [], projpath, {});
       deleteDialog(runningDialog);
+      console.log("a");
       if (result.exitCode === 0) {
         createDialog("info", `${cmd}: Done`, result.stdout);
       } else {
-        createDialog("error", `${cmd}: Error`, result.stderr);
+        createDialog("error", `${cmd}: Error`, result.stdout);
       }
     } catch (e) {
       createDialog("error", `${cmd}: Error`, `${e}`);

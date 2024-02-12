@@ -35,7 +35,16 @@ declare global {
         clone: (owner: string, repo: string, branch: string, local: string[]) => Promise<string>;
       };
       run: {
-        execa: (command: string, args: string[], cwd: string[], options?: Options) => Promise<ExecaReturnValue<string>>;
+        execa: (
+          command: string,
+          args: string[],
+          cwd: string[],
+          options?: Options,
+        ) => Promise<{
+          exitCode: number;
+          stdout: string;
+          stderr: string;
+        }>;
       };
       web: {
         open: (url: string) => Promise<void>;

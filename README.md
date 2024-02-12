@@ -9,6 +9,5 @@
 ## TODO
 
 - add registor
-- hide command log
 - add parameter
 - add logging
