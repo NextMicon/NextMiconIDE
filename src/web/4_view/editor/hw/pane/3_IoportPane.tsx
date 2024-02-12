@@ -11,7 +11,7 @@ export const IoportPane: FC = () => {
   return (
     <div style={{ overflowY: "scroll", background: color._.bg, color: color._.text }}>
       {board.ioifs.map(({ type }) => (
-        <Accordion key={type} title={type}>
+        <Accordion color={color.headder._} key={type} title={type}>
           {getAvailableIOPorts(type).map((name) => (
             <Ioport key={name} type={type} name={name} />
           ))}
