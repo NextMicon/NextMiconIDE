@@ -10,7 +10,7 @@ import {
 } from "@mui/icons-material";
 import { FC, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { Instance, Ioport, Wire, getWireKeyStr } from "~/web/1_type";
+import { Instance, Primitive, Wire, getWireKeyStr } from "~/web/1_type";
 import {
   boardState,
   instancesResolvedState,
@@ -146,7 +146,7 @@ const IoportList: FC = () => {
   );
 };
 
-const IoportListItem: FC<{ ioport: Ioport }> = ({ ioport }) => {
+const IoportListItem: FC<{ ioport: Primitive }> = ({ ioport }) => {
   // Global State
   const { selected, append, select, rename } = useIoport(ioport);
   const color = useColor().editor.hw.pane.item;

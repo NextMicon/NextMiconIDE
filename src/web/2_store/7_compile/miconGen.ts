@@ -1,12 +1,12 @@
 import { Project } from "~/files";
-import { Instance, Ioport, Wire, eqPortKey, wireName } from "~/web/1_type";
+import { Instance, Primitive, Wire, eqPortKey, wireName } from "~/web/1_type";
 import { cpp } from "./cppGen";
 import { VInstance, VWire, verilog } from "./verilogGen";
 
 // ------------------------------------------------------------------------------------------------
 // 置換リスト
 
-export const genReplace = (project: Project, instances: Instance[], ioports: Ioport[], wires: Wire[]): Record<string, string> => {
+export const genReplace = (project: Project, instances: Instance[], ioports: Primitive[], wires: Wire[]): Record<string, string> => {
   return {
     includes: genIncludes(instances),
     declarations: genDeclarations(instances),
@@ -47,7 +47,7 @@ const genDefinitions = (instances: Instance[]) => {
 // ------------------------------------------------------------------------------------------------
 // ハードウェア
 
-const genIOPort = (ioports: Ioport[]) => {
+const genIOPort = (ioports: Primitive[]) => {
   return ioports
     .flatMap(({ name, pack }) => {
       switch (pack.type) {
@@ -64,7 +64,7 @@ const genIOPort = (ioports: Ioport[]) => {
     .join(",\n");
 };
 
-const genIOBuffer = (ioports: Ioport[], wires: Wire[]) => {
+const genIOBuffer = (ioports: Primitive[], wires: Wire[]) => {
   return ioports
     .flatMap(({ name, pack }) => {
       if (pack.type === "inout") {
@@ -132,7 +132,7 @@ const genIOBuffer = (ioports: Ioport[], wires: Wire[]) => {
     .join("\n");
 };
 
-const genIRQ = (ioports: Ioport[], wires: Wire[]) => {
+const genIRQ = (ioports: Primitive[], wires: Wire[]) => {
   return ioports
     .flatMap(({ pack, name }) => {
       if (pack.type === "irq") {

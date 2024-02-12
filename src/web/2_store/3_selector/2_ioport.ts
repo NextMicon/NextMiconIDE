@@ -1,6 +1,6 @@
 import { selector } from "recoil";
 import { posAdd, posRound, posSub } from "~/utils";
-import { Ioport, getIoportKey } from "~/web/1_type";
+import { Primitive, getIoportKey } from "~/web/1_type";
 import { boardState, projectState } from "../2_project/0_project";
 import { ioportIsSelected, selectedObjectsState } from "../4_actions/0_select";
 import { hwEditorFSM, mousePositionState } from "../4_editor/0_fsm";
@@ -20,7 +20,7 @@ const resolveAllIoports = selector({
   },
 });
 
-const ioportsResolveState = selector<({ type: "ioport"; value: Ioport } | { type: "error"; value: IoportError })[]>({
+const ioportsResolveState = selector<({ type: "ioport"; value: Primitive } | { type: "error"; value: IoportError })[]>({
   key: "ioportsResolve",
   get: ({ get }) => {
     const { ioports } = get(projectState);
@@ -46,7 +46,7 @@ const ioportsResolveState = selector<({ type: "ioport"; value: Ioport } | { type
   },
 });
 
-export const ioportsResolvedState = selector<Ioport[]>({
+export const ioportsResolvedState = selector<Primitive[]>({
   key: "ioportsResolved",
   get: ({ get }) => {
     const ioports = get(ioportsResolveState);

@@ -1,9 +1,9 @@
 import { MouseEventHandler } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { Ioport, getIoportKey } from "~/web/1_type";
+import { Primitive, getIoportKey } from "~/web/1_type";
 import { hwEditorFSM, mousePositionState, useAppendIoport, useIoportIsSelected, useRenameIoport, useSelectIoport } from "~/web/2_store";
 
-export const useIoport = (ioport: Ioport) => {
+export const useIoport = (ioport: Primitive) => {
   // Global State
   const [fsm, setState] = useRecoilState(hwEditorFSM);
   const mousePosition = useRecoilValue(mousePositionState);

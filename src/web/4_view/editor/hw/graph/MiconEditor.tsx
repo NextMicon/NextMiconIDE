@@ -16,7 +16,7 @@ import {
 } from "~/web/2_store";
 import { Canvas } from "./0_Canvas";
 import { InstanceView, PackView } from "./1_Instance";
-import { IoifView, IoportComponent } from "./2_Ioport";
+import { IoifView, PrimitiveComponent } from "./2_Primitive";
 import { PortComponent } from "./3_Port";
 import { WireComponent } from "./4_Wire";
 
@@ -29,7 +29,7 @@ export const MiconEditor: FC<{}> = () => {
   return (
     <Canvas>
       {fsm.state === "Selecting" && <SelectRect start={fsm.value.start} />}
-      {ioPorts?.map((ioport) => <IoportComponent key={ioport.name} ioport={ioport} />)}
+      {ioPorts?.map((ioport) => <PrimitiveComponent key={ioport.name} prim={ioport} />)}
       {instances?.map((instance) => <InstanceView key={instance.name} instance={instance} />)}
       {fsm.state === "Wireing" && <ConnectingWire path={[fsm.value.startPos, ...fsm.value.path]} />}
       {wires?.map((wire, i) => <WireComponent key={i} wire={wire} />)}

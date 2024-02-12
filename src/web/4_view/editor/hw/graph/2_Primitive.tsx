@@ -1,12 +1,12 @@
 import { FC, useState } from "react";
 import { Board } from "~/files";
 import { Position, posAdd, posFlip, posSub } from "~/utils";
-import { Ioport } from "~/web/1_type";
+import { Primitive } from "~/web/1_type";
 import { useColor } from "~/web/2_store";
 import { useIoport } from "~/web/3_facade";
 import { ExclamationIcon, LeftIcon, QuestionIcon, RightIcon } from "~/web/4_view/atom";
 
-export const IoportComponent: FC<{ ioport: Ioport }> = ({ ioport }) => {
+export const PrimitiveComponent: FC<{ prim: Primitive }> = ({ prim: ioport }) => {
   // Global State
   const { selected, onClick, onMouseDown } = useIoport(ioport);
   const color = useColor().editor.hw.graph.obj;
