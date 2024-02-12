@@ -1,7 +1,7 @@
 import { Project } from "~/files";
 import { Instance, Primitive, Wire, eqPortKey, wireName } from "~/web/1_type";
-import { cpp } from "./cppGen";
-import { VInstance, VWire, verilog } from "./verilogGen";
+import { cpp } from "./3_cppGen";
+import { VInstance, VWire, verilog } from "./2_verilogGen";
 
 // ------------------------------------------------------------------------------------------------
 // 置換リスト

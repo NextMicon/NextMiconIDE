@@ -161,9 +161,9 @@ export const colorThemes: Record<ColorName, ColorTheme> = {
           _: { bg: C.navy.dark, icon: C.white, text: C.white },
           headder: { _: { bg: C.gray.dark, icon: C.sakura.dark, text: C.white } },
           item: {
-            _: { bg: C.navy.dark, icon: C.white, text: C.white },
+            _: { bg: C.navy.dark, icon: C.sakura.dark, text: C.white },
             sel: { bg: C.sakura.dark, icon: C.white, text: C.black },
-            hov: { bg: C.sakura.light, icon: C.white, text: C.black },
+            hov: { bg: C.sakura.light, icon: C.sakura.dark, text: C.black },
             btn: {
               _: { bg: C.gray.midlight, icon: C.gray.dark, text: C.black },
               hov: { bg: C.white, icon: C.sakura.dark, text: C.black },

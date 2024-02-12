@@ -3,7 +3,7 @@ import { boardPathState, boardState, projectPathState, projectState } from "../2
 import { instancesResolvedState } from "../3_selector/1_instance";
 import { ioportsResolvedState } from "../3_selector/2_ioport";
 import { wiresResolvedState } from "../3_selector/4_wire";
-import { genReplace } from "./miconGen";
+import { genReplace } from "./1_miconGen";
 
 export const useGenerate = () => {
   const projectPath = useRecoilValue(projectPathState);

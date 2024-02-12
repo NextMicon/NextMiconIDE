@@ -1,4 +1,3 @@
-export * from "./accordion";
 export * from "./button";
 export * from "./icons";
 export * from "./layer";
