@@ -21,7 +21,7 @@ import {
   wiresResolvedState,
 } from "~/web/2_store";
 import { useInstance, useIoport, useWire } from "~/web/3_facade";
-import { Center, IconButton, IconText, Left, layout } from "~/web/4_view/atom";
+import { Center, IconButton, IconText, Left, css } from "~/web/4_view/atom";
 
 export const InfoPane: FC = () => {
   const color = useColor().editor.hw.pane;
@@ -49,7 +49,7 @@ const BoardInfo: FC = () => {
   const [detail, setDetail] = useState(false);
 
   return (
-    <div style={{ ...layout.colGrid({ column: [20, null, null, 30], row: 30 }), height: 30 }}>
+    <div style={{ ...css.colGrid({ column: [20, null, null, 30], row: 30 }), height: 30 }}>
       <div></div>
       <Left>{proj.board.name}</Left>
       <Left>{proj.board.version}</Left>
@@ -88,7 +88,7 @@ const InstanceListItem: FC<{ instance: Instance }> = ({ instance }) => {
   return (
     <div
       style={{
-        ...layout.colGrid({ column: [20, null, null, 30], row: 30 }),
+        ...css.colGrid({ column: [20, null, null, 30], row: 30 }),
         height: "auto",
         cursor: "pointer",
         background: _color.bg,
@@ -158,7 +158,7 @@ const IoportListItem: FC<{ ioport: Primitive }> = ({ ioport }) => {
     <>
       <div
         style={{
-          ...layout.colGrid({ column: [20, null, null, 30], row: 30 }),
+          ...css.colGrid({ column: [20, null, null, 30], row: 30 }),
           height: "auto",
           cursor: "pointer",
           background: _color.bg,
@@ -218,7 +218,7 @@ const WireListItem: FC<{ wire: Wire }> = ({ wire }) => {
   return (
     <div
       style={{
-        ...layout.colGrid({ column: [20, null, 20, 40, null], row: 30 }),
+        ...css.colGrid({ column: [20, null, 20, 40, null], row: 30 }),
         height: "auto",
         background: _color.bg,
         color: _color.text,

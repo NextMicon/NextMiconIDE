@@ -1,5 +1,5 @@
 import { CSSProperties, Children, FC, ReactElement, ReactNode, cloneElement, useState } from "react";
-import { Center, layout } from "./0_styling";
+import { Center, css } from "./0_styling";
 import { SvgIconComponent } from "@mui/icons-material";
 
 export const IconButton: FC<{
@@ -19,7 +19,7 @@ export const IconButton: FC<{
         background: hover ? color.hov.bg : color._.bg,
         color: hover ? color.hov.icon : color._.icon,
 
-        ...layout.center,
+        ...css.center,
 
         width: size,
         height: size,
@@ -74,11 +74,11 @@ export const IconText: FC<{
   height: number;
 }> = ({ color, text, Icon, height }) => {
   return (
-    <div style={{ ...layout.colGrid({ column: [height, null] }), height: "auto", background: color.bg }}>
+    <div style={{ ...css.colGrid({ column: [height, null] }), height: "auto", background: color.bg }}>
       <Center>
         <Icon style={{ height: height - 10, width: height - 10, color: color.icon }} />
       </Center>
-      <div style={{ ...layout.left, fontSize: height - 20, color: color.text }}>{text}</div>
+      <div style={{ ...css.left, fontSize: height - 20, color: color.text }}>{text}</div>
     </div>
   );
 };
@@ -93,15 +93,15 @@ export const IconTextButton: FC<{
   const [hover, setHover] = useState(false);
   return (
     <div
-      style={{ ...layout.colGrid({ column: [height, null] }), height: "auto", background: color.bg, cursor: "pointer" }}
+      style={{ ...css.colGrid({ column: [height, null] }), height: "auto", background: color.bg, cursor: "pointer" }}
       onClick={onClick}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      <div style={layout.center}>
+      <div style={css.center}>
         <Icon style={{ height: `${height - 10}px`, width: `${height - 10}px` }} />
       </div>
-      <div style={{ ...layout.left, fontSize: `${height - 20}px` }}>{text}</div>
+      <div style={{ ...css.left, fontSize: `${height - 20}px` }}>{text}</div>
     </div>
   );
 };

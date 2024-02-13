@@ -4,14 +4,14 @@ import { useRecoilState } from "recoil";
 import { useColor } from "~/web/2_store";
 
 import { playTick } from "~/web/2_store/4_view/simulator";
-import { Center, IconButton, layout } from "~/web/4_view/atom";
+import { Center, IconButton, css } from "~/web/4_view/atom";
 
 export const ReplayController: FC<{ size: number }> = ({ size }) => {
   const [tick, setTick] = useRecoilState(playTick);
   const color = useColor().editor.toolbar;
 
   return (
-    <div style={layout.colGrid({ column: [size, size, size, null] })}>
+    <div style={css.colGrid({ column: [size, size, size, null] })}>
       <Center>
         <IconButton color={color.btn} size={size - 10} onClick={() => setTick(tick - 1)}>
           <NavigateBefore />

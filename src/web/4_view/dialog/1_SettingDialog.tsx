@@ -3,7 +3,7 @@ import { FC } from "react";
 import { useSetRecoilState } from "recoil";
 import { dialogState } from "~/web/2_route";
 import { colorThemes, useColor, useSetColorName } from "~/web/2_store";
-import { Dialog, IconButton, layout } from "../atom";
+import { Dialog, IconButton, css } from "../atom";
 
 export const SettingDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
   const color = useColor();
@@ -13,15 +13,15 @@ export const SettingDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
 
   return (
     <Dialog zIndex={zIndex} close={() => setDialog(undefined)}>
-      <div style={{ ...layout.colGrid({ column: [null, 50] }), height: 50 }}>
-        <div style={{ ...layout.left, fontSize: 25, fontWeight: "bold" }}>Settings</div>
+      <div style={{ ...css.colGrid({ column: [null, 50] }), height: 50 }}>
+        <div style={{ ...css.left, fontSize: 25, fontWeight: "bold" }}>Settings</div>
         <IconButton color={color.dialog.btn} onClick={() => setDialog(undefined)}>
           <Close />
         </IconButton>
       </div>
-      <div style={layout.colGrid({ column: [150, 200], row: 30 })}>
+      <div style={css.colGrid({ column: [150, 200], row: 30 })}>
         <>
-          <div style={layout.left}>Color</div>
+          <div style={css.left}>Color</div>
           <select value={colorName} onChange={(e) => setColorName(e.target.value)}>
             {colors.map(([k, _]) => (
               <option key={k}>{k}</option>
@@ -29,7 +29,7 @@ export const SettingDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
           </select>
         </>
         <>
-          <div style={{ ...layout.left }}>GitHub Token</div>
+          <div style={{ ...css.left }}>GitHub Token</div>
           <input />
         </>
       </div>

@@ -1,12 +1,13 @@
-import "allotment/dist/style.css";
 import { FC, useEffect } from "react";
 import { useRecoilState, useRecoilValueLoadable } from "recoil";
-import { boardState, modeState, useColor, useOpenProject, useOpenSoftware, useRunMake } from "~/web/2_store";
+
+import "allotment/dist/style.css";
+import { boardState, modeState, useOpenProject, useOpenSoftware, useRunMake } from "~/web/2_store";
 import { BottomBar } from "./common/BottomBar";
 import { TopBar } from "./common/TopBar";
 import { HWEditor } from "./hw/HWEditor";
 import { SWeditor } from "./sw/SWEditor";
-import { layout } from "../atom";
+import { css } from "../atom";
 
 export const Editor: FC<{ projectPath: string[] }> = ({ projectPath }) => {
   const loading = useRecoilValueLoadable(boardState);
@@ -46,7 +47,7 @@ const EditorLoadded = () => {
   }, [keyboardEventHandler]);
 
   return (
-    <div style={{ ...layout.rowGrid({ row: [50, null, 20] }), height: "100%" }}>
+    <div style={{ ...css.rowGrid({ row: [50, null, 20] }), height: "100%" }}>
       <TopBar />
       {mode === "hardware" && <HWEditor />}
       {mode === "software" && <SWeditor />}

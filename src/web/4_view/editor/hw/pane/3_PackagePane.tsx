@@ -3,13 +3,13 @@ import { CSSProperties, FC, useState } from "react";
 import { useRecoilState, useRecoilValueLoadable } from "recoil";
 import { PackKey, packEq, packToString } from "~/web/1_type";
 import { hwEditorFSM, localPacksState, useColor, useGetNewInstanceName } from "~/web/2_store";
-import { IconButton, SearchBox, TextButton, layout } from "~/web/4_view/atom";
+import { IconButton, SearchBox, TextButton, css } from "~/web/4_view/atom";
 
 export const PackagePane: FC<{ style?: CSSProperties }> = ({ style }) => {
   const [keyword, setKeyword] = useState("");
   const color = useColor().editor.hw.pane;
   return (
-    <div style={{ ...layout.rowGrid({ row: ["48px", "1fr"] }), background: color._.bg, userSelect: "none", ...style }}>
+    <div style={{ ...css.rowGrid({ row: ["48px", "1fr"] }), background: color._.bg, userSelect: "none", ...style }}>
       <SearchBox
         text={keyword}
         setText={setKeyword}
@@ -61,7 +61,7 @@ const Package: FC<{ pack: PackKey }> = ({ pack }) => {
   return (
     <div
       style={{
-        ...layout.colGrid({ column: [20, null, 30], row: 30 }),
+        ...css.colGrid({ column: [20, null, 30], row: 30 }),
         height: "auto",
         background: _color.bg,
         color: _color.text,

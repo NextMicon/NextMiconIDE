@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { hweditorSizesState, paneState, useColor } from "~/web/2_store";
 import { useHWEditorFacade } from "~/web/3_facade";
 import { MiconEditor } from "./graph/MiconEditor";
-import { layout } from "../../atom";
+import { css } from "../../atom";
 import { EditorToolBar, PaneTabBar } from "./toolbar/ButtonBar";
 import { InfoPane, PrimitivePane, PackagePane } from "./pane";
 
@@ -20,7 +20,7 @@ export const HWEditor = () => {
   const color = useColor();
 
   return (
-    <div style={{ ...layout.colGrid({ column: [50, null, 50] }), background: color.editor.hw.graph.canvas.bg }}>
+    <div style={{ ...css.colGrid({ column: [50, null, 50] }), background: color.editor.hw.graph.canvas.bg }}>
       <PaneTabBar />
       <Allotment onChange={setSizes} defaultSizes={sizes}>
         <Allotment.Pane preferredSize={400} minSize={50}>

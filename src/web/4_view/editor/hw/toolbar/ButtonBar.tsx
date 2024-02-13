@@ -2,14 +2,14 @@ import { Apps, CommitSharp, DeleteOutline, Flip, InfoOutlined, Redo, SaveOutline
 import { useRecoilState } from "recoil";
 import { paneState, useColor } from "~/web/2_store";
 import { useButtonAction } from "~/web/3_facade";
-import { Center, IconButton, layout } from "~/web/4_view/atom";
+import { Center, IconButton, css } from "~/web/4_view/atom";
 
 export const ButtonBar = () => {
   const color = useColor().editor.hw.toolbar;
   const { undo, redo, save, flip, del } = useButtonAction();
   const [infoPane, setInfoPane] = useRecoilState(paneState);
   return (
-    <div style={{ ...layout.rowGrid({ row: [50, 50, 50, 50, 50, 50, 50, 50], column: 50 }), width: 50, background: color._.bg }}>
+    <div style={{ ...css.rowGrid({ row: [50, 50, 50, 50, 50, 50, 50, 50], column: 50 }), width: 50, background: color._.bg }}>
       <Center>
         <IconButton color={color.btn} size={40} onClick={() => setInfoPane({ type: "info" })}>
           <InfoOutlined />
@@ -58,7 +58,7 @@ export const PaneTabBar = () => {
   const color = useColor().editor.hw.toolbar;
   const [infoPane, setInfoPane] = useRecoilState(paneState);
   return (
-    <div style={{ ...layout.rowGrid({ row: [50, 50, 50], column: 50 }), background: color._.bg }}>
+    <div style={{ ...css.rowGrid({ row: [50, 50, 50], column: 50 }), background: color._.bg }}>
       <Center>
         <IconButton color={color.btn} size={40} onClick={() => setInfoPane({ type: "info" })}>
           <InfoOutlined />
@@ -82,7 +82,7 @@ export const EditorToolBar = () => {
   const color = useColor().editor.hw.toolbar;
   const { undo, redo, save, flip, del } = useButtonAction();
   return (
-    <div style={{ ...layout.rowGrid({ row: [50, 50, 50, 50, 50], column: 50 }), background: color._.bg }}>
+    <div style={{ ...css.rowGrid({ row: [50, 50, 50, 50, 50], column: 50 }), background: color._.bg }}>
       <Center>
         <IconButton color={color.btn} size={40} onClick={() => undo()}>
           <Undo />

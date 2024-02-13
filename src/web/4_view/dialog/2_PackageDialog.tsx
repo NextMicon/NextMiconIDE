@@ -3,7 +3,7 @@ import { FC, Fragment } from "react";
 import { useRecoilRefresher_UNSTABLE, useRecoilValue, useSetRecoilState } from "recoil";
 import { dialogState } from "~/web/2_route";
 import { localPacksState, mergedPackList, registoryPackListState, useColor, useDownloadPackage, useUpdateRegistory } from "~/web/2_store";
-import { Dialog, IconButton, layout } from "../atom";
+import { Dialog, IconButton, css } from "../atom";
 
 export const PackageDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
   const color = useColor();
@@ -20,20 +20,20 @@ export const PackageDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
   console.table(merged);
   return (
     <Dialog zIndex={zIndex} close={() => setDialog(undefined)}>
-      <div style={layout.rowGrid({ row: [50, null] })}>
-        <div style={layout.colGrid({ column: [null, 50] })}>
-          <div style={{ ...layout.left, fontSize: 25, fontWeight: "bold" }}>Package</div>
+      <div style={css.rowGrid({ row: [50, null] })}>
+        <div style={css.colGrid({ column: [null, 50] })}>
+          <div style={{ ...css.left, fontSize: 25, fontWeight: "bold" }}>Package</div>
           <IconButton color={color.dialog.btn} onClick={() => setDialog(undefined)}>
             <Close />
           </IconButton>
         </div>
         <div style={{ overflow: "scroll" }}>
-          <div style={layout.colGrid({ column: [null, null, null, 30], row: 30 })}>
+          <div style={css.colGrid({ column: [null, null, null, 30], row: 30 })}>
             <>
-              <div style={{ ...layout.left, fontWeight: "bold" }}>Owner</div>
-              <div style={{ ...layout.left, fontWeight: "bold" }}>Package</div>
-              <div style={{ ...layout.left, fontWeight: "bold" }}>Version</div>
-              <div style={{ ...layout.left }}>
+              <div style={{ ...css.left, fontWeight: "bold" }}>Owner</div>
+              <div style={{ ...css.left, fontWeight: "bold" }}>Package</div>
+              <div style={{ ...css.left, fontWeight: "bold" }}>Version</div>
+              <div style={{ ...css.left }}>
                 <IconButton color={color.dialog.btn} size={30} onClick={() => reloadRegistory().then(() => reload())}>
                   <ReplayRounded />
                 </IconButton>
@@ -41,10 +41,10 @@ export const PackageDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
             </>
             {merged.map((pack, i) => (
               <Fragment key={i}>
-                <div style={{ ...layout.left }}>{pack.owner}</div>
-                <div style={{ ...layout.left }}>{pack.name}</div>
-                <div style={{ ...layout.left }}>{pack.version}</div>
-                <div style={{ ...layout.center }}>
+                <div style={{ ...css.left }}>{pack.owner}</div>
+                <div style={{ ...css.left }}>{pack.name}</div>
+                <div style={{ ...css.left }}>{pack.version}</div>
+                <div style={{ ...css.center }}>
                   {pack.remote && !pack.local && (
                     <IconButton color={color.dialog.btn} size={30} onClick={() => downloadPackage(pack).then(() => reload())}>
                       <Download />

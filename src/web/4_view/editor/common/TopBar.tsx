@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { URL_NEXT_MICON } from "~/consts";
 import { dialogState, routeState } from "~/web/2_route";
 import { modeState, projectNameState, useColor, useGenerate, useRunMake } from "~/web/2_store";
-import { Center, IconButton, layout } from "~/web/4_view/atom";
+import { Center, IconButton, css } from "~/web/4_view/atom";
 
 export const TopBar: FC = () => {
   const color = useColor();
@@ -18,7 +18,7 @@ export const TopBar: FC = () => {
     <>
       <div
         style={{
-          ...layout.colGrid({ column: [50, 50, 50, null, 50, 50, 50, 50] }),
+          ...css.colGrid({ column: [50, 50, 50, null, 50, 50, 50, 50] }),
           background: color.editor.toolbar._.bg,
           color: color.editor.toolbar._.text,
         }}
@@ -38,7 +38,7 @@ export const TopBar: FC = () => {
             <Language />
           </IconButton>
         </Center>
-        <div style={{ ...layout.center, color: color.editor.toolbar._.text, fontWeight: "bold", fontSize: "20px" }}>{projectName}</div>
+        <div style={{ ...css.center, color: color.editor.toolbar._.text, fontWeight: "bold", fontSize: "20px" }}>{projectName}</div>
         <Center>
           <IconButton color={color.editor.toolbar.btn} size={40} onClick={() => setMode("hardware")}>
             <DeviceHub />

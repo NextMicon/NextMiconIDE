@@ -1,6 +1,6 @@
 import { useRecoilValue } from "recoil";
 import { projectPathState, useColor } from "~/web/2_store";
-import { layout } from "../../atom";
+import { css } from "../../atom";
 
 export const BottomBar = () => {
   const color = useColor();
@@ -8,7 +8,7 @@ export const BottomBar = () => {
   return (
     <div
       style={{
-        ...layout.left,
+        ...css.left,
         background: color.editor.toolbar._.bg,
         color: color.editor.toolbar._.text,
       }}

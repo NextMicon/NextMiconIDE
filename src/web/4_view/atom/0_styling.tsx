@@ -16,7 +16,7 @@ const gridAuto = (e?: string | number) => {
   return "100%";
 };
 
-export const layout = {
+export const css = {
   flex: ({
     direction,
     justify,
@@ -56,6 +56,6 @@ export const layout = {
   },
 };
 
-export const Left: FC<{ children?: ReactNode }> = ({ children }) => <div style={layout.left}>{children}</div>;
-export const Right: FC<{ children?: ReactNode }> = ({ children }) => <div style={layout.right}>{children}</div>;
-export const Center: FC<{ children?: ReactNode }> = ({ children }) => <div style={layout.center}>{children}</div>;
+export const Left: FC<{ children?: ReactNode }> = ({ children }) => <div style={css.left}>{children}</div>;
+export const Right: FC<{ children?: ReactNode }> = ({ children }) => <div style={css.right}>{children}</div>;
+export const Center: FC<{ children?: ReactNode }> = ({ children }) => <div style={css.center}>{children}</div>;

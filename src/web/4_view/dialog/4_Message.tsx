@@ -1,7 +1,7 @@
 import { Check, KeyboardArrowDown, KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { FC, useState } from "react";
 import { Message, useColor, useMessage } from "~/web/2_store";
-import { Center, IconButton, layout } from "../atom";
+import { Center, IconButton, css } from "../atom";
 
 export const MessageList: FC = () => {
   const color = useColor();
@@ -46,7 +46,7 @@ const MessageItem: FC<{ message: Message }> = ({ message }) => {
 
   return (
     <div style={{ height: "auto", borderRadius: 20, marginBottom: 10, background: color.dialog.msg[message.type], width: "400px" }}>
-      <div style={{ ...layout.colGrid({ column: [50, null, 50] }), height: 50 }}>
+      <div style={{ ...css.colGrid({ column: [50, null, 50] }), height: 50 }}>
         <Center>
           <IconButton color={color.dialog.btn} onClick={() => setOpen(!open)} size={40}>
             {open ? <KeyboardArrowDown /> : <KeyboardArrowRight />}

@@ -3,7 +3,7 @@ import { FC, useState } from "react";
 import { useRecoilRefresher_UNSTABLE, useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { dialogState } from "~/web/2_route";
 import { boardListState, projectListState, useColor, useCreateProject } from "~/web/2_store";
-import { layout, Dialog, IconButton, Left } from "../atom";
+import { css, Dialog, IconButton, Left } from "../atom";
 
 export const CreateProjectDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
   const color = useColor();
@@ -19,13 +19,13 @@ export const CreateProjectDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
 
   return (
     <Dialog zIndex={zIndex} close={() => setDialog(undefined)}>
-      <div style={{ ...layout.colGrid({ column: [null, 50], row: 50 }), height: 50 }}>
-        <div style={{ ...layout.left, fontSize: 25, fontWeight: "bold" }}>Create Project</div>
+      <div style={{ ...css.colGrid({ column: [null, 50], row: 50 }), height: 50 }}>
+        <div style={{ ...css.left, fontSize: 25, fontWeight: "bold" }}>Create Project</div>
         <IconButton color={color.dialog.btn} onClick={() => setDialog(undefined)}>
           <Close />
         </IconButton>
       </div>
-      <div style={layout.colGrid({ column: [150, 200], row: 30 })}>
+      <div style={css.colGrid({ column: [150, 200], row: 30 })}>
         <>
           <Left>Board</Left>
           <select onChange={(e) => setBoard(e.target.value)} value={board}>

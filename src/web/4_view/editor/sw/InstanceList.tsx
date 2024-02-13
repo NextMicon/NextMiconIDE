@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 import { Func, Package } from "~/files";
 import { Instance } from "~/web/1_type";
 import { instancesResolvedState, useColor } from "~/web/2_store";
-import { layout } from "~/web/4_view/atom";
+import { css } from "~/web/4_view/atom";
 
 export const InstanceList = () => {
   const instances = useRecoilValue(instancesResolvedState);
@@ -56,8 +56,8 @@ const InstanceDoc: FC<{ instance: Instance }> = ({ instance }) => {
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        <div style={{ ...layout.center }}>{open ? <KeyboardArrowDown style={iconCss} /> : <KeyboardArrowRight style={iconCss} />}</div>
-        <div style={{ ...layout.left, fontSize: SIZE - 10 }}>{instance.name}</div>
+        <div style={{ ...css.center }}>{open ? <KeyboardArrowDown style={iconCss} /> : <KeyboardArrowRight style={iconCss} />}</div>
+        <div style={{ ...css.left, fontSize: SIZE - 10 }}>{instance.name}</div>
       </div>
       {open && (
         <div style={{ display: "flex", flexDirection: "column", rowGap: 10 }}>
@@ -92,11 +92,11 @@ const Func: FC<{ inst: string; note: string; method: Func }> = ({ inst, note, me
       onMouseLeave={() => setHover(false)}
       onClick={() => window.ipc.clipboard.copy(use)}
     >
-      <div style={{ ...layout.left, height: 20, whiteSpace: "nowrap" }}>
+      <div style={{ ...css.left, height: 20, whiteSpace: "nowrap" }}>
         <pre> </pre>
         <pre style={{ color: _color.comment }}>{note}</pre>
       </div>
-      <div style={{ ...layout.left, height: 20, whiteSpace: "nowrap" }}>
+      <div style={{ ...css.left, height: 20, whiteSpace: "nowrap" }}>
         <pre> </pre>
         <pre style={{ color: typeColor(method.type) }}>{method.type}</pre>
         <pre> </pre>

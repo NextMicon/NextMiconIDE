@@ -14,7 +14,7 @@ import {
 import { FC, ReactNode, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { boardState, hwEditorFSM, useAvailableIoports, useColor } from "~/web/2_store";
-import { Center, IconText, Left, LeftIcon, layout } from "~/web/4_view/atom";
+import { Center, IconText, Left, LeftIcon, css } from "~/web/4_view/atom";
 
 const primitives = [
   { type: "in", nameSel: "select", Icon: KeyboardArrowRight },
@@ -58,7 +58,7 @@ const PrimitiveSelector: FC<{ type: string; nameSel: "select" | "input" | "none"
     <div
       key={type}
       style={{
-        ...layout.colGrid({ column: [40, null, null], row: 40 }),
+        ...css.colGrid({ column: [40, null, null], row: 40 }),
         height: "auto",
         background: _color.bg,
         color: _color.text,
@@ -70,7 +70,7 @@ const PrimitiveSelector: FC<{ type: string; nameSel: "select" | "input" | "none"
       <Center>
         <Icon style={{ height: 30, width: 30, color: _color.icon }} />
       </Center>
-      <div style={{ ...layout.left, fontSize: 20 }}>{type}</div>
+      <div style={{ ...css.left, fontSize: 20 }}>{type}</div>
       <div style={{ padding: 5 }}>
         {nameSel === "select" && (
           <select
@@ -102,7 +102,7 @@ const Ioport: FC<{ type: string; name: string }> = ({ type, name }) => {
   return (
     <div
       style={{
-        ...layout.colGrid({ column: [20, null] }),
+        ...css.colGrid({ column: [20, null] }),
         height: "30px",
         background: _color.bg,
         color: _color.text,
@@ -111,7 +111,7 @@ const Ioport: FC<{ type: string; name: string }> = ({ type, name }) => {
     >
       <div></div>
       <div
-        style={layout.left}
+        style={css.left}
         onClick={() => {
           setState({ state: "AddIoport", value: { type, name } });
         }}

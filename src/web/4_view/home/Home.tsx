@@ -2,16 +2,16 @@ import { Apps, DeveloperBoard, NoteAddOutlined, OpenInBrowser, Settings } from "
 import { FC } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { dialogState, routeState } from "~/web/2_route";
-import { IconButton, TextButton, layout } from "~/web/4_view/atom";
+import { IconButton, TextButton, css } from "~/web/4_view/atom";
 import { projectListState, useColor } from "../../2_store";
 
 export const Home: FC = () => {
   const color = useColor();
   return (
-    <div style={{ ...layout.center, height: "100%", background: color.home._.bg, color: color.home._.text }}>
+    <div style={{ ...css.center, height: "100%", background: color.home._.bg, color: color.home._.text }}>
       <div style={{ maxWidth: "500px", maxHeight: "600px", width: "100%", height: "100%" }}>
-        <div style={{ ...layout.rowGrid({ row: ["1fr", "1fr", "3fr"], column: "100%" }) }}>
-          <div style={{ ...layout.center, fontWeight: "bold", fontSize: 40 }}>Next Micon IDE</div>
+        <div style={{ ...css.rowGrid({ row: ["1fr", "1fr", "3fr"], column: "100%" }) }}>
+          <div style={{ ...css.center, fontWeight: "bold", fontSize: 40 }}>Next Micon IDE</div>
           <Buttons />
           <ProjectList />
         </div>
@@ -31,7 +31,7 @@ const Buttons: FC = () => {
       .then((root) => (root ? setRoute({ page: "editor", project: root }) : undefined));
   };
   return (
-    <div style={{ ...layout.flex({ direction: "horizontal", justify: "space-between", align: "center" }) }}>
+    <div style={{ ...css.flex({ direction: "horizontal", justify: "space-between", align: "center" }) }}>
       <IconButton color={color.home.btn} size={80} onClick={() => setDialog("createProject")}>
         <NoteAddOutlined />
       </IconButton>

@@ -3,7 +3,7 @@ import { FC, Fragment } from "react";
 import { useRecoilRefresher_UNSTABLE, useRecoilValue, useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { dialogState } from "~/web/2_route";
 import { boardListState, pathState, useColor } from "~/web/2_store";
-import { Dialog, IconButton, layout } from "~/web/4_view/atom";
+import { Dialog, IconButton, css } from "~/web/4_view/atom";
 
 export const BoardDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
   const color = useColor();
@@ -13,19 +13,19 @@ export const BoardDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
   const home = useRecoilValue(pathState);
   return (
     <Dialog zIndex={zIndex} close={() => setDialog(undefined)}>
-      <div style={layout.rowGrid({ row: [50, null] })}>
-        <div style={layout.colGrid({ column: [null, 50] })}>
-          <div style={{ ...layout.left, fontSize: 25, fontWeight: "bold" }}>Boards</div>
+      <div style={css.rowGrid({ row: [50, null] })}>
+        <div style={css.colGrid({ column: [null, 50] })}>
+          <div style={{ ...css.left, fontSize: 25, fontWeight: "bold" }}>Boards</div>
           <IconButton color={color.dialog.btn} onClick={() => setDialog(undefined)}>
             <Close />
           </IconButton>
         </div>
         <div style={{ overflow: "scroll" }}>
-          <div style={layout.colGrid({ column: [null, null, null, 30], row: 30 })}>
+          <div style={css.colGrid({ column: [null, null, null, 30], row: 30 })}>
             <>
-              <div style={{ ...layout.left, fontWeight: "bold" }}>Owner</div>
-              <div style={{ ...layout.left, fontWeight: "bold" }}>Package</div>
-              <div style={{ ...layout.left, fontWeight: "bold" }}>Version</div>
+              <div style={{ ...css.left, fontWeight: "bold" }}>Owner</div>
+              <div style={{ ...css.left, fontWeight: "bold" }}>Package</div>
+              <div style={{ ...css.left, fontWeight: "bold" }}>Version</div>
               <div>
                 <IconButton color={color.dialog.btn} size={30} onClick={() => console.log("Reload Packages")}>
                   <ReplayRounded />
@@ -34,10 +34,10 @@ export const BoardDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
             </>
             {boardList.getValue().map((pack, i) => (
               <Fragment key={i}>
-                <div style={layout.left}>{pack.owner}</div>
-                <div style={layout.left}>{pack.name}</div>
-                <div style={layout.left}>{pack.version}</div>
-                <div style={layout.center}>
+                <div style={css.left}>{pack.owner}</div>
+                <div style={css.left}>{pack.name}</div>
+                <div style={css.left}>{pack.version}</div>
+                <div style={css.center}>
                   {i % 3 === 0 && (
                     <IconButton color={color.dialog.btn} size={30} onClick={() => console.log("Download", pack.name)}>
                       <Download />
