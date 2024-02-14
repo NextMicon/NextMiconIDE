@@ -5,7 +5,7 @@ import { PackKey, packEq, packToString } from "~/web/1_type";
 import { hwEditorFSM, localPacksState, useColor, useGetNewInstanceName } from "~/web/2_store";
 import { IconButton, SearchBox, css } from "~/web/4_view/atom";
 
-export const PackagePane: FC<{ style?: CSSProperties }> = ({ style }) => {
+export const ModPane: FC<{ style?: CSSProperties }> = ({ style }) => {
   const [keyword, setKeyword] = useState("");
   const color = useColor().editor.hw.pane;
   return (
@@ -18,12 +18,12 @@ export const PackagePane: FC<{ style?: CSSProperties }> = ({ style }) => {
         iconColor={color._.bg}
         inputColor={"white"}
       />
-      <PackageList />
+      <ModList />
     </div>
   );
 };
 
-const PackageList = () => {
+const ModList = () => {
   const localPackListLodable = useRecoilValueLoadable(localPacksState);
   const loadingMessage = "Loading package list";
   const errorMessage = "Failed to load packages";
@@ -34,7 +34,7 @@ const PackageList = () => {
       {localPackListLodable.state === "hasValue" && (
         <div style={{ ...css.colGrid({ column: [20, null, 30], row: 30 }), height: "auto" }}>
           {localPackListLodable.getValue().map((pack, i) => (
-            <Package key={packToString(pack)} pack={pack} />
+            <ModItem key={packToString(pack)} pack={pack} />
           ))}
         </div>
       )}
@@ -42,7 +42,7 @@ const PackageList = () => {
   );
 };
 
-const Package: FC<{ pack: PackKey }> = ({ pack }) => {
+const ModItem: FC<{ pack: PackKey }> = ({ pack }) => {
   // Global State
   const color = useColor().editor.hw.pane.item;
   const [fsm, setState] = useRecoilState(hwEditorFSM);
@@ -52,7 +52,7 @@ const Package: FC<{ pack: PackKey }> = ({ pack }) => {
   const [hover, setHover] = useState(false);
 
   // Calculate
-  const selected = fsm.state === "AddInstance" && packEq(fsm.value.pack, pack);
+  const selected = fsm.state === "AddInst" && packEq(fsm.value.mod, pack);
   const _color = selected ? color.sel : hover ? color.hov : color._;
 
   // TODO: this is random value
@@ -64,7 +64,7 @@ const Package: FC<{ pack: PackKey }> = ({ pack }) => {
       <div
         style={{ display: "flex", alignItems: "center" }}
         onClick={() => {
-          setState({ state: "AddInstance", value: { pack, name: getNewName(pack.name.toLocaleLowerCase()) } });
+          setState({ state: "AddInst", value: { mod: pack, name: getNewName(pack.name.toLocaleLowerCase()) } });
         }}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}

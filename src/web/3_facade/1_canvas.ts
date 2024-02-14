@@ -37,11 +37,11 @@ export const useCanvasForeground = () => {
       }
     },
     onClick: (e: MouseEvent) => {
-      if (fsm.state === "AddInstance") {
-        createInstance({ name: fsm.value.name, pack: fsm.value.pack, params: [], pos: posRound(mousePosition) });
+      if (fsm.state === "AddInst") {
+        createInstance({ name: fsm.value.name, pack: fsm.value.mod, params: [], pos: posRound(mousePosition) });
         setState({ state: "Default", value: {} });
       }
-      if (fsm.state === "AddIoport") {
+      if (fsm.state === "AddPrim") {
         createIoport({ type: fsm.value.type, name: fsm.value.name, params: [], pos: posRound(mousePosition) });
         setState({ state: "Default", value: {} });
       }

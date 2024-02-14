@@ -34,8 +34,8 @@ export const MiconEditor: FC<{}> = () => {
       {fsm.state === "Wireing" && <ConnectingWire path={[fsm.value.startPos, ...fsm.value.path]} />}
       {wires?.map((wire, i) => <WireComponent key={i} wire={wire} />)}
       {ports?.map((port) => <PortComponent key={port.key} port={port} />)}
-      {fsm.state === "AddInstance" && <DummyInstance pack={fsm.value.pack} name={fsm.value.name} />}
-      {fsm.state === "AddIoport" && <DummyIoport ioifName={fsm.value.type} ioName={fsm.value.name} />}
+      {fsm.state === "AddInst" && <DummyInstance pack={fsm.value.mod} name={fsm.value.name} />}
+      {fsm.state === "AddPrim" && <DummyIoport ioifName={fsm.value.type} ioName={fsm.value.name} />}
     </Canvas>
   );
 };
