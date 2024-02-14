@@ -61,11 +61,11 @@ const BoardInfo: FC = () => {
 const InstanceList: FC = () => {
   const instances = useRecoilValue(instancesResolvedState);
   return (
-    <>
-      {instances.map((inst, i) => (
+    <div style={{ ...css.colGrid({ column: [20, null, null, 30], row: 30 }), height: "auto" }}>
+      {instances.map((inst) => (
         <InstanceListItem key={inst.name} instance={inst} />
       ))}
-    </>
+    </div>
   );
 };
 
@@ -86,26 +86,22 @@ const InstanceListItem: FC<{ instance: Instance }> = ({ instance }) => {
   };
 
   return (
-    <div
-      style={{
-        ...css.colGrid({ column: [20, null, null, 30], row: 30 }),
-        height: "auto",
-        cursor: "pointer",
-        background: _color.bg,
-        color: _color.text,
-      }}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      onClick={(e) => (e.ctrlKey ? append() : select())}
-    >
-      <div></div>
-      <Left>{instance.pack.name}</Left>
-      <Left>{instance.name}</Left>
-      <IconButton color={color.btn} style={{ margin: "2px" }} onClick={() => setDetail(!detail)}>
-        {detail ? <KeyboardArrowDown /> : <KeyboardArrowLeft />}
-      </IconButton>
+    <>
+      <div
+        style={{ ...css.colSubGrid(), cursor: "pointer", background: _color.bg, color: _color.text }}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        onClick={(e) => (e.ctrlKey ? append() : select())}
+      >
+        <div></div>
+        <Left>{instance.pack.name}</Left>
+        <Left>{instance.name}</Left>
+        <IconButton color={color.btn} style={{ margin: "2px" }} onClick={() => setDetail(!detail)}>
+          {detail ? <KeyboardArrowDown /> : <KeyboardArrowLeft />}
+        </IconButton>
+      </div>
       {detail && (
-        <>
+        <div style={{ ...css.colSubGrid(), cursor: "pointer", background: _color.bg, color: _color.text }}>
           <div></div>
           <div></div>
           <input
@@ -120,20 +116,20 @@ const InstanceListItem: FC<{ instance: Instance }> = ({ instance }) => {
           <IconButton color={color.btn} style={{ margin: "2px" }} onClick={submitRename}>
             <Check />
           </IconButton>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 
 const IoportList: FC = () => {
   const ioports = useRecoilValue(ioportsResolvedState);
   return (
-    <>
+    <div style={{ ...css.colGrid({ column: [20, null, null, 30], row: 30 }), height: "auto" }}>
       {ioports.map((ioport, i) => {
         return <IoportListItem key={ioport.name} ioport={ioport} />;
       })}
-    </>
+    </div>
   );
 };
 
@@ -157,13 +153,7 @@ const IoportListItem: FC<{ ioport: Primitive }> = ({ ioport }) => {
   return (
     <>
       <div
-        style={{
-          ...css.colGrid({ column: [20, null, null, 30], row: 30 }),
-          height: "auto",
-          cursor: "pointer",
-          background: _color.bg,
-          color: _color.text,
-        }}
+        style={{ ...css.colSubGrid(), cursor: "pointer", background: _color.bg, color: _color.text }}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         onClick={(e) => (e.ctrlKey ? append() : select())}
@@ -174,21 +164,21 @@ const IoportListItem: FC<{ ioport: Primitive }> = ({ ioport }) => {
         <IconButton color={color.btn} style={{ margin: "2px" }} onClick={() => setDetail(!detail)}>
           {detail ? <KeyboardArrowDown /> : <KeyboardArrowLeft />}
         </IconButton>
-        {detail && (
-          <>
-            <div> </div>
-            <div></div>
-            <select onChange={(e) => setNewName(e.target.value)}>
-              {avalable.map((s) => (
-                <option key={s}>{s}</option>
-              ))}
-            </select>
-            <IconButton color={color.btn} style={{ margin: "2px" }} onClick={submitRename}>
-              <Check />
-            </IconButton>
-          </>
-        )}
       </div>
+      {detail && (
+        <div style={{ ...css.colSubGrid(), cursor: "pointer", background: _color.bg, color: _color.text }}>
+          <div> </div>
+          <div></div>
+          <select onChange={(e) => setNewName(e.target.value)}>
+            {avalable.map((s) => (
+              <option key={s}>{s}</option>
+            ))}
+          </select>
+          <IconButton color={color.btn} style={{ margin: "2px" }} onClick={submitRename}>
+            <Check />
+          </IconButton>
+        </div>
+      )}
     </>
   );
 };
@@ -196,11 +186,11 @@ const IoportListItem: FC<{ ioport: Primitive }> = ({ ioport }) => {
 const WireList: FC = () => {
   const wires = useRecoilValue(wiresResolvedState);
   return (
-    <>
+    <div style={{ ...css.colGrid({ column: [20, null, 20, 40, null], row: 30 }), height: "auto" }}>
       {wires.map((wire) => (
         <WireListItem key={getWireKeyStr(wire)} wire={wire} />
       ))}
-    </>
+    </div>
   );
 };
 
@@ -217,14 +207,7 @@ const WireListItem: FC<{ wire: Wire }> = ({ wire }) => {
 
   return (
     <div
-      style={{
-        ...css.colGrid({ column: [20, null, 20, 40, null], row: 30 }),
-        height: "auto",
-        background: _color.bg,
-        color: _color.text,
-        cursor: "pointer",
-        whiteSpace: "nowrap",
-      }}
+      style={{ ...css.colSubGrid(), cursor: "pointer", background: _color.bg, color: _color.text, whiteSpace: "nowrap" }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       onClick={(e) => (e.ctrlKey ? append() : select())}

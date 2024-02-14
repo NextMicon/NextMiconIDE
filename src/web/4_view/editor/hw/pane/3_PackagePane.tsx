@@ -3,7 +3,7 @@ import { CSSProperties, FC, useState } from "react";
 import { useRecoilState, useRecoilValueLoadable } from "recoil";
 import { PackKey, packEq, packToString } from "~/web/1_type";
 import { hwEditorFSM, localPacksState, useColor, useGetNewInstanceName } from "~/web/2_store";
-import { IconButton, SearchBox, TextButton, css } from "~/web/4_view/atom";
+import { IconButton, SearchBox, css } from "~/web/4_view/atom";
 
 export const PackagePane: FC<{ style?: CSSProperties }> = ({ style }) => {
   const [keyword, setKeyword] = useState("");
@@ -32,7 +32,7 @@ const PackageList = () => {
       {localPackListLodable.state === "loading" && <div>{loadingMessage}</div>}
       {localPackListLodable.state === "hasError" && <div>{errorMessage}</div>}
       {localPackListLodable.state === "hasValue" && (
-        <div style={{ overflowY: "scroll" }}>
+        <div style={{ ...css.colGrid({ column: [20, null, 30], row: 30 }), height: "auto" }}>
           {localPackListLodable.getValue().map((pack, i) => (
             <Package key={packToString(pack)} pack={pack} />
           ))}
@@ -59,16 +59,7 @@ const Package: FC<{ pack: PackKey }> = ({ pack }) => {
   const ready = pack.name.includes("O");
 
   return (
-    <div
-      style={{
-        ...css.colGrid({ column: [20, null, 30], row: 30 }),
-        height: "auto",
-        background: _color.bg,
-        color: _color.text,
-        cursor: "pointer",
-        display: "grid",
-      }}
-    >
+    <div style={{ ...css.colSubGrid(), background: _color.bg, color: _color.text, cursor: "pointer" }}>
       <div></div>
       <div
         style={{ display: "flex", alignItems: "center" }}
@@ -80,12 +71,6 @@ const Package: FC<{ pack: PackKey }> = ({ pack }) => {
       >
         {pack.name}
       </div>
-      {/* <TextButton color={color.btn} style={{ margin: "5px 2px", ...layout.center }}>
-        v0.0
-      </TextButton>
-      <IconButton color={color.btn} style={{ margin: "2px" }}>
-        {ready ? <Check /> : <ArrowDownward />}
-      </IconButton> */}
       <IconButton color={color.btn} style={{ margin: "2px" }} onClick={() => window.ipc.web.open("https://example.com")}>
         <QuestionMark />
       </IconButton>
