@@ -10,6 +10,8 @@ interface TextFile {
 
 export const softwareFileState = atom<TextFile>({ key: "textFile" });
 
+export const textRangeState = atom<{ from: number; to: number }>({ key: "selection", default: { from: 0, to: 0 } });
+
 export const useOpenSoftware = () => {
   const setTextFile = useSetRecoilState(softwareFileState);
   const { createMessage } = useMessage();
@@ -32,6 +34,7 @@ export const useOpenSoftware = () => {
 
 export const useSoftwareEditor = () => {
   const [textFile, setTextFile] = useRecoilState(softwareFileState);
+  const [textRange, setTextRange] = useRecoilState(textRangeState);
 
   const update = (text: string) => {
     setTextFile({ ...textFile, text: text });
@@ -45,5 +48,18 @@ export const useSoftwareEditor = () => {
     }
   };
 
-  return { path: textFile.path, value: textFile.text, uploading: textFile.uploading, update: update, save: save };
+  const insert = (snipet: string) => {
+    update(textFile.text.slice(0, textRange.from) + snipet + textFile.text.slice(textRange.to));
+  };
+
+  return {
+    path: textFile.path,
+    value: textFile.text,
+    uploading: textFile.uploading,
+    update: update,
+    save: save,
+    textRange,
+    setTextRange,
+    insert,
+  };
 };

@@ -17,7 +17,7 @@ export const useRunMake = () => {
       if (result.exitCode === 0) {
         createDialog("info", `${cmd}: Done`, result.stdout);
       } else {
-        createDialog("error", `${cmd}: Error`, result.stdout);
+        createDialog("error", `${cmd}: Error`, result.stdout + result.stderr);
       }
     } catch (e) {
       createDialog("error", `${cmd}: Error`, `${e}`);

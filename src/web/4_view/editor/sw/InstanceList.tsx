@@ -1,9 +1,9 @@
 import { KeyboardArrowDown, KeyboardArrowRight } from "@mui/icons-material";
 import { CSSProperties, FC, Fragment, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { Func, Package } from "~/files";
+import { Func } from "~/files";
 import { Instance } from "~/web/1_type";
-import { instancesResolvedState, useColor } from "~/web/2_store";
+import { instancesResolvedState, useColor, useSoftwareEditor } from "~/web/2_store";
 import { css } from "~/web/4_view/atom";
 
 export const InstanceList = () => {
@@ -71,6 +71,7 @@ const InstanceDoc: FC<{ instance: Instance }> = ({ instance }) => {
 const Func: FC<{ inst: string; note: string; method: Func }> = ({ inst, note, method }) => {
   const color = useColor().editor.sw.pane.func;
   const [hover, setHover] = useState(false);
+  const { insert } = useSoftwareEditor();
 
   const use = `${inst}.${method.name}();`;
   const _color = hover ? color.hov : color._;
@@ -90,7 +91,7 @@ const Func: FC<{ inst: string; note: string; method: Func }> = ({ inst, note, me
       }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      onClick={() => window.ipc.clipboard.copy(use)}
+      onClick={() => insert(use)}
     >
       <div style={{ ...css.left, height: 20, whiteSpace: "nowrap" }}>
         <pre> </pre>

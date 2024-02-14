@@ -1,7 +1,7 @@
 import { useRecoilValueLoadable } from "recoil";
 import { softwareFileState, useSoftwareEditor } from "~/web/2_store";
 
-import CodeMirror, { EditorView, keymap } from "@uiw/react-codemirror";
+import CodeMirror, { getStatistics, keymap } from "@uiw/react-codemirror";
 import { cpp } from "@codemirror/lang-cpp";
 
 export const TextEditor = () => {
@@ -16,7 +16,8 @@ export const TextEditor = () => {
 };
 
 const TextEditorBody = () => {
-  const { value, update, save } = useSoftwareEditor();
+  const { value, update, save, textRange, setTextRange } = useSoftwareEditor();
+
   return (
     <CodeMirror
       value={value}
@@ -27,7 +28,7 @@ const TextEditorBody = () => {
         keymap.of([
           {
             key: "Ctrl-s",
-            run: (e) => {
+            run: () => {
               save();
               return true;
             },
@@ -35,6 +36,12 @@ const TextEditorBody = () => {
         ]),
       ]}
       onChange={update}
+      onUpdate={(s) => {
+        const newRange = getStatistics(s).selection.ranges.at(0);
+        if (newRange && newRange.from !== textRange.from && newRange.to !== textRange.to) {
+          setTextRange({ from: newRange.from, to: newRange.to });
+        }
+      }}
     />
   );
 };
