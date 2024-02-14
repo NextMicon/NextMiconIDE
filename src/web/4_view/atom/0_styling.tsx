@@ -54,6 +54,12 @@ export const css = {
       gridAutoColumns: gridAuto(column),
     };
   },
+  colSubGrid: (): CSSProperties => {
+    return { display: "grid", gridTemplateColumns: "subgrid", gridColumnStart: 1, gridColumnEnd: -1 };
+  },
+  rowSubGrid: (): CSSProperties => {
+    return { display: "grid", gridTemplateColumns: "subgrid", gridColumnStart: 1, gridColumnEnd: -1 };
+  },
 };
 
 export const Left: FC<{ children?: ReactNode }> = ({ children }) => <div style={css.left}>{children}</div>;
