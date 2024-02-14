@@ -1,9 +1,7 @@
 import {
-  ArrowBack,
   Code,
   DataArray,
   DataObject,
-  HailSharp,
   KeyboardArrowLeft,
   KeyboardArrowRight,
   Numbers,
@@ -21,11 +19,12 @@ const primitives = [
   { type: "out", nameSel: "select", Icon: KeyboardArrowLeft },
   { type: "inout", nameSel: "select", Icon: Code },
   { type: "irq", nameSel: "select", Icon: PriorityHigh },
-  { type: "in_reg", nameSel: "input", Icon: Numbers },
-  { type: "out_reg", nameSel: "input", Icon: Numbers },
+  { type: "in_reg", nameSel: "none", Icon: Numbers },
+  { type: "out_reg", nameSel: "none", Icon: Numbers },
   { type: "slice", nameSel: "none", Icon: DataArray },
   { type: "concat", nameSel: "none", Icon: DataObject },
   { type: "const", nameSel: "none", Icon: Percent },
+  { type: "verilog", nameSel: "none", Icon: Code },
 ] as { type: string; nameSel: "select" | "input" | "none"; Icon: SvgIconComponent }[];
 
 export const PrimitivePane: FC = () => {
@@ -56,7 +55,7 @@ const PrimitiveSelector: FC<{ type: string; nameSel: "select" | "input" | "none"
   return (
     <div
       key={type}
-      style={{ ...css.colSubGrid(), background: _color.bg, color: _color.text, cursor: "pointer" }}
+      style={{ ...css.colSubGrid, background: _color.bg, color: _color.text, cursor: "pointer" }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >

@@ -88,7 +88,7 @@ const InstanceListItem: FC<{ instance: Instance }> = ({ instance }) => {
   return (
     <>
       <div
-        style={{ ...css.colSubGrid(), cursor: "pointer", background: _color.bg, color: _color.text }}
+        style={{ ...css.colSubGrid, cursor: "pointer", background: _color.bg, color: _color.text }}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         onClick={(e) => (e.ctrlKey ? append() : select())}
@@ -101,7 +101,7 @@ const InstanceListItem: FC<{ instance: Instance }> = ({ instance }) => {
         </IconButton>
       </div>
       {detail && (
-        <div style={{ ...css.colSubGrid(), cursor: "pointer", background: _color.bg, color: _color.text }}>
+        <div style={{ ...css.colSubGrid, cursor: "pointer", background: _color.bg, color: _color.text }}>
           <div></div>
           <div></div>
           <input
@@ -153,7 +153,7 @@ const IoportListItem: FC<{ ioport: Primitive }> = ({ ioport }) => {
   return (
     <>
       <div
-        style={{ ...css.colSubGrid(), cursor: "pointer", background: _color.bg, color: _color.text }}
+        style={{ ...css.colSubGrid, cursor: "pointer", background: _color.bg, color: _color.text }}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         onClick={(e) => (e.ctrlKey ? append() : select())}
@@ -166,7 +166,7 @@ const IoportListItem: FC<{ ioport: Primitive }> = ({ ioport }) => {
         </IconButton>
       </div>
       {detail && (
-        <div style={{ ...css.colSubGrid(), cursor: "pointer", background: _color.bg, color: _color.text }}>
+        <div style={{ ...css.colSubGrid, cursor: "pointer", background: _color.bg, color: _color.text }}>
           <div> </div>
           <div></div>
           <select onChange={(e) => setNewName(e.target.value)}>
@@ -207,7 +207,7 @@ const WireListItem: FC<{ wire: Wire }> = ({ wire }) => {
 
   return (
     <div
-      style={{ ...css.colSubGrid(), cursor: "pointer", background: _color.bg, color: _color.text, whiteSpace: "nowrap" }}
+      style={{ ...css.colSubGrid, cursor: "pointer", background: _color.bg, color: _color.text, whiteSpace: "nowrap" }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       onClick={(e) => (e.ctrlKey ? append() : select())}

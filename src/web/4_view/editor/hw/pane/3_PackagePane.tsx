@@ -59,7 +59,7 @@ const Package: FC<{ pack: PackKey }> = ({ pack }) => {
   const ready = pack.name.includes("O");
 
   return (
-    <div style={{ ...css.colSubGrid(), background: _color.bg, color: _color.text, cursor: "pointer" }}>
+    <div style={{ ...css.colSubGrid, background: _color.bg, color: _color.text, cursor: "pointer" }}>
       <div></div>
       <div
         style={{ display: "flex", alignItems: "center" }}

@@ -33,33 +33,23 @@ export const css = {
   left: { display: "flex", justifyContent: "left", alignItems: "center" } as CSSProperties,
   right: { display: "flex", justifyContent: "right", alignItems: "center" } as CSSProperties,
 
-  grid: ({ row, column }: { row: (string | number | null)[]; column: (string | number | null)[] }): CSSProperties => {
-    return {
-      display: "grid",
-      gridTemplateColumns: gridTemplate(column),
-      gridTemplateRows: gridTemplate(row),
-    };
-  },
-  colGrid: ({ column, row }: { column: (string | number | null)[]; row?: string | number }): CSSProperties => {
-    return {
-      display: "grid",
-      gridTemplateColumns: gridTemplate(column),
-      gridAutoRows: gridAuto(row),
-    };
-  },
-  rowGrid: ({ row, column }: { row: (string | number | null)[]; column?: string | number }): CSSProperties => {
-    return {
-      display: "grid",
-      gridTemplateRows: gridTemplate(row),
-      gridAutoColumns: gridAuto(column),
-    };
-  },
-  colSubGrid: (): CSSProperties => {
-    return { display: "grid", gridTemplateColumns: "subgrid", gridColumnStart: 1, gridColumnEnd: -1 };
-  },
-  rowSubGrid: (): CSSProperties => {
-    return { display: "grid", gridTemplateColumns: "subgrid", gridColumnStart: 1, gridColumnEnd: -1 };
-  },
+  grid: ({ row, column }: { row: (string | number | null)[]; column: (string | number | null)[] }): CSSProperties => ({
+    display: "grid",
+    gridTemplateColumns: gridTemplate(column),
+    gridTemplateRows: gridTemplate(row),
+  }),
+  colGrid: ({ column, row }: { column: (string | number | null)[]; row?: string | number }): CSSProperties => ({
+    display: "grid",
+    gridTemplateColumns: gridTemplate(column),
+    gridAutoRows: gridAuto(row),
+  }),
+  rowGrid: ({ row, column }: { row: (string | number | null)[]; column?: string | number }): CSSProperties => ({
+    display: "grid",
+    gridTemplateRows: gridTemplate(row),
+    gridAutoColumns: gridAuto(column),
+  }),
+  colSubGrid: { display: "grid", gridTemplateColumns: "subgrid", gridColumnStart: 1, gridColumnEnd: -1 } as CSSProperties,
+  rowSubGrid: { display: "grid", gridTemplateRows: "subgrid", gridRowStart: 1, gridRowEnd: -1 } as CSSProperties,
 };
 
 export const Left: FC<{ children?: ReactNode }> = ({ children }) => <div style={css.left}>{children}</div>;
