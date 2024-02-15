@@ -1,16 +1,23 @@
 * {
-  font-family: "Lucida Console", monospace;
+  font-family: monospace;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+html,
+body,
+div#root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
 }
 
 body {
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  overflow: hidden;
-  margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #e36d8d;
+  /* background: #e36d8d; */
 }
 
 div {
@@ -19,6 +26,8 @@ div {
   box-sizing: border-box;
 }
 
-::-webkit-scrollbar {
-  display: none;
+.cm-editor div {
+  width: auto;
+  height: auto;
+  box-sizing: content-box;
 }

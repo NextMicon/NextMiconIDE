@@ -13,5 +13,4 @@ export interface PackKey {
 }
 
 export const packToString = (pack: PackKey) => `${pack.owner}/${pack.name}/${pack.version}`;
-export const packEq = (lhs: PackKey, rhs: PackKey) =>
-  lhs.owner === rhs.owner && lhs.name === rhs.name && lhs.version === rhs.version;
+export const packEq = (lhs: PackKey, rhs: PackKey) => lhs.owner === rhs.owner && lhs.name === rhs.name && lhs.version === rhs.version;

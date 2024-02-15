@@ -1,6 +1,6 @@
 import { atom, useRecoilState } from "recoil";
 
-type MessageType = "error" | "warn" | "info";
+type MessageType = "error" | "warn" | "sucsess" | "info";
 
 export interface Message {
   id: string;

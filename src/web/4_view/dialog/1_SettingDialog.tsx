@@ -1,46 +1,36 @@
 import { Close } from "@mui/icons-material";
-import { CSSProperties, FC } from "react";
+import { FC } from "react";
 import { useSetRecoilState } from "recoil";
 import { dialogState } from "~/web/2_route";
-import { useSetColorName } from "~/web/2_store";
-import { Dialog, Grid, IconButton, Left, cssLeft } from "../atom";
+import { colorThemes, useColor, useSetColorName } from "~/web/2_store";
+import { Dialog, IconButton, css } from "../atom";
 
 export const SettingDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
+  const color = useColor();
   const setDialog = useSetRecoilState(dialogState);
   const { colorName, setColorName } = useSetColorName();
-
-  const cssBorder: CSSProperties = { width: "100%", borderWidth: 1, borderColor: "black", borderStyle: "solid" };
+  const colors = Object.entries(colorThemes);
 
   return (
     <Dialog zIndex={zIndex} close={() => setDialog(undefined)}>
-      <Grid style={{ height: "50px" }} column={["1fr", "50px"]}>
-        <Left style={{ fontSize: 25, fontWeight: "bold" }}>Settings</Left>
-        <IconButton onClick={() => setDialog(undefined)}>
+      <div style={{ ...css.colGrid({ column: [null, 50] }), height: 50 }}>
+        <div style={{ ...css.left, fontSize: 25, fontWeight: "bold" }}>Settings</div>
+        <IconButton color={color.dialog.btn} onClick={() => setDialog(undefined)}>
           <Close />
         </IconButton>
-      </Grid>
-      <div
-        style={{
-          height: "auto",
-          display: "grid",
-          gridTemplateColumns: "150px 200px",
-        }}
-      >
+      </div>
+      <div style={css.colGrid({ column: [150, 200], row: 30 })}>
         <>
-          <div style={{ ...cssLeft }}>Color</div>
-          <div>
-            <select value={colorName} onChange={(e) => setColorName(e.target.value)} style={{ ...cssBorder }}>
-              <option value={"ai"}>Ai</option>
-              <option value={"sakura"}>Sakura</option>
-              <option value={"dark"}>Dark Ai</option>
-            </select>
-          </div>
+          <div style={css.left}>Color</div>
+          <select value={colorName} onChange={(e) => setColorName(e.target.value)}>
+            {colors.map(([k, _]) => (
+              <option key={k}>{k}</option>
+            ))}
+          </select>
         </>
         <>
-          <div style={{ ...cssLeft }}>GitHub Token</div>
-          <div>
-            <input style={{ ...cssBorder }} />
-          </div>
+          <div style={{ ...css.left }}>GitHub Token</div>
+          <input />
         </>
       </div>
     </Dialog>

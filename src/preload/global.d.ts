@@ -28,18 +28,29 @@ declare global {
         tree: (paths: string[]) => Promise<directoryTree.DirectoryTree<Record<string, any>>>;
         exist: (paths: string[]) => Promise<boolean>;
         mkdir: (paths: string[]) => Promise<boolean>;
+        unzip: (zipPaths: string[], outPaths: string[]) => Promise<void>;
       };
       github: {
         fetch: (owner: string, repo: string, branch: string, path: string[]) => Promise<string>;
         clone: (owner: string, repo: string, branch: string, local: string[]) => Promise<string>;
       };
       run: {
-        execa: (command: string, args: string[], cwd: string[], options?: Options) => Promise<ExecaReturnValue<string>>;
+        execa: (
+          command: string,
+          args: string[],
+          cwd: string[],
+          options?: Options,
+        ) => Promise<{
+          exitCode: number;
+          stdout: string;
+          stderr: string;
+        }>;
       };
       web: {
         open: (url: string) => Promise<void>;
         fetch: (url: string) => Promise<string>;
         clone: (remotePaths: string[], localPaths: string[]) => Promise<string>;
+        dl: (remotePaths: string[], localPaths: string[]) => Promise<void>;
       };
       config: {
         getColor: () => Promise<ConfigJSON["color"]>;

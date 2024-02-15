@@ -10,6 +10,6 @@ type Route = { page: "home" } | { page: "editor"; project: string[] };
 
 export const routeState = atom<Route>({ key: "route", default: { page: "home" } });
 
-type Dialog = "createProject" | "setting" | "package" | "board";
+type Dialog = "createProject" | "setting" | "package" | "board" | "build";
 
 export const dialogState = atom<Dialog | undefined>({ key: "dialog", default: undefined });

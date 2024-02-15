@@ -30,8 +30,17 @@ export const webHandler = () => {
   // Fetch File and Write Local
   ipcMain.handle(IPCKeys.WEB_CLONE, async (_, remotePaths: string[], localPaths: string[]) => {
     log.trace(IPCKeys.WEB_FETCH, join(...remotePaths), join(...localPaths));
-    return fetch(join(...remotePaths))
-      .then((res) => res.text())
-      .then((str) => writeFileSync(join(...localPaths), str));
+    const res = await fetch(join(...remotePaths));
+    const txt = await res.text();
+    writeFileSync(join(...localPaths), txt);
+    return txt;
+  });
+
+  ipcMain.handle(IPCKeys.WEB_DL, async (_, remotePaths: string[], localPaths: string[]) => {
+    log.trace(IPCKeys.WEB_FETCH, join(...remotePaths), join(...localPaths));
+    const res = await fetch(join(...remotePaths));
+    const arrBuf = await res.arrayBuffer();
+    const buf = Buffer.from(arrBuf);
+    writeFileSync(join(...localPaths), buf);
   });
 };

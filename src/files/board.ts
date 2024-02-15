@@ -26,6 +26,6 @@ export interface Board {
 
     size: [number, number];
   }[];
-  tools: { name: string; cmd: string }[];
+  tools: { name: string; cmd: string; inst: string }[];
   cmd: { name: string; src: string[]; out: string[]; cmd: string; arg: string[] }[];
 }

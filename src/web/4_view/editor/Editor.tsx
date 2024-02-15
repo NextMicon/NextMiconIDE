@@ -1,12 +1,13 @@
-import "allotment/dist/style.css";
 import { FC, useEffect } from "react";
 import { useRecoilState, useRecoilValueLoadable } from "recoil";
+
+import "allotment/dist/style.css";
 import { boardState, modeState, useOpenProject, useOpenSoftware, useRunMake } from "~/web/2_store";
-import { Grid } from "~/web/4_view/atom";
 import { BottomBar } from "./common/BottomBar";
 import { TopBar } from "./common/TopBar";
 import { HWEditor } from "./hw/HWEditor";
 import { SWeditor } from "./sw/SWEditor";
+import { css } from "../atom";
 
 export const Editor: FC<{ projectPath: string[] }> = ({ projectPath }) => {
   const loading = useRecoilValueLoadable(boardState);
@@ -14,14 +15,13 @@ export const Editor: FC<{ projectPath: string[] }> = ({ projectPath }) => {
   const openSoftware = useOpenSoftware();
 
   useEffect(() => {
-    openProject(projectPath);
-    openSoftware(projectPath);
+    openProject(projectPath).then(() => openSoftware(projectPath));
   }, [projectPath]);
 
   return (
     <>
-      {loading.state === "loading" && <div>{`Loading project: ${projectPath} `}</div>}
-      {loading.state === "hasError" && <div>{`Failed to open project: ${projectPath}`}</div>}
+      {loading.state === "loading" && <div>{`Loading project: ${projectPath.join("/").replaceAll("///", "/")} `}</div>}
+      {loading.state === "hasError" && <div>{`Failed to open project: ${projectPath.join("/").replaceAll("///", "/")}`}</div>}
       {loading.state === "hasValue" && <EditorLoadded />}
     </>
   );
@@ -37,7 +37,7 @@ const EditorLoadded = () => {
       if (mode === "software") setMode("hardware");
     }
     if (e.ctrlKey && e.key === "Enter") {
-      runMake();
+      runMake("upload");
     }
   };
 
@@ -47,11 +47,11 @@ const EditorLoadded = () => {
   }, [keyboardEventHandler]);
 
   return (
-    <Grid row={["50px", "1fr", "20px"]}>
+    <div style={{ ...css.rowGrid({ row: [50, null, 20] }), height: "100%" }}>
       <TopBar />
       {mode === "hardware" && <HWEditor />}
       {mode === "software" && <SWeditor />}
       <BottomBar />
-    </Grid>
+    </div>
   );
 };

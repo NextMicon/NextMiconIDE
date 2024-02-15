@@ -22,16 +22,16 @@ export const useOpenProject = () => {
   const setBoard = useSetRecoilState(boardState);
 
   return async (path: string[]) => {
-    window.log.info("Open Project: Start");
+    window.log.info("openProject: Start");
     try {
       resetRevertBuffer();
       resetSvg();
       const appHome = await window.ipc.dir.getHome();
       // ----------------------------------------------------------------------
-      window.log.debug("Load Project");
+      window.log.info("openProject: Load Project");
       const proj = await window.ipc.fs.read([...path, PROJ_FILE]).then((str) => load(str) as Project);
       // ----------------------------------------------------------------------
-      window.log.debug("Load Board");
+      window.log.info("openProject: Load Board");
       const boardPath = [...appHome, BOARD_DIR, proj.board.owner, proj.board.name, proj.board.version];
       const board = await window.ipc.fs.read([...boardPath, BOARD_FILE]).then((str) => load(str) as Board);
       // ----------------------------------------------------------------------
@@ -40,11 +40,11 @@ export const useOpenProject = () => {
       setProject(proj);
       setBoardPath(boardPath);
       setBoard(board);
-      window.log.info("Open Project: Done");
+      window.log.info("openProject: Done");
     } catch (e) {
-      window.log.error("Failed to Open Project");
+      window.log.error("openProject: Failed");
       window.log.error(e);
-      createMessage("error", "Failed to Open Project", `${e}`);
+      createMessage("error", "Failed to open project", `${e}`);
     }
   };
 };

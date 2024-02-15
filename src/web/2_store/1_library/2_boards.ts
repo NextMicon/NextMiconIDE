@@ -1,6 +1,6 @@
 import { load } from "js-yaml";
-import { selector } from "recoil";
-import { BOARD_DIR, BOARD_FILE } from "~/consts";
+import { selector, useRecoilValue } from "recoil";
+import { BOARD_DIR, BOARD_FILE, URL_BOARD_REPO, URL_PACK_REPO } from "~/consts";
 import { Board } from "~/files";
 import { pathState } from "../0_sys/directory";
 import { flatten } from "./util";
@@ -45,3 +45,18 @@ export const boardsState = selector({
     return boards;
   },
 });
+
+// --------------------------------------------------------------------------------
+// ボードをダウンロード
+
+export const useDownloadBoard = () => {
+  const { home } = useRecoilValue(pathState);
+  return async (owner: string, name: string, version: string) => {
+    const path = [owner, name, version];
+    const zip = `${name}.zip`;
+    await window.ipc.fs.mkdir([...home, BOARD_DIR, ...path]);
+    await window.ipc.web.clone([URL_BOARD_REPO, ...path, zip], [...home, BOARD_DIR, ...path, zip]);
+    // TODO: Unzip
+    // await window.ipc.fs.unzip([...home, BOARD_DIR, ...path, zip], [...home, BOARD_DIR, ...path]);
+  };
+};

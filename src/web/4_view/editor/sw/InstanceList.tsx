@@ -1,15 +1,16 @@
 import { KeyboardArrowDown, KeyboardArrowRight } from "@mui/icons-material";
-import { CSSProperties, FC, useState } from "react";
+import { CSSProperties, FC, Fragment, useState } from "react";
 import { useRecoilValue } from "recoil";
+import { Func } from "~/files";
 import { Instance } from "~/web/1_type";
-import { instancesResolvedState, useColor } from "~/web/2_store";
-import { cssCenter, cssLeft } from "~/web/4_view/atom";
+import { instancesResolvedState, useColor, useSoftwareEditor } from "~/web/2_store";
+import { css } from "~/web/4_view/atom";
 
 export const InstanceList = () => {
   const instances = useRecoilValue(instancesResolvedState);
-  const color = useColor();
+  const color = useColor().editor.sw.pane;
   return (
-    <div style={{ overflow: "scroll", backgroundColor: color.gray.black, color: color.gray.white }}>
+    <div style={{ overflow: "scroll", background: color._.bg }}>
       <div
         style={{
           height: "auto",
@@ -30,10 +31,12 @@ export const InstanceList = () => {
 };
 
 const InstanceDoc: FC<{ instance: Instance }> = ({ instance }) => {
-  const color = useColor();
+  const color = useColor().editor.sw.pane.inst;
 
   const [open, setOpen] = useState(false);
   const [hover, setHover] = useState(false);
+
+  const _color = hover ? color.hov : color._;
 
   const SIZE = 30;
   const iconCss: CSSProperties = { height: `${SIZE}px`, width: `${SIZE}px` };
@@ -46,49 +49,73 @@ const InstanceDoc: FC<{ instance: Instance }> = ({ instance }) => {
           cursor: "pointer",
           display: "grid",
           gridTemplateColumns: `${SIZE}px 1fr`,
-          background: hover ? color.primary.dark : color.gray.black,
+          background: _color.bg,
+          color: _color.text,
         }}
         onClick={() => setOpen(!open)}
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
-        <div style={{ ...cssCenter }}>{open ? <KeyboardArrowDown style={iconCss} /> : <KeyboardArrowRight style={iconCss} />}</div>
-        <div style={{ ...cssLeft, fontSize: SIZE - 10 }}>{instance.name}</div>
+        <div style={{ ...css.center }}>{open ? <KeyboardArrowDown style={iconCss} /> : <KeyboardArrowRight style={iconCss} />}</div>
+        <div style={{ ...css.left, fontSize: SIZE - 10 }}>{instance.name}</div>
       </div>
       {open && (
-        <div>
-          {instance.pack.software?.member.map(({ doc, copy }, i) => (
-            <Method key={i} doc={doc} copy={copy.replace("${INSTANCE}", instance.name)} />
-          ))}
+        <div style={{ display: "flex", flexDirection: "column", rowGap: 10 }}>
+          {instance.pack.software?.methods.map((method, i) => <Func key={i} inst={instance.name} note={method.note} method={method} />)}
         </div>
       )}
     </div>
   );
 };
 
-const Method: FC<{ doc: string; copy: string }> = ({ doc, copy }) => {
-  const color = useColor();
+const Func: FC<{ inst: string; note: string; method: Func }> = ({ inst, note, method }) => {
+  const color = useColor().editor.sw.pane.func;
   const [hover, setHover] = useState(false);
+  const { insert } = useSoftwareEditor();
 
-  const SIZE = 30;
-  const TAB = 40;
+  const use = `${inst}.${method.name}();`;
+  const _color = hover ? color.hov : color._;
+
+  const startWithLowercase = (str: string) => str.charAt(0) === str.charAt(0).toLowerCase();
+  const typeColor = (str: string) => (startWithLowercase(str) ? _color.embtype : _color.objtype);
 
   return (
     <div
       style={{
-        height: SIZE,
-        background: hover ? color.primary.dark : color.gray.black,
+        height: "auto",
+        background: _color.bg,
+        color: _color.text,
         cursor: "pointer",
-        display: "grid",
-        gridTemplateColumns: `${TAB}px 1fr`,
+        display: "flex",
+        flexDirection: "column",
       }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      onClick={() => window.ipc.clipboard.copy(copy)}
+      onClick={() => insert(use)}
     >
-      <div style={{ ...cssCenter }}>{/* <HorizontalRule style={{ height: 15, width: 15 }} /> */}</div>
-      <div style={{ ...cssLeft, whiteSpace: "nowrap" }}>{doc}</div>
-      {/* <Left style={{ whiteSpace: "nowrap", overflow: "hidden", padding: "0 5px" }}>{doc}</Left> */}
+      <div style={{ ...css.left, height: 20, whiteSpace: "nowrap" }}>
+        <pre> </pre>
+        <pre style={{ color: _color.comment }}>{note}</pre>
+      </div>
+      <div style={{ ...css.left, height: 20, whiteSpace: "nowrap" }}>
+        <pre> </pre>
+        <pre style={{ color: typeColor(method.type) }}>{method.type}</pre>
+        <pre> </pre>
+        <pre style={{ color: _color.funcname, fontWeight: "bold" }}>{method.name}</pre>
+        <pre>(</pre>
+        {method.args.map((arg, i, arr) => {
+          const sep = i < arr.length - 1;
+          return (
+            <Fragment key={i}>
+              <pre style={{ color: typeColor(arg.type) }}>{arg.type}</pre>
+              <pre> </pre>
+              <pre style={{ color: _color.varname }}>{arg.name}</pre>
+              {sep && <pre>, </pre>}
+            </Fragment>
+          );
+        })}
+        <pre>);</pre>
+      </div>
     </div>
   );
 };

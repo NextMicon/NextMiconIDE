@@ -1,10 +1,10 @@
-import { ArrowRightAlt, DeviceHub, EditNote, Home, QuestionMark, Send, Settings } from "@mui/icons-material";
+import { DeviceHub, EditNote, Handyman, Home, Language, Send, Settings } from "@mui/icons-material";
 import { FC } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { URL_HELP } from "~/consts";
+import { URL_NEXT_MICON } from "~/consts";
 import { dialogState, routeState } from "~/web/2_route";
 import { modeState, projectNameState, useColor, useGenerate, useRunMake } from "~/web/2_store";
-import { Center, Grid, IconButton } from "~/web/4_view/atom";
+import { Center, IconButton, css } from "~/web/4_view/atom";
 
 export const TopBar: FC = () => {
   const color = useColor();
@@ -16,44 +16,51 @@ export const TopBar: FC = () => {
   const generate = useGenerate();
   return (
     <>
-      <Grid column={["50px", "50px", "50px", "1fr", "50px", "50px", "50px", "50px"]} style={{ background: color.primary.dark }}>
+      <div
+        style={{
+          ...css.colGrid({ column: [50, 50, 50, null, 50, 50, 50, 50] }),
+          background: color.editor.toolbar._.bg,
+          color: color.editor.toolbar._.text,
+        }}
+      >
         <Center>
-          <IconButton size={40} onClick={() => setRoute({ page: "home" })}>
+          <IconButton color={color.editor.toolbar.btn} size={40} onClick={() => setRoute({ page: "home" })}>
             <Home />
           </IconButton>
         </Center>
         <Center>
-          <IconButton size={40} onClick={() => setDialog("setting")}>
+          <IconButton color={color.editor.toolbar.btn} size={40} onClick={() => setDialog("setting")}>
             <Settings />
           </IconButton>
         </Center>
         <Center>
-          <IconButton size={40} onClick={() => window.ipc.web.open(URL_HELP)}>
-            <QuestionMark />
+          <IconButton color={color.editor.toolbar.btn} size={40} onClick={() => window.ipc.web.open(URL_NEXT_MICON)}>
+            <Language />
           </IconButton>
         </Center>
-        <Center style={{ color: "white", fontWeight: "bold", fontSize: "20px" }}>{projectName}</Center>
+        <div style={{ ...css.center, color: color.editor.toolbar._.text, fontWeight: "bold", fontSize: "20px" }}>{projectName}</div>
         <Center>
-          <IconButton size={40} onClick={() => setMode("hardware")} forceHover={mode === "hardware"}>
+          <IconButton color={color.editor.toolbar.btn} size={40} onClick={() => setMode("hardware")}>
             <DeviceHub />
           </IconButton>
         </Center>
+
         <Center>
-          <IconButton size={40} onClick={() => generate()}>
-            <ArrowRightAlt />
-          </IconButton>
-        </Center>
-        <Center>
-          <IconButton size={40} onClick={() => setMode("software")} forceHover={mode === "software"}>
+          <IconButton color={color.editor.toolbar.btn} size={40} onClick={() => setMode("software")}>
             <EditNote />
           </IconButton>
         </Center>
         <Center>
-          <IconButton size={40} onClick={async () => runMake("upload")}>
+          <IconButton color={color.editor.toolbar.btn} size={40} onClick={async () => runMake("upload")}>
             <Send />
           </IconButton>
         </Center>
-      </Grid>
+        <Center>
+          <IconButton color={color.editor.toolbar.btn} size={40} onClick={() => setDialog("build")}>
+            <Handyman />
+          </IconButton>
+        </Center>
+      </div>
     </>
   );
 };

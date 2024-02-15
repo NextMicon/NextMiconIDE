@@ -2,75 +2,70 @@ import { Check, Close, Download, ReplayRounded, Upload } from "@mui/icons-materi
 import { FC, Fragment } from "react";
 import { useRecoilRefresher_UNSTABLE, useRecoilValue, useSetRecoilState } from "recoil";
 import { dialogState } from "~/web/2_route";
-import { localPacksState, mergedPackList, pathState, registoryPackListState, useUpdateRegistory } from "~/web/2_store";
-import { Center, Dialog, Grid, IconButton, Left } from "../atom";
+import { localPacksState, mergedPackList, registoryPackListState, useColor, useDownloadPackage, useUpdateRegistory } from "~/web/2_store";
+import { Dialog, IconButton, css } from "../atom";
 
 export const PackageDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
+  const color = useColor();
   const setDialog = useSetRecoilState(dialogState);
-  const appHome = useRecoilValue(pathState);
   const localPacks = useRecoilValue(localPacksState);
   const merged = useRecoilValue(mergedPackList);
   const reload = useRecoilRefresher_UNSTABLE(localPacksState);
   const registory = useRecoilValue(registoryPackListState);
   const reloadRegistory = useUpdateRegistory();
+  const downloadPackage = useDownloadPackage();
+
   console.log(localPacks);
   console.log(registory);
   console.table(merged);
   return (
     <Dialog zIndex={zIndex} close={() => setDialog(undefined)}>
-      <Grid row={["50px", "1fr"]}>
-        <Grid column={["1fr", "50px"]}>
-          <Left style={{ fontSize: 25, fontWeight: "bold" }}>Package</Left>
-          <IconButton onClick={() => setDialog(undefined)}>
+      <div style={css.rowGrid({ row: [50, null] })}>
+        <div style={css.colGrid({ column: [null, 50] })}>
+          <div style={{ ...css.left, fontSize: 25, fontWeight: "bold" }}>Package</div>
+          <IconButton color={color.dialog.btn} onClick={() => setDialog(undefined)}>
             <Close />
           </IconButton>
-        </Grid>
+        </div>
         <div style={{ overflow: "scroll" }}>
-          <div
-            style={{
-              height: "auto",
-              display: "grid",
-              gridAutoColumns: "30px",
-              gridTemplateColumns: "1fr 1fr 1fr 30px",
-            }}
-          >
+          <div style={css.colGrid({ column: [null, null, null, 30], row: 30 })}>
             <>
-              <Left style={{ fontWeight: "bold" }}>Owner</Left>
-              <Left style={{ fontWeight: "bold" }}>Package</Left>
-              <Left style={{ fontWeight: "bold" }}>Version</Left>
-              <Left>
-                <IconButton size={30} onClick={() => reload()}>
+              <div style={{ ...css.left, fontWeight: "bold" }}>Owner</div>
+              <div style={{ ...css.left, fontWeight: "bold" }}>Package</div>
+              <div style={{ ...css.left, fontWeight: "bold" }}>Version</div>
+              <div style={{ ...css.left }}>
+                <IconButton color={color.dialog.btn} size={30} onClick={() => reloadRegistory().then(() => reload())}>
                   <ReplayRounded />
                 </IconButton>
-              </Left>
+              </div>
             </>
             {merged.map((pack, i) => (
               <Fragment key={i}>
-                <Left>{pack.owner}</Left>
-                <Left>{pack.name}</Left>
-                <Left>{pack.version}</Left>
-                <Center>
+                <div style={{ ...css.left }}>{pack.owner}</div>
+                <div style={{ ...css.left }}>{pack.name}</div>
+                <div style={{ ...css.left }}>{pack.version}</div>
+                <div style={{ ...css.center }}>
                   {pack.remote && !pack.local && (
-                    <IconButton size={30} onClick={() => console.log("Download", pack.name)}>
+                    <IconButton color={color.dialog.btn} size={30} onClick={() => downloadPackage(pack).then(() => reload())}>
                       <Download />
                     </IconButton>
                   )}
                   {!pack.remote && pack.local && (
-                    <IconButton size={30} onClick={() => console.log("Upload", pack.name)}>
+                    <IconButton color={color.dialog.btn} size={30} onClick={() => console.log("Upload", pack.name)}>
                       <Upload />
                     </IconButton>
                   )}
                   {pack.remote && pack.local && (
-                    <IconButton size={30} onClick={() => console.log("OK", pack.name)}>
+                    <IconButton color={color.dialog.btn} size={30} onClick={() => downloadPackage(pack).then(() => reload())}>
                       <Check />
                     </IconButton>
                   )}
-                </Center>
+                </div>
               </Fragment>
             ))}
           </div>
         </div>
-      </Grid>
+      </div>
     </Dialog>
   );
 };

@@ -16,7 +16,7 @@ import {
 } from "~/web/2_store";
 import { Canvas } from "./0_Canvas";
 import { InstanceView, PackView } from "./1_Instance";
-import { IoifView, IoportComponent } from "./2_Ioport";
+import { IoifView, PrimitiveComponent } from "./2_Primitive";
 import { PortComponent } from "./3_Port";
 import { WireComponent } from "./4_Wire";
 
@@ -29,13 +29,13 @@ export const MiconEditor: FC<{}> = () => {
   return (
     <Canvas>
       {fsm.state === "Selecting" && <SelectRect start={fsm.value.start} />}
-      {ioPorts?.map((ioport) => <IoportComponent key={ioport.name} ioport={ioport} />)}
+      {ioPorts?.map((ioport) => <PrimitiveComponent key={ioport.name} prim={ioport} />)}
       {instances?.map((instance) => <InstanceView key={instance.name} instance={instance} />)}
       {fsm.state === "Wireing" && <ConnectingWire path={[fsm.value.startPos, ...fsm.value.path]} />}
       {wires?.map((wire, i) => <WireComponent key={i} wire={wire} />)}
       {ports?.map((port) => <PortComponent key={port.key} port={port} />)}
-      {fsm.state === "AddInstance" && <DummyInstance pack={fsm.value.pack} name={fsm.value.name} />}
-      {fsm.state === "AddIoport" && <DummyIoport ioifName={fsm.value.type} ioName={fsm.value.name} />}
+      {fsm.state === "AddInst" && <DummyInstance pack={fsm.value.mod} name={fsm.value.name} />}
+      {fsm.state === "AddPrim" && <DummyIoport ioifName={fsm.value.type} ioName={fsm.value.name} />}
     </Canvas>
   );
 };
@@ -49,8 +49,8 @@ const SelectRect: FC<{ start: Position; end?: Position }> = ({ start, end }) => 
   const color = useColor();
   return (
     <>
-      <rect x={x} y={y} width={width} height={height} fill={color.primary.light} opacity={0.3} />
-      <rect x={x} y={y} width={width} height={height} fill="none" stroke={color.primary.dark} strokeWidth={1} />
+      <rect x={x} y={y} width={width} height={height} fill={color.editor.hw.graph.select.fill} opacity={0.3} />
+      <rect x={x} y={y} width={width} height={height} fill="none" stroke={color.editor.hw.graph.select.stroke} strokeWidth={1} />
     </>
   );
 };
@@ -63,7 +63,7 @@ const ConnectingWire: FC<{ path: Position[] }> = ({ path }) => {
     <g fill="none" strokeLinecap="round" strokeLinejoin="round">
       <polyline
         points={[...path, stickeyMouse].map(([x, y]) => `${x},${y}`).reduce((p, c) => `${p} ${c}`, "")}
-        stroke={color.gray.black}
+        stroke={color.editor.hw.graph.wire._}
         strokeWidth={3}
       />
     </g>

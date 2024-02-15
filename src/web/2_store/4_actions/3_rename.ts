@@ -42,7 +42,7 @@ const renameIoport = (project: Project, oldName: string, newName: string): Proje
     wires: project.wires.map((wire) => ({
       ...wire,
       first: wire.first[0] === oldName ? [newName, wire.first[1]] : wire.first,
-      to: wire.last[0] === oldName ? [newName, wire.last[1]] : wire.last,
+      last: wire.last[0] === oldName ? [newName, wire.last[1]] : wire.last,
     })),
   };
 };
@@ -51,6 +51,7 @@ export const useRenameIoport = () => {
   const { commit } = useRevert();
   const [project, setProject] = useRecoilState(projectState);
   return (oldName: string, newName: string) => {
+    console.log("Rename", oldName, newName);
     setProject(renameIoport(project, oldName, newName));
     commit();
   };

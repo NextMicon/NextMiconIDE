@@ -4,7 +4,7 @@ import { Rect, corrision, corrisionRectPoint, diagonalRect } from "~/web/0_commo
 import {
   Instance,
   InstanceKey,
-  Ioport,
+  Primitive,
   IoportKey,
   WaypointKey,
   Wire,
@@ -97,19 +97,14 @@ export const useSelectWaypoint = () => {
 const instanceRangeSelect = (instances: Instance[], rect: Rect): InstanceKey[] => {
   return instances
     .filter((instance) =>
-      corrision(
-        { x: instance.pos[0], y: instance.pos[1], width: instance.pack.size[0], height: instance.pack.size[1] },
-        rect,
-      ),
+      corrision({ x: instance.pos[0], y: instance.pos[1], width: instance.pack.size[0], height: instance.pack.size[1] }, rect),
     )
     .map(({ name }) => name);
 };
 
-const ioportRangeSelect = (ioports: Ioport[], rect: Rect): InstanceKey[] => {
+const ioportRangeSelect = (ioports: Primitive[], rect: Rect): InstanceKey[] => {
   return ioports
-    .filter((ioport) =>
-      corrision({ x: ioport.pos[0], y: ioport.pos[1], width: ioport.pack.size[0], height: ioport.pack.size[1] }, rect),
-    )
+    .filter((ioport) => corrision({ x: ioport.pos[0], y: ioport.pos[1], width: ioport.pack.size[0], height: ioport.pack.size[1] }, rect))
     .map(({ name }) => name);
 };
 

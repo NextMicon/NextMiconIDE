@@ -8,8 +8,8 @@ type States =
   | { state: "Default"; value: {} }
   | { state: "Selecting"; value: { start: Position } }
   | { state: "Moving"; value: { start: Position } }
-  | { state: "AddInstance"; value: { pack: PackKey; name: string } }
-  | { state: "AddIoport"; value: { type: string; name: string } }
+  | { state: "AddPrim"; value: { type: string; name: string } }
+  | { state: "AddInst"; value: { mod: PackKey; name: string } }
   | { state: "AddWaypoint"; value: { wire: WireKey; idx: number } }
   | { state: "Wireing"; value: { start: PortKey; startPos: Position; path: Position[] } };
 

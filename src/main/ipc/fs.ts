@@ -1,10 +1,11 @@
 import directoryTree from "directory-tree";
 import { OpenDialogOptions, dialog, ipcMain } from "electron";
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "fs";
+import { createReadStream, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "fs";
 import { getLogger } from "log4js";
 import { dirname, join, sep } from "path";
 import { IPCKeys } from "~/ipckey";
 import { mainWindow } from "~/main/main";
+import unzip from "unzipper";
 
 const log = getLogger("IPC");
 
@@ -78,8 +79,23 @@ export const fsHandler = () => {
     log.trace(IPCKeys.FS_MKDIR, path);
     try {
       const exist = existsSync(path);
-      if (!exist) mkdirSync(path);
+      if (!exist) mkdirSync(path, { recursive: true });
       return true;
+    } catch (e) {
+      throw e;
+    }
+  });
+
+  ipcMain.handle(IPCKeys.FS_UNZIP, (_, zipPaths: string[], outPaths: string[]) => {
+    const zipPath = join(...zipPaths);
+    const outPath = join(...outPaths);
+    log.trace(IPCKeys.FS_UNZIP, zipPath, outPath);
+    try {
+      if (!zipPaths.at(-1)?.endsWith(".zip")) {
+        throw `Zipfile required: ${zipPath}`;
+      }
+      const stream = createReadStream(zipPath);
+      stream.pipe(unzip.Extract({ path: outPath }));
     } catch (e) {
       throw e;
     }

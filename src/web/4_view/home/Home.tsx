@@ -1,30 +1,27 @@
 import { Apps, DeveloperBoard, NoteAddOutlined, OpenInBrowser, Settings } from "@mui/icons-material";
 import { FC } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import "~/assets/logo.png";
 import { dialogState, routeState } from "~/web/2_route";
-import { Center, Flex, Grid, IconButton, TextButton } from "~/web/4_view/atom";
+import { IconButton, TextButton, css } from "~/web/4_view/atom";
 import { projectListState, useColor } from "../../2_store";
 
 export const Home: FC = () => {
   const color = useColor();
-
   return (
-    <Center style={{ background: color.primary.dark }}>
-      <div style={{ maxWidth: "500px", maxHeight: "600px", padding: "20px" }}>
-        <Grid row={["1fr", "1fr", "3fr"]}>
-          <Center>
-            <span style={{ fontWeight: "bold", fontSize: 40, color: "white" }}>Next Micon IDE</span>
-          </Center>
+    <div style={{ ...css.center, height: "100%", background: color.home._.bg, color: color.home._.text }}>
+      <div style={{ maxWidth: "500px", maxHeight: "600px", width: "100%", height: "100%" }}>
+        <div style={{ ...css.rowGrid({ row: ["1fr", "1fr", "3fr"], column: "100%" }) }}>
+          <div style={{ ...css.center, fontWeight: "bold", fontSize: 40 }}>Next Micon IDE</div>
           <Buttons />
           <ProjectList />
-        </Grid>
+        </div>
       </div>
-    </Center>
+    </div>
   );
 };
 
 const Buttons: FC = () => {
+  const color = useColor();
   const setRoute = useSetRecoilState(routeState);
   const setDialog = useSetRecoilState(dialogState);
   const openProjectWithDialog = () => {
@@ -34,23 +31,23 @@ const Buttons: FC = () => {
       .then((root) => (root ? setRoute({ page: "editor", project: root }) : undefined));
   };
   return (
-    <Flex direction="horizontal" justify="space-between" align="center">
-      <IconButton size={80} onClick={() => setDialog("createProject")}>
+    <div style={{ ...css.flex({ direction: "horizontal", justify: "space-between", align: "center" }) }}>
+      <IconButton color={color.home.btn} size={80} onClick={() => setDialog("createProject")}>
         <NoteAddOutlined />
       </IconButton>
-      <IconButton size={80} onClick={openProjectWithDialog}>
+      <IconButton color={color.home.btn} size={80} onClick={openProjectWithDialog}>
         <OpenInBrowser />
       </IconButton>
-      <IconButton size={80} onClick={() => setDialog("setting")}>
+      <IconButton color={color.home.btn} size={80} onClick={() => setDialog("setting")}>
         <Settings />
       </IconButton>
-      <IconButton size={80} onClick={() => setDialog("package")}>
+      <IconButton color={color.home.btn} size={80} onClick={() => setDialog("package")}>
         <Apps />
       </IconButton>
-      <IconButton size={80} onClick={() => setDialog("board")}>
+      <IconButton color={color.home.btn} size={80} onClick={() => setDialog("board")}>
         <DeveloperBoard />
       </IconButton>
-    </Flex>
+    </div>
   );
 };
 
@@ -58,20 +55,25 @@ const ProjectList: FC = () => {
   const recent = useRecoilValue(projectListState);
   // TODO: Last Modified 順に並べなおす
   return (
-    <Flex direction="vertical">
-      {recent.map(({ name, path }, i) => (
-        <ProjectItem key={i} name={`${i + 1}. ${name}`} path={path} />
-      ))}
-    </Flex>
+    <div style={{ overflowY: "scroll" }}>
+      <div>
+        {recent.map(({ name, path }, i) => (
+          <ProjectItem key={i} name={`${i + 1}. ${name}`} path={path} />
+        ))}
+      </div>
+    </div>
   );
 };
 
 const ProjectItem: FC<{ name: string; path: string[] }> = ({ name, path }) => {
   const setRoute = useSetRecoilState(routeState);
+  const color = useColor();
   return (
     <TextButton
+      color={color.home.btn}
       style={{
         height: "30px",
+        width: "100%",
         textAlign: "left",
         margin: "5px 0",
         padding: "0 5px",

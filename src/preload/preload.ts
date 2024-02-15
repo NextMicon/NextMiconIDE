@@ -28,6 +28,7 @@ contextBridge.exposeInMainWorld("ipc", {
     tree: (paths: string[]) => ipcRenderer.invoke(IPCKeys.FS_GET_TREE, paths),
     exist: (paths: string[]) => ipcRenderer.invoke(IPCKeys.FS_EXIST, paths),
     mkdir: (paths: string[]) => ipcRenderer.invoke(IPCKeys.FS_MKDIR, paths),
+    unzip: (zipPaths: string[], outPaths: string[]) => ipcRenderer.invoke(IPCKeys.FS_UNZIP, zipPaths, outPaths),
   },
   github: {
     fetch: (owner: string, repo: string, branch: string, path: string[]) =>
@@ -41,6 +42,7 @@ contextBridge.exposeInMainWorld("ipc", {
     open: (url: string) => ipcRenderer.invoke(IPCKeys.WEB_OPEN, url),
     fetch: (url: string) => ipcRenderer.invoke(IPCKeys.WEB_FETCH, url),
     clone: (remotePaths: string[], localPaths: string[]) => ipcRenderer.invoke(IPCKeys.WEB_CLONE, remotePaths, localPaths),
+    dl: (remotePaths: string[], localPaths: string[]) => ipcRenderer.invoke(IPCKeys.WEB_DL, remotePaths, localPaths),
   },
   config: {
     getColor: () => ipcRenderer.invoke(IPCKeys.CONFIG_GET_COLOR),

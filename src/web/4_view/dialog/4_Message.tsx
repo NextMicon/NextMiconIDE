@@ -1,24 +1,21 @@
-import { Check } from "@mui/icons-material";
+import { Check, KeyboardArrowDown, KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { FC, useState } from "react";
 import { Message, useColor, useMessage } from "~/web/2_store";
-import { Center, Grid, IconButton } from "../atom";
+import { Center, IconButton, css } from "../atom";
 
 export const MessageList: FC = () => {
   const color = useColor();
   const { messages } = useMessage();
 
-  // const instsErrors = useRecoilValueLoadable(instancesResolveErrorState);
-
-  const msg = [...messages];
-
-  if (msg.length === 0) return <></>;
+  if (messages.length === 0) return <></>;
 
   return (
     <div
       style={{
         pointerEvents: "all",
-        background: color.gray.dark,
         borderTopLeftRadius: 20,
+
+        background: "gray",
 
         position: "absolute",
         right: 0,
@@ -44,33 +41,29 @@ export const MessageList: FC = () => {
 
 const MessageItem: FC<{ message: Message }> = ({ message }) => {
   const color = useColor();
-  const [width, setWidth] = useState(false);
+  const [open, setOpen] = useState(false);
   const { deleteMessage } = useMessage();
+
   return (
-    <div
-      style={{
-        pointerEvents: "auto",
-        background: color.note[message.type],
-        height: "auto",
-        borderRadius: 20,
-        marginBottom: 10,
-        width: width ? "100%" : "400px",
-        cursor: "pointer",
-      }}
-      onClick={() => setWidth(!width)}
-      onDoubleClick={() => deleteMessage(message.id)}
-    >
-      <Grid column={["1fr", "50px"]} style={{ height: "50px" }}>
+    <div style={{ height: "auto", borderRadius: 20, marginBottom: 10, background: color.dialog.msg[message.type], width: "400px" }}>
+      <div style={{ ...css.colGrid({ column: [50, null, 50] }), height: 50 }}>
+        <Center>
+          <IconButton color={color.dialog.btn} onClick={() => setOpen(!open)} size={40}>
+            {open ? <KeyboardArrowDown /> : <KeyboardArrowRight />}
+          </IconButton>
+        </Center>
         <Center>
           <span style={{ fontSize: 20, fontWeight: "bold", height: "auto" }}> {message.title}</span>
         </Center>
         <Center>
-          <IconButton onClick={() => deleteMessage(message.id)} size={40} base={color.gray.mid}>
-            <Check style={{ color: color.note[message.type] }} />
+          <IconButton color={color.dialog.btn} onClick={() => deleteMessage(message.id)} size={40}>
+            <Check />
           </IconButton>
         </Center>
-      </Grid>
-      <div style={{ whiteSpace: "break-spaces", height: "auto", padding: "0 20px 20px 20px", overflowX: "scroll" }}>{message.text}</div>
+      </div>
+      {open && (
+        <div style={{ whiteSpace: "break-spaces", height: "auto", padding: "0 20px 20px 20px", overflowX: "scroll" }}>{message.text}</div>
+      )}
     </div>
   );
 };

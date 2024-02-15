@@ -1,11 +1,12 @@
 import { Close } from "@mui/icons-material";
-import { CSSProperties, FC, useState } from "react";
+import { FC, useState } from "react";
 import { useRecoilRefresher_UNSTABLE, useRecoilValueLoadable, useSetRecoilState } from "recoil";
 import { dialogState } from "~/web/2_route";
-import { boardListState, projectListState, useCreateProject } from "~/web/2_store";
-import { Dialog, Grid, IconButton, Left, cssLeft } from "../atom";
+import { boardListState, projectListState, useColor, useCreateProject } from "~/web/2_store";
+import { css, Dialog, IconButton, Left } from "../atom";
 
 export const CreateProjectDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
+  const color = useColor();
   const setDialog = useSetRecoilState(dialogState);
   const boardListLoaddable = useRecoilValueLoadable(boardListState);
 
@@ -16,67 +17,55 @@ export const CreateProjectDialog: FC<{ zIndex: number }> = ({ zIndex }) => {
   const createProject = useCreateProject();
   const refreshProjectList = useRecoilRefresher_UNSTABLE(projectListState);
 
-  const cssBorder: CSSProperties = { width: "100%", borderWidth: 1, borderColor: "black", borderStyle: "solid" };
-
   return (
     <Dialog zIndex={zIndex} close={() => setDialog(undefined)}>
-      <Grid style={{ height: "50px" }} column={["1fr", "50px"]}>
-        <Left style={{ fontSize: 25, fontWeight: "bold" }}>Create Project</Left>
-        <IconButton onClick={() => setDialog(undefined)}>
+      <div style={{ ...css.colGrid({ column: [null, 50], row: 50 }), height: 50 }}>
+        <div style={{ ...css.left, fontSize: 25, fontWeight: "bold" }}>Create Project</div>
+        <IconButton color={color.dialog.btn} onClick={() => setDialog(undefined)}>
           <Close />
         </IconButton>
-      </Grid>
-      <div
-        style={{
-          height: "auto",
-          display: "grid",
-          gridTemplateColumns: "100px 200px",
-        }}
-      >
+      </div>
+      <div style={css.colGrid({ column: [150, 200], row: 30 })}>
         <>
-          <div style={{ ...cssLeft }}>Board</div>
-          <div>
-            <select onChange={(e) => setBoard(e.target.value)} value={board} style={{ ...cssBorder }}>
-              <option value={undefined}>-</option>
-              {boardListLoaddable.getValue().map((board, i) => (
-                <option key={i} value={board.name}>
-                  {board.name}
-                </option>
-              ))}
-            </select>
-          </div>
+          <Left>Board</Left>
+          <select onChange={(e) => setBoard(e.target.value)} value={board}>
+            <option value={undefined}>-</option>
+            {boardListLoaddable.getValue().map((board, i) => (
+              <option key={i} value={board.name}>
+                {board.name}
+              </option>
+            ))}
+          </select>
         </>
         <>
-          <div style={{ ...cssLeft }}>Version</div>
-          <div>
-            <select onChange={(e) => setVersion(e.target.value)} style={{ ...cssBorder }}>
-              <option value={undefined}>-</option>
-              <option>0.0.0</option>
-            </select>
-          </div>
+          <Left>Version</Left>
+          <select onChange={(e) => setVersion(e.target.value)}>
+            <option value={undefined}>-</option>
+            <option>0.0.0</option>
+          </select>
         </>
         <>
-          <div style={{ ...cssLeft }}>Name</div>
-          <div>
-            <input type="text" style={{ ...cssBorder }} value={proj} onChange={(e) => setProj(e.target.value)} />
-          </div>
+          <Left>Name</Left>
+          <input type="text" value={proj} onChange={(e) => setProj(e.target.value)} />
         </>
         <>
-          <div></div>
-          <div>
-            {board && version && proj && (
+          <Left>Create</Left>
+          <>
+            {board && version && proj ? (
               <button
-                style={{ ...cssBorder, background: "lightgray" }}
+                style={{ background: "lightgray", cursor: "pointer" }}
                 onClick={() =>
-                  createProject(proj, { owner: "NextMicon", name: board, version: "0.0.0" })
+                  createProject(proj, { owner: "NextMicon", name: board, version: version })
                     .then(() => refreshProjectList())
                     .then(() => setDialog(undefined))
                 }
               >
-                Create!
+                {"Create!"}
               </button>
+            ) : (
+              <div></div>
             )}
-          </div>
+          </>
         </>
       </div>
     </Dialog>

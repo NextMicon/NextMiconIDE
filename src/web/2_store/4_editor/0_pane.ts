@@ -1,5 +1,5 @@
 import { atom } from "recoil";
 
-type Pane = { type: "info" } | { type: "pack" } | { type: "ioport" };
+type Pane = { type: "info" } | { type: "primitive" } | { type: "pack" };
 
 export const paneState = atom<Pane>({ key: "paneState", default: { type: "info" } });

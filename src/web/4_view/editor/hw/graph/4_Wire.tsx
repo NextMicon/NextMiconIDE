@@ -7,7 +7,7 @@ import { useWaypoint, useWire } from "~/web/3_facade";
 export const WireComponent: FC<{ wire: Wire }> = ({ wire }) => {
   // Global State
   const { selected, pathPoints, midPoints, startAddWaypoint, onClick, onDoubleClick, insertWaypoint } = useWire(wire);
-  const color = useColor();
+  const color = useColor().editor.hw.graph.wire;
 
   // Local State
   const [hover, setHover] = useState(false);
@@ -28,8 +28,8 @@ export const WireComponent: FC<{ wire: Wire }> = ({ wire }) => {
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <polyline points={points} stroke={color.primary.dark} opacity={highlight ? 0.5 : 0} strokeWidth={12} />
-        <polyline points={points} stroke={color.gray.black} strokeWidth={3} />
+        <polyline points={points} stroke={color.hov} opacity={highlight ? 0.5 : 0} strokeWidth={12} />
+        <polyline points={points} stroke={color._} strokeWidth={3} />
         {midPoints.map((pos, i) => (
           <MidpointSVG key={i} wire={wire} idx={i} pos={pos} onMouseDown={() => startAddWaypoint(i)} />
         ))}
@@ -43,7 +43,7 @@ export const WireComponent: FC<{ wire: Wire }> = ({ wire }) => {
 
 const WaypointSVG: FC<{ wire: Wire; idx: number; pos: Position }> = ({ wire, idx, pos }) => {
   // Global State
-  const color = useColor();
+  const color = useColor().editor.hw.graph.wire;
   const { selected, onClick, onMouseDown } = useWaypoint(getWaypointKey(wire, idx));
 
   // Local State
@@ -61,22 +61,15 @@ const WaypointSVG: FC<{ wire: Wire; idx: number; pos: Position }> = ({ wire, idx
       onMouseLeave={() => setHover(false)}
       style={{ cursor: "pointer" }}
     >
-      <circle cx={x} cy={y} r={4} fillOpacity={highlight ? 1 : 0} fill={color.gray.black} />
-      <circle
-        cx={x}
-        cy={y}
-        r={10}
-        fillOpacity={highlight ? 0.3 : 0}
-        fill={color.primary.light}
-        stroke={highlight ? color.primary.dark : "none"}
-      />
+      <circle cx={x} cy={y} r={4} fillOpacity={highlight ? 1 : 0} fill={color._} />
+      <circle cx={x} cy={y} r={10} fillOpacity={highlight ? 0.3 : 0} fill={color._} stroke={highlight ? color.hov : "none"} />
     </g>
   );
 };
 
 const MidpointSVG: FC<{ wire: Wire; idx: number; pos: Position; onMouseDown: () => void }> = ({ pos, onMouseDown }) => {
   // Global State
-  const color = useColor();
+  const color = useColor().editor.hw.graph.wire;
 
   // Local State
   const [hover, setHover] = useState(false);
@@ -86,14 +79,14 @@ const MidpointSVG: FC<{ wire: Wire; idx: number; pos: Position; onMouseDown: () 
 
   return (
     <g onMouseDown={onMouseDown} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={{ cursor: "pointer" }}>
-      <circle cx={x} cy={y} r={4} fillOpacity={hover ? 1 : 0} fill={color.gray.black} />
+      <circle cx={x} cy={y} r={4} fillOpacity={hover ? 1 : 0} fill={color._} />
       <circle
         cx={x}
         cy={y}
         r={10}
         fillOpacity={hover ? 0.3 : 0}
-        fill={color.primary.light}
-        stroke={hover ? color.primary.dark : "none"}
+        fill={color._}
+        stroke={hover ? color.hov : "none"}
         strokeDasharray={"2 2"}
       />
     </g>
